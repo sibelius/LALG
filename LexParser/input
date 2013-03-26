@@ -1,0 +1,6 @@
+program lalg;
+{teste}
+var a: integer;
+begin
+readd1(a, @, 1);
+end.
