@@ -1,0 +1,69 @@
+!SESSION 2013-03-26 10:55:22.212 -----------------------------------------------
+eclipse.buildId=M20130204-1200
+java.version=1.6.0_27
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.jee.product
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.jee.product
+
+!ENTRY JavaCC 1 0 2013-03-26 10:59:44.081
+!MESSAGE File L/DFPLalg/src/DFPLalgGrammar.jj created
+
+!ENTRY JavaCC 1 0 2013-03-26 10:59:44.091
+!MESSAGE Initializing JavaCC project preferences
+
+!ENTRY JavaCC 1 0 2013-03-26 11:00:25.033
+!MESSAGE File L/DFPLalg/src/dfp/DFPLalgGrammar.jj created
+!SESSION 2013-03-26 17:08:40.749 -----------------------------------------------
+eclipse.buildId=M20130204-1200
+java.version=1.6.0_27
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.jee.product
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.jee.product
+
+!ENTRY JavaCC 1 0 2013-03-26 17:14:06.026
+!MESSAGE File L/DFPLalg/src/MyParser.jj created
+
+!ENTRY JavaCC 1 0 2013-03-26 17:24:00.282
+!MESSAGE File L/DFPLalg/src/test/MyNewGrammar.jj created
+
+!ENTRY JavaCC 1 0 2013-03-26 17:27:22.482
+!MESSAGE File L/DFPLalg/src/test/MyNewGrammar.jj created
+
+!ENTRY JavaCC 1 0 2013-03-26 17:31:04.391
+!MESSAGE File L/DFPLalg/src/dfp/DFPLalgParser.jj created
+!SESSION 2013-03-27 11:11:51.496 -----------------------------------------------
+eclipse.buildId=M20130204-1200
+java.version=1.6.0_27
+java.vendor=Sun Microsystems Inc.
+BootLoader constants: OS=linux, ARCH=x86_64, WS=gtk, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.jee.product
+Command-line arguments:  -os linux -ws gtk -arch x86_64 -product org.eclipse.epp.package.jee.product
+
+!ENTRY JavaCC 1 0 2013-03-27 11:36:07.359
+!MESSAGE File L/DFPLalg/src/tst/MyNewGrammar.jj created
+
+!ENTRY JavaCC 1 0 2013-03-27 11:37:34.787
+!MESSAGE File L/DFPLalg/src/teste/MyNewGrammar.jj created
+
+!ENTRY org.eclipse.jface 2 0 2013-03-27 11:38:46.937
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2013-03-27 11:38:46.937
+!MESSAGE A conflict occurred for CTRL+D:
+Binding(CTRL+D,
+	ParameterizedCommand(Command(org.eclipse.debug.ui.commands.eof,EOF,
+		Send end of file,
+		Category(org.eclipse.debug.ui.category.run,Run/Debug,Run/Debug command category,true),
+		org.eclipse.ui.internal.MakeHandlersGo@1338f9b4,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.debug.ui.console,,,system)
+Binding(CTRL+D,
+	ParameterizedCommand(Command(org.eclipse.ui.edit.text.delete.line,Delete Line,
+		Delete a line of text,
+		Category(org.eclipse.ui.category.textEditor,Text Editing,Text Editing Commands,true),
+		org.eclipse.ui.internal.MakeHandlersGo@191a248,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.textEditorScope,,,system)

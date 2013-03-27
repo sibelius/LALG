@@ -11,10 +11,10 @@ op_add "+"|"-"
 op_mul "*"|"/"
 %%
 
-"{"[^}]*"}"	{} /* Ignore the comments */ 
+
+"{"[^}]*"}"	{ printf("%s - comentario\n", yytext); } /* Ignore the comments */ 
 "{"[^}]*	{ 
 	printf("%s - comentario não fechado\n", yytext); /* Error - Comment not closed */
-	yyterminate();
 }
 
 [ \r\t\n]+ {} /* Eliminate white spaces */
@@ -31,10 +31,10 @@ op_mul "*"|"/"
 	printf("%s - id\n", yytext); /* Identifier rule */
 }
 
-{relation}	printf("%s - simb_relation\n", yytext);
+{relation}	printf("%s - simb_relacao\n", yytext);
 {op_add}	printf("%s - simb_op_add\n", yytext);
 {op_mul}	printf("%s - simb_op_mul\n", yytext);
-":=" 			printf("%s - simb_assign\n", yytext);
+":=" 		printf("%s - simb_atrib\n", yytext);
 ";"			printf("%s - simb_ponto_virgula\n", yytext); 	
 ":"			printf("%s - simb_dois_pontos\n", yytext); 	
 "("			printf("%s - simb_abre_parentese\n", yytext); 	

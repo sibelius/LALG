@@ -1,0 +1,41 @@
+/**
+ * JavaCC template file created by SF JavaCC plugin 1.5.17+ wizard for JavaCC 1.5.0+
+ */options{  JDK_VERSION = "1.5";  static = true;}PARSER_BEGIN(DFPLalgParser)package dfp;
+
+public class DFPLalgParser{  public static void main(String args []) throws ParseException  {
+    DFPLalgParser parser = new DFPLalgParser(System.in);    while (true)    {
+      try      {        		DFPLalgParser.parser();
+		} catch(Exception e)		{
+		  	System.out.println("NOK.");
+        System.out.println(e.getMessage());
+        DFPLalgParser.ReInit(System.in);		}catch (Error e)
+      {
+        System.out.println("Oops.");
+        System.out.println(e.getMessage());
+        DFPLalgParser.ReInit(System.in);
+      }    }  }}PARSER_END(DFPLalgParser)SKIP : { " " | "\r" | "\t" | "\n" }
+TOKEN :{
+  < SIMB_ATRIB: 			":=" > |
+  < SIMB_PONTO_VIRGULA: 	"," > |
+  < SIMB_DOIS_PONTOS: 		"," > |
+  < SIMB_ABRE_PARENTESE: 	"," > |
+  < SIMB_FECHA_PARENTESE: 	"," > |
+  < SIMB_VIRGULA: 			"," > |
+  < SIMB_PONTO: 			"." > |
+  < SIMB_RELACAO: 			"=" | "<>" | ">=" | "<=" | ">" | "<" > |
+  < SIMB_OPP_ADD: 			"+" | "-" > |
+  < SIMB_OPP_MUL: 			"*" | "/" >}
+ void parser():
+{ Token t;}
+{
+  (    t=<SIMB_ATRIB> 				{ System.out.println(t.image + " - simb_atrib"); } |
+    t=<SIMB_PONTO_VIRGULA> 		{ System.out.println(t.image + " - simb_virgula"); } |
+    t=<SIMB_DOIS_PONTOS> 		{ System.out.println(t.image + " - simb_dois_pontos"); } |
+    t=<SIMB_ABRE_PARENTESE> 	{ System.out.println(t.image + " - simb_abre_parentese"); } |
+    t=<SIMB_FECHA_PARENTESE> 	{ System.out.println(t.image + " - simb_fecha_parentese"); } |
+    t=<SIMB_VIRGULA> 			{ System.out.println(t.image + " - simb_virgula"); } |
+    t=<SIMB_PONTO> 				{ System.out.println(t.image + " - simb_ponto"); } |
+    t=<SIMB_RELACAO> 			{ System.out.println(t.image + " - simb_relacao"); } |
+    t=<SIMB_OPP_ADD> 			{ System.out.println(t.image + " - simb_opp_add"); } |
+    t=<SIMB_OPP_MUL> 			{ System.out.println(t.image + " - simb_opp_mul"); })
+}

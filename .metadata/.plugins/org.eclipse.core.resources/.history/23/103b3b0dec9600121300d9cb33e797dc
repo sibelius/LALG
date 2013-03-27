@@ -1,0 +1,18 @@
+/**
+ * JavaCC template file created by SF JavaCC plugin 1.5.17+ wizard for JavaCC 1.5.0+
+ */options{  JDK_VERSION = "1.5";  static = true;}PARSER_BEGIN(DFPLalgParser)package dfp;
+
+public class DFPLalgParser{  public static void main(String args []) throws ParseException  {
+    DFPLalgParser parser = new DFPLalgParser(System.in);    while (true)    {
+      try      {        		DFPLalgParser.parser();
+		} catch(Exception e)		{
+		  	System.out.println("NOK.");
+        System.out.println(e.getMessage());
+        DFPLalgParser.ReInit(System.in);		}    }  }}PARSER_END(DFPLalgParser)SKIP : { " " | "\r" | "\t" | "\n" }
+TOKEN :{
+  < SIMB_ASSIGN: ":=" >}
+ void parser():
+{ }
+{
+  (    <SIMB_ASSIGN> { System.out.println("simb_assign"); })
+}
