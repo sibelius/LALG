@@ -44,7 +44,8 @@ else		printf("%s - simb_else\n", yytext);
 :			printf("%s - simb_dois_pontos\n", yytext); 	
 "("			printf("%s - simb_abre_parentese\n", yytext); 	
 ")"			printf("%s - simb_fecha_parentese\n", yytext); 	
-,			printf("%s - simb_virgula\n", yytext); 	
+,			printf("%s - simb_virgula\n", yytext);
+"."			printf("%s - simb_ponto\n", yytext); 	
 
 {digit}+						printf("%s - simb_num_inteiro\n", yytext);
 {digit}+"."{digit}+				printf("%s - simb_num_real\n", yytext);
