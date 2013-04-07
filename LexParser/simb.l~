@@ -49,7 +49,7 @@ else		printf("%s - simb_else\n", yytext);
 
 {digit}+						printf("%s - simb_num_inteiro\n", yytext);
 {digit}+"."{digit}+					printf("%s - simb_num_real\n", yytext);
-{digit}+({digit}|{letter})*"."({digit}|{letter})*	printf("%s - erro - numero real mal formado\n", yytext);
+{digit}+({digit}|{letter})*"."({digit}|{letra})*		printf("%s - erro - numero real mal formado\n", yytext);
 {letter}+({letter}|{digit})*				printf("%s - id\n", yytext);
 
 .		printf("%s - simb_unk\n", yytext); /* Unknowns symbols */
