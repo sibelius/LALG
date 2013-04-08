@@ -2,7 +2,11 @@
  * JavaCC template file created by SF JavaCC plugin 1.5.17+ wizard for JavaCC 1.5.0+
  */options{  JDK_VERSION = "1.5";  static = true;}PARSER_BEGIN(DFPLalgParser)package dfp;
 
-public class DFPLalgParser{  public static void main(String args []) throws ParseException  {
+public class DFPLalgParser{
+  /*Palavras Reservadas*/
+  public static Hashtable PR = new Hashtable();
+    public static void main(String args [])  throws ParseException,
+                                                FileNotFoundException  {    
     DFPLalgParser parser = new DFPLalgParser(System.in);    while (true)    {
       try      {        		DFPLalgParser.parser();
 		} catch(Exception e)		{
@@ -13,22 +17,50 @@ public class DFPLalgParser{  public static void main(String args []) throws Pa
         System.out.println("Oops.");
         System.out.println(e.getMessage());
         DFPLalgParser.ReInit(System.in);
-      }    }  }}PARSER_END(DFPLalgParser)SKIP : { " " | "\r" | "\t" | "\n" }
+      }    }  }}PARSER_END(DFPLalgParser)SKIP : {
+  " "     // ignora espaços
+| "\t"    // ignora tabs
+| "\n"    // ignora novas_linhas
+| "\r"    // ignora retornos
+| < "{" (~["\n","\r","}"])* "}" ("\n" | "\r" | "\r\n") >  // ignora comentarios de linha unica
+}
+
 TOKEN :{
-  < SIMB_ATRIB: 			":=" > |
-  < SIMB_PONTO_VIRGULA: 	";" > |
-  < SIMB_DOIS_PONTOS: 		":" > |
-  < SIMB_ABRE_PARENTESE: 	"(" > |
-  < SIMB_FECHA_PARENTESE: 	")" > |
-  < SIMB_VIRGULA: 			"," > |
-  < SIMB_PONTO: 			"." > |
-  < SIMB_RELACAO: 			"=" | "<>" | ">=" | "<=" | ">" | "<" > |
-  < SIMB_OPP_ADD: 			"+" | "-" > |
-  < SIMB_OPP_MUL: 			"*" | "/" >}
+  < #DIGIT:					(["0"-"9"]) 							> |
+  < #LETTER:				(["a"-"z"] | ["A"-"Z"]) 				> |
+  < #LOD:					(<LETTER> | <DIGIT>) 					> | //LETTER OR DIGIT
+//  < #SEQNAOLIT				("!"|"-"|"~") (~["+","-","*","/","\",":","=","(",")","<",">",",",";","."])	> |
+//  < #SEQNAONUM				("!"|"-"|"~") (~["+","-","*","/","\",":","=","(",")","<",">",",",";"]) 		> |
+  							//NSL  [!-~]{-}[:<>;.=:,+\-*/()]
+							//NSN  [!-~]{-}[:<>;=:,+\-*/()]
+  < IDENTIFIER_MG: 			(<LOD>){50}(<LOD>)*						> |
+  < IDENTIFIER: 			<LETTER>(<LOD>)* 						> |
+  < COMMENT_NF:				"{" (~["\n","\r","}"])*					> |
+  < SIMB_NUM_INTEIRO: 		(<DIGIT>)+	 							> |
+  < SIMB_NUM_REAL: 			(<DIGIT>)+ "." (<DIGIT>)+				> |
+  < SIMB_NUM_REAL_MF: 		(<DIGIT>)+(<LOD>)* "."(<LOD>)* 			> |
+  < SIMB_ATRIB: 			":=" 									> |
+  < SIMB_PONTO_VIRGULA: 	";" 									> |
+  < SIMB_DOIS_PONTOS: 		":" 									> |
+  < SIMB_ABRE_PARENTESE: 	"(" 									> |
+  < SIMB_FECHA_PARENTESE: 	")" 									> |
+  < SIMB_VIRGULA: 			"," 									> |
+  < SIMB_PONTO: 			"." 									> |
+  < SIMB_RELACAO: 			"=" | "<>" | ">=" | "<=" | ">" | "<"	> |
+  < SIMB_OPP_ADD: 			"+" | "-" 								> |
+  < SIMB_OPP_MUL: 			"*" | "/" 								> |
+  < OTHER:					~[] 									>}
  void parser():
 { Token t;}
 {
-  (    t=<SIMB_ATRIB> 				{ System.out.println(t.image + " - simb_atrib"); } |
+  (
+    t=<IDENTIFIER_MG> 			{ System.out.println(t.image + " - erro - id muito grande!"); } |
+    t=<IDENTIFIER> 				{ System.out.println(t.image + " - id"); } |
+    t=<COMMENT_NF> 				{ System.out.println(t.image + " - erro - comentario nao fechado!"); } |    t=<SIMB_NUM_INTEIRO>		{ System.out.println(t.image + " - simb_num_int"); } |
+    t=<SIMB_NUM_INTEIRO_MF>		{ System.out.println(t.image + " - erro - numero inteiro mal formado!"); } |
+    t=<SIMB_NUM_REAL>			{ System.out.println(t.image + " - simb_num_real"); } |
+    t=<SIMB_NUM_REAL_MF>		{ System.out.println(t.image + " - erro - numero real mal formado!"); } |
+    t=<SIMB_ATRIB> 				{ System.out.println(t.image + " - simb_atrib"); } |
     t=<SIMB_PONTO_VIRGULA> 		{ System.out.println(t.image + " - simb_virgula"); } |
     t=<SIMB_DOIS_PONTOS> 		{ System.out.println(t.image + " - simb_dois_pontos"); } |
     t=<SIMB_ABRE_PARENTESE> 	{ System.out.println(t.image + " - simb_abre_parentese"); } |
@@ -37,5 +69,6 @@ public class DFPLalgParser{  public static void main(String args []) throws Pa
     t=<SIMB_PONTO> 				{ System.out.println(t.image + " - simb_ponto"); } |
     t=<SIMB_RELACAO> 			{ System.out.println(t.image + " - simb_relacao"); } |
     t=<SIMB_OPP_ADD> 			{ System.out.println(t.image + " - simb_opp_add"); } |
-    t=<SIMB_OPP_MUL> 			{ System.out.println(t.image + " - simb_opp_mul"); })
+    t=<SIMB_OPP_MUL> 			{ System.out.println(t.image + " - simb_opp_mul"); } |
+    t=<OTHER> 					{ System.out.println(t.image + " - unknown"); })
 }

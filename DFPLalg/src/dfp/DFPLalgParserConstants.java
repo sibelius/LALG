@@ -11,25 +11,45 @@ public interface DFPLalgParserConstants {
   /** End of File. */
   int EOF = 0;
   /** RegularExpression Id. */
-  int SIMB_ATRIB = 5;
+  int DIGIT = 6;
   /** RegularExpression Id. */
-  int SIMB_PONTO_VIRGULA = 6;
+  int LETTER = 7;
   /** RegularExpression Id. */
-  int SIMB_DOIS_PONTOS = 7;
+  int LOD = 8;
   /** RegularExpression Id. */
-  int SIMB_ABRE_PARENTESE = 8;
+  int IDENTIFIER_MG = 9;
   /** RegularExpression Id. */
-  int SIMB_FECHA_PARENTESE = 9;
+  int IDENTIFIER = 10;
   /** RegularExpression Id. */
-  int SIMB_VIRGULA = 10;
+  int COMMENT_NF = 11;
   /** RegularExpression Id. */
-  int SIMB_PONTO = 11;
+  int SIMB_NUM_INTEIRO = 12;
   /** RegularExpression Id. */
-  int SIMB_RELACAO = 12;
+  int SIMB_NUM_REAL = 13;
   /** RegularExpression Id. */
-  int SIMB_OPP_ADD = 13;
+  int SIMB_NUM_REAL_MF = 14;
   /** RegularExpression Id. */
-  int SIMB_OPP_MUL = 14;
+  int SIMB_ATRIB = 15;
+  /** RegularExpression Id. */
+  int SIMB_PONTO_VIRGULA = 16;
+  /** RegularExpression Id. */
+  int SIMB_DOIS_PONTOS = 17;
+  /** RegularExpression Id. */
+  int SIMB_ABRE_PARENTESE = 18;
+  /** RegularExpression Id. */
+  int SIMB_FECHA_PARENTESE = 19;
+  /** RegularExpression Id. */
+  int SIMB_VIRGULA = 20;
+  /** RegularExpression Id. */
+  int SIMB_PONTO = 21;
+  /** RegularExpression Id. */
+  int SIMB_RELACAO = 22;
+  /** RegularExpression Id. */
+  int SIMB_OPP_ADD = 23;
+  /** RegularExpression Id. */
+  int SIMB_OPP_MUL = 24;
+  /** RegularExpression Id. */
+  int OTHER = 25;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -38,9 +58,19 @@ public interface DFPLalgParserConstants {
   String[] tokenImage = {
     "<EOF>",
     "\" \"",
-    "\"\\r\"",
     "\"\\t\"",
     "\"\\n\"",
+    "\"\\r\"",
+    "<token of kind 5>",
+    "<DIGIT>",
+    "<LETTER>",
+    "<LOD>",
+    "<IDENTIFIER_MG>",
+    "<IDENTIFIER>",
+    "<COMMENT_NF>",
+    "<SIMB_NUM_INTEIRO>",
+    "<SIMB_NUM_REAL>",
+    "<SIMB_NUM_REAL_MF>",
     "\":=\"",
     "\";\"",
     "\":\"",
@@ -51,6 +81,7 @@ public interface DFPLalgParserConstants {
     "<SIMB_RELACAO>",
     "<SIMB_OPP_ADD>",
     "<SIMB_OPP_MUL>",
+    "<OTHER>",
   };
 
 }

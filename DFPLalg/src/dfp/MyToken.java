@@ -1,0 +1,52 @@
+package dfp;
+
+public enum MyToken {
+	T_PROGRAM,
+	T_BEGIN,
+	T_END,
+	T_VAR,
+	T_CONST,
+	T_REAL,
+	T_INTEGER,
+	T_PROCEDURE,
+	T_READ,
+	T_WRITE,
+	T_WHILE,
+	T_IF,
+	T_THEN,
+	T_ELSE,
+	T_FOR,
+	T_TO,
+	T_DO,
+	
+	T_EQUAL,
+	T_DIFF,
+	T_GREATER_EQ,
+	T_LESSER_EQ,
+	T_GREATER,
+	T_LESSER,
+	T_PLUS,
+	T_MINUS,
+	T_TIMES,
+	T_DIVISION,
+	T_ASSIGN,
+	T_SEMICOLON,
+	T_COLON,
+	T_L_PAREN,
+	T_R_PAREN,
+	T_COMMA,
+	T_DOT,
+	
+	T_NINTEGER,
+	T_NREAL,
+	T_ID,
+	
+	//ERRORS
+	T_MF_INTEGER,
+	T_MF_REAL,
+	T_MF_ID,
+	T_LONG_ID,
+	T_ERR_COMMENT,
+	
+	T_UNKNOWN
+}

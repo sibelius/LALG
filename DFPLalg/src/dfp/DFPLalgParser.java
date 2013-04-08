@@ -28,6 +28,30 @@ public class DFPLalgParser implements DFPLalgParserConstants {
   static final public void parser() throws ParseException {
   Token t;
     switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case IDENTIFIER_MG:
+      t = jj_consume_token(IDENTIFIER_MG);
+                                          System.out.println(t.image + " - erro: id muito grande!");
+      break;
+    case IDENTIFIER:
+      t = jj_consume_token(IDENTIFIER);
+                                                  System.out.println(t.image + " - id");
+      break;
+    case COMMENT_NF:
+      t = jj_consume_token(COMMENT_NF);
+                                                  System.out.println(t.image + " - erro: comentario nao fechado!");
+      break;
+    case SIMB_NUM_INTEIRO:
+      t = jj_consume_token(SIMB_NUM_INTEIRO);
+                                          System.out.println(t.image + " - simb_num_int");
+      break;
+    case SIMB_NUM_REAL:
+      t = jj_consume_token(SIMB_NUM_REAL);
+                                          System.out.println(t.image + " - simb_num_real");
+      break;
+    case SIMB_NUM_REAL_MF:
+      t = jj_consume_token(SIMB_NUM_REAL_MF);
+                                          System.out.println(t.image + " - erro: numero real mal formado!");
+      break;
     case SIMB_ATRIB:
       t = jj_consume_token(SIMB_ATRIB);
                                                   System.out.println(t.image + " - simb_atrib");
@@ -68,6 +92,10 @@ public class DFPLalgParser implements DFPLalgParserConstants {
       t = jj_consume_token(SIMB_OPP_MUL);
                                           System.out.println(t.image + " - simb_opp_mul");
       break;
+    case OTHER:
+      t = jj_consume_token(OTHER);
+                                                  System.out.println(t.image + " - unknown");
+      break;
     default:
       jj_la1[0] = jj_gen;
       jj_consume_token(-1);
@@ -91,7 +119,7 @@ public class DFPLalgParser implements DFPLalgParserConstants {
       jj_la1_init_0();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x7fe0,};
+      jj_la1_0 = new int[] {0x3fffe00,};
    }
 
   /** Constructor with InputStream. */
@@ -229,7 +257,7 @@ public class DFPLalgParser implements DFPLalgParserConstants {
   /** Generate ParseException. */
   static public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[15];
+    boolean[] la1tokens = new boolean[26];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
@@ -243,7 +271,7 @@ public class DFPLalgParser implements DFPLalgParserConstants {
         }
       }
     }
-    for (int i = 0; i < 15; i++) {
+    for (int i = 0; i < 26; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;
