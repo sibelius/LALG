@@ -3,7 +3,7 @@
  */
  
 %{
-#include "Token.h"
+#define SIMB_NUM_INTEIRO 1
 %}
 
 
@@ -40,25 +40,18 @@ then		        { printf("%s - sim_then\n", yytext);		}
 else		        { printf("%s - sim_else\n", yytext); 		}
 for		            { printf("%s - sim_for\n", yytext);		}
 
-"="  {return T_EQUAL;}
-"<>" {return T_DIFF;}      
-">=" {return T_GREATER_EQ;}
-"<=" {return T_LESSER_EQ;} 
-">"  {return T_GREATER;}   
-"<"  {return T_LESSER;}    
-"+"  {return T_PLUS;}      
-"-"  {return T_MINUS;}     
-"*"  {return T_TIMES;}     
-"/"  {return T_DIVISION;}  
-":=" {return T_ASSIGN;}    
-";"	 {return T_SEMICOLON;} 
-":"  {return T_COLON;}     
-"("	 {return T_L_PAREN;}          
-")"	 {return T_R_PAREN;}          
-","	 {return T_COMMA;}     
-"."	 {return T_DOT;}       
+{relation}	        { printf("%s - sim_relation\n", yytext);	}
+{op_add}	        { printf("%s - sim_op_add\n", yytext);		}
+{op_mul}        	{ printf("%s - sim_op_mul\n", yytext);		}
+":=" 		        { printf("%s - sim_assign\n", yytext);		}
+";"		            { printf("%s - sim_ponto_virgula\n", yytext); 	}
+":"		            { printf("%s - sim_dois_pontos\n", yytext); 	}
+"("		            { printf("%s - sim_abre_parentese\n", yytext); }
+")"		            { printf("%s - sim_fecha_parentese\n", yytext);}
+","		            { printf("%s - sim_virgula\n", yytext);	}
+"."		            { printf("%s - sim_ponto\n", yytext); 		}	
 
-{digit}+						{printf("%s - sim_num_inteiro\n", yytext);}
+{digit}+						{printf("%s - sim_num_inteiro\n", yytext); return SIMB_NUM_INTEIRO;}
 {digit}+"."{digit}+					{printf("%s - sim_num_real\n", yytext);}
 
 {letter}+({letter}|{digit}){50,}			{	printf("%s - erro - identificador muito grande\n", yytext);}
@@ -78,11 +71,5 @@ for		            { printf("%s - sim_for\n", yytext);		}
 int main()
 {
     yylex();
-    /*
-    int token;
-    while( (token = yylex()) > 0) {
-        printf("%d %s", token, yytext);
-    }
     return 0;
-    */
 }
