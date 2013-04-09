@@ -4,7 +4,7 @@
 
 public class DFPLalgParser{
   /*Palavras Reservadas*/
-  public static Hashtable PR = new Hashtable();
+ 
     public static void main(String args [])  throws ParseException,
                                                 FileNotFoundException  {    
     DFPLalgParser parser = new DFPLalgParser(System.in);    while (true)    {

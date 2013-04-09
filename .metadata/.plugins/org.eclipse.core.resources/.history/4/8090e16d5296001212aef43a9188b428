@@ -1,2 +1,0 @@
-options{  JDK_VERSION = "1.5";  static = true;}PARSER_BEGIN(MyParser)
-public class MyParser{ }PARSER_END(MyParser)/* This regular expressions will be skipped during lexical analysis */SKIP :{  " "| "\r"| "\t"| "\n"}/* For the regular expressions no the right, the token on the left will be returned */TOKEN : /* OPERATORS */{  < PLUS : "+" >| < MINUS : "-" >| < MULTIPLY : "*" >| < DIVIDE : "/" >}TOKEN :{  < CONSTANT : (< DIGIT >)+ >| < #DIGIT : [ "0"-"9" ] >}

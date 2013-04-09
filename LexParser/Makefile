@@ -1,3 +1,3 @@
 all:
 	flex simb.l
-	gcc lex.yy.c -lfl 
+	g++ lex.yy.cc -lfl -std=gnu++0x 
