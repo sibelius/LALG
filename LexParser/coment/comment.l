@@ -12,7 +12,7 @@ op_mul "*"|"/"
 %%
 
 "{"[^}]*"}"	{ printf("%s - comentario\n", yytext); } /* Ignore the comments */ 
-"{"[^}]*	{ 
+"{"[^}]* "\n"  { 
 	printf("%s - comentario não fechado\n", yytext); /* Error - Comment not closed */
 }
 
