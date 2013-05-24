@@ -124,7 +124,7 @@ seq_nao_literal  [!-~]{-}[:<>;.=:,+\-*/()]
 %%
 
 "{"[^}\n}]*"}"	    {} /* Ignore the comments */ 
-"{"[^}]*            {
+"{"[^}\n]*"\n"      {
 	cadeia = yytext;
 	printError(ERR_COMMENT); 
 	return ERR_COMMENT;  /* Error - Comment not closed */ 
