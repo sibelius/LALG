@@ -34,7 +34,7 @@ seq_nao_literal  [!-~]{-}[:<>;.=:,+\-*/()]
 
 [ \r\t]+          {} /* Eliminate white spaces */
 
-\n { num_lines++; }	/* Count lines */
+[\n] { num_lines++; }	/* Count lines */
 
 "program" { return T_PROGRAM;}			
 "begin" { return T_BEGIN;}

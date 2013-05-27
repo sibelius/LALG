@@ -330,7 +330,7 @@ int main (int argc, char *argv[])
 void yyerror (char *s)
 {
         if(strcmp(s,"syntax error")){ /*Descartamos as mensagens padrões "syntax error do Bison*/
-                fprintf (stderr, " Erro sintatico: Line %d, Era esperado %s\n", num_lines, s);
+                fprintf (stderr, " Erro sintatico: Line %d, Era esperado %s\n", num_line, s);
                 numerrors++;
         } 
 }

@@ -77,13 +77,14 @@
         #include <stdio.h>
         #include <string.h>
         #include <stdlib.h>	
-        
+        int yylex (void);
         void yyerror (char *);
         int numerrors=0;
+        extern int num_lines;
 
 
 /* Line 189 of yacc.c  */
-#line 87 "lalg.tab.c"
+#line 88 "lalg.tab.c"
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
@@ -170,7 +171,7 @@
 
 
 /* Line 264 of yacc.c  */
-#line 174 "lalg.tab.c"
+#line 175 "lalg.tab.c"
 
 #ifdef short
 # undef short
@@ -505,20 +506,20 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    73,    73,    74,    77,    77,    78,    78,    79,    82,
-      83,    86,    87,    91,    92,    95,    99,   103,   104,   107,
-     107,   108,   108,   109,   112,   113,   116,   117,   120,   121,
-     125,   126,   129,   129,   130,   133,   134,   138,   139,   140,
-     144,   145,   145,   149,   150,   154,   154,   155,   158,   158,
-     158,   159,   159,   162,   163,   163,   167,   168,   169,   173,
-     177,   178,   182,   183,   183,   184,   187,   188,   191,   192,
-     196,   200,   201,   202,   206,   207,   207,   211,   212,   216,
-     216,   217,   221,   224,   229,   229,   230,   230,   231,   231,
-     232,   232,   233,   233,   234,   235,   235,   236,   236,   236,
-     239,   242,   242,   245,   248,   248,   252,   256,   257,   258,
-     259,   260,   261,   262,   266,   270,   271,   272,   276,   277,
-     281,   282,   286,   290,   291,   295,   296,   300,   301,   302,
-     303,   307,   308,   312,   313
+       0,    74,    74,    75,    78,    78,    79,    79,    80,    83,
+      84,    87,    88,    92,    93,    96,   100,   104,   105,   108,
+     108,   109,   109,   110,   113,   114,   117,   118,   121,   122,
+     126,   127,   130,   130,   131,   134,   135,   139,   140,   141,
+     145,   146,   146,   150,   151,   155,   155,   156,   159,   159,
+     159,   160,   160,   163,   164,   164,   168,   169,   170,   174,
+     178,   179,   183,   184,   184,   185,   188,   189,   192,   193,
+     197,   201,   202,   203,   207,   208,   208,   212,   213,   217,
+     217,   218,   222,   225,   230,   230,   231,   231,   232,   232,
+     233,   233,   234,   234,   235,   236,   236,   237,   237,   237,
+     240,   243,   243,   246,   249,   249,   253,   257,   258,   259,
+     260,   261,   262,   263,   267,   271,   272,   273,   277,   278,
+     282,   283,   287,   291,   292,   296,   297,   301,   302,   303,
+     304,   308,   309,   313,   314
 };
 #endif
 
@@ -1573,735 +1574,735 @@ yyreduce:
         case 3:
 
 /* Line 1455 of yacc.c  */
-#line 74 "lalg.y"
-    { yyerror("Erro sintatico: esperado 'program'"); yyclearin; ;}
+#line 75 "lalg.y"
+    { yyerror("program"); yyclearin;;}
     break;
 
   case 4:
 
 /* Line 1455 of yacc.c  */
-#line 77 "lalg.y"
+#line 78 "lalg.y"
     {;}
     break;
 
   case 5:
 
 /* Line 1455 of yacc.c  */
-#line 77 "lalg.y"
+#line 78 "lalg.y"
     {;}
     break;
 
   case 6:
 
 /* Line 1455 of yacc.c  */
-#line 78 "lalg.y"
-    { yyerror("Erro sintatico: esperado 'id'"); yyclearin;;}
+#line 79 "lalg.y"
+    { yyerror("id"); yyclearin;;}
     break;
 
   case 8:
 
 /* Line 1455 of yacc.c  */
-#line 79 "lalg.y"
-    { yyerror("Erro sintatico: esperado 'program'"); yyclearin; ;}
+#line 80 "lalg.y"
+    { yyerror("program1"); yyclearin; ;}
     break;
 
   case 9:
 
 /* Line 1455 of yacc.c  */
-#line 82 "lalg.y"
+#line 83 "lalg.y"
     {;}
     break;
 
   case 10:
 
 /* Line 1455 of yacc.c  */
-#line 83 "lalg.y"
-    { yyerror("Erro sintatico: esperado 'program'"); yyclearin; ;}
+#line 84 "lalg.y"
+    { yyerror("program2"); yyclearin; ;}
     break;
 
   case 11:
 
 /* Line 1455 of yacc.c  */
-#line 86 "lalg.y"
+#line 87 "lalg.y"
     {;}
     break;
 
   case 12:
 
 /* Line 1455 of yacc.c  */
-#line 87 "lalg.y"
-    { yyerror("Erro sintatico: esperado 'program'"); yyclearin; ;}
+#line 88 "lalg.y"
+    { yyerror("program3"); yyclearin; ;}
     break;
 
   case 14:
 
 /* Line 1455 of yacc.c  */
-#line 92 "lalg.y"
-    { yyerrok; printf("Erro sintatico: esperado 'begin', encontrado %d\n", yychar); ;}
+#line 93 "lalg.y"
+    { yyerror("begin"); ;}
     break;
 
   case 19:
 
 /* Line 1455 of yacc.c  */
-#line 107 "lalg.y"
+#line 108 "lalg.y"
     {;}
     break;
 
   case 20:
 
 /* Line 1455 of yacc.c  */
-#line 107 "lalg.y"
+#line 108 "lalg.y"
     {;}
     break;
 
   case 21:
 
 /* Line 1455 of yacc.c  */
-#line 108 "lalg.y"
-    { yyerrok; printf("Erro sintatico: esperado 'id', encontrado %d\n", yychar); ;}
+#line 109 "lalg.y"
+    { yyerror("id"); ;}
     break;
 
   case 23:
 
 /* Line 1455 of yacc.c  */
-#line 109 "lalg.y"
-    { yyerrok; printf("Erro sintatico: esperado 'id', encontrado %d\n", yychar); ;}
+#line 110 "lalg.y"
+    { yyerror("id"); ;}
     break;
 
   case 24:
 
 /* Line 1455 of yacc.c  */
-#line 112 "lalg.y"
+#line 113 "lalg.y"
     {;}
     break;
 
   case 25:
 
 /* Line 1455 of yacc.c  */
-#line 113 "lalg.y"
-    { yyerrok; printf("Erro sintatico: esperado '=', encontrado %d\n", yychar); ;}
+#line 114 "lalg.y"
+    { yyerror("="); ;}
     break;
 
   case 26:
 
 /* Line 1455 of yacc.c  */
-#line 116 "lalg.y"
+#line 117 "lalg.y"
     {;}
     break;
 
   case 27:
 
 /* Line 1455 of yacc.c  */
-#line 117 "lalg.y"
-    { yyerrok; printf("Erro sintatico: esperado 'numero', encontrado %d\n", yychar); ;}
+#line 118 "lalg.y"
+    { yyerror("numero"); ;}
     break;
 
   case 29:
 
 /* Line 1455 of yacc.c  */
-#line 121 "lalg.y"
-    { yyerrok; printf("Erro sintatico: esperado ';', encontrado %d\n", yychar); ;}
+#line 122 "lalg.y"
+    { yyerror(";"); ;}
     break;
 
   case 32:
 
 /* Line 1455 of yacc.c  */
-#line 129 "lalg.y"
+#line 130 "lalg.y"
     {;}
     break;
 
   case 33:
 
 /* Line 1455 of yacc.c  */
-#line 129 "lalg.y"
+#line 130 "lalg.y"
     {;}
     break;
 
   case 34:
 
 /* Line 1455 of yacc.c  */
-#line 130 "lalg.y"
-    { yyerrok; printf("Erro sintatico: esperado ':', encontrado %d\n", yychar); ;}
+#line 131 "lalg.y"
+    { yyerror(":"); ;}
     break;
 
   case 36:
 
 /* Line 1455 of yacc.c  */
-#line 134 "lalg.y"
-    { yyerrok; printf("Erro sintatico: esperado ';', encontrado %d\n", yychar); ;}
+#line 135 "lalg.y"
+    { yyerror(";"); ;}
     break;
 
   case 37:
-
-/* Line 1455 of yacc.c  */
-#line 138 "lalg.y"
-    {;}
-    break;
-
-  case 38:
 
 /* Line 1455 of yacc.c  */
 #line 139 "lalg.y"
     {;}
     break;
 
-  case 39:
+  case 38:
 
 /* Line 1455 of yacc.c  */
 #line 140 "lalg.y"
-    { yyerrok; printf("Erro sintatico: esperado 'tipo', encontrado %d\n", yychar); ;}
+    {;}
+    break;
+
+  case 39:
+
+/* Line 1455 of yacc.c  */
+#line 141 "lalg.y"
+    { yyerror("tipo"); ;}
     break;
 
   case 40:
 
 /* Line 1455 of yacc.c  */
-#line 144 "lalg.y"
+#line 145 "lalg.y"
     {;}
     break;
 
   case 41:
 
 /* Line 1455 of yacc.c  */
-#line 145 "lalg.y"
-    { yyclearin; yyerrok; printf("Erro sintatico: esperado 'id', encontrado %d\n", yychar); ;}
+#line 146 "lalg.y"
+    { yyclearin; yyerror("id"); ;}
     break;
 
   case 42:
 
 /* Line 1455 of yacc.c  */
-#line 145 "lalg.y"
+#line 146 "lalg.y"
     {;}
     break;
 
   case 43:
 
 /* Line 1455 of yacc.c  */
-#line 149 "lalg.y"
+#line 150 "lalg.y"
     {;}
     break;
 
   case 44:
 
 /* Line 1455 of yacc.c  */
-#line 150 "lalg.y"
+#line 151 "lalg.y"
     {;}
     break;
 
   case 45:
 
 /* Line 1455 of yacc.c  */
-#line 154 "lalg.y"
+#line 155 "lalg.y"
     {;}
     break;
 
   case 48:
 
 /* Line 1455 of yacc.c  */
-#line 158 "lalg.y"
+#line 159 "lalg.y"
     {;}
     break;
 
   case 49:
 
 /* Line 1455 of yacc.c  */
-#line 158 "lalg.y"
+#line 159 "lalg.y"
     {;}
     break;
 
   case 51:
 
 /* Line 1455 of yacc.c  */
-#line 159 "lalg.y"
-    { yyclearin; yyerrok; printf("Erro sintatico: esperado 'id', encontrado %d\n", yychar); ;}
+#line 160 "lalg.y"
+    { yyclearin; yyerror("id"); ;}
     break;
 
   case 54:
 
 /* Line 1455 of yacc.c  */
-#line 163 "lalg.y"
-    { yyclearin; yyerrok; printf("Erro sintatico: esperado ';', encontrado %d\n", yychar); ;}
+#line 164 "lalg.y"
+    { yyclearin; yyerror(";"); ;}
     break;
 
   case 56:
 
 /* Line 1455 of yacc.c  */
-#line 167 "lalg.y"
+#line 168 "lalg.y"
     {;}
     break;
 
   case 57:
 
 /* Line 1455 of yacc.c  */
-#line 168 "lalg.y"
-    { yyclearin; yyerrok; printf("Erro sintatico: esperado ')', encontrado %d\n", yychar); ;}
+#line 169 "lalg.y"
+    { yyclearin; yyerror(")"); ;}
     break;
 
   case 58:
 
 /* Line 1455 of yacc.c  */
-#line 169 "lalg.y"
+#line 170 "lalg.y"
     {;}
     break;
 
   case 59:
 
 /* Line 1455 of yacc.c  */
-#line 173 "lalg.y"
+#line 174 "lalg.y"
     {;}
     break;
 
   case 60:
 
 /* Line 1455 of yacc.c  */
-#line 177 "lalg.y"
+#line 178 "lalg.y"
     {;}
     break;
 
   case 61:
 
 /* Line 1455 of yacc.c  */
-#line 178 "lalg.y"
+#line 179 "lalg.y"
     {;}
     break;
 
   case 63:
 
 /* Line 1455 of yacc.c  */
-#line 183 "lalg.y"
-    { yyerrok; printf("Erro sintatico: esperado 'begin', encontrado %d\n", yychar); ;}
+#line 184 "lalg.y"
+    { yyerror("begin"); ;}
     break;
 
   case 65:
 
 /* Line 1455 of yacc.c  */
-#line 184 "lalg.y"
-    { yyerrok; printf("Erro sintatico: esperado 'begin', encontrado %d\n", yychar); ;}
+#line 185 "lalg.y"
+    { yyerror("begin"); ;}
     break;
 
   case 67:
 
 /* Line 1455 of yacc.c  */
-#line 188 "lalg.y"
-    { yyerrok; printf("Erro sintatico: esperado 'end', encontrado %d\n", yychar); ;}
+#line 189 "lalg.y"
+    { yyerror("end"); ;}
     break;
 
   case 69:
 
 /* Line 1455 of yacc.c  */
-#line 192 "lalg.y"
-    { yyerrok; printf("Erro sintatico: esperado ';', encontrado %d\n", yychar); ;}
+#line 193 "lalg.y"
+    { yyerror(";"); ;}
     break;
 
   case 71:
 
 /* Line 1455 of yacc.c  */
-#line 200 "lalg.y"
+#line 201 "lalg.y"
     {;}
     break;
 
   case 72:
 
 /* Line 1455 of yacc.c  */
-#line 201 "lalg.y"
-    { yyerrok; printf("Erro sintatico: esperado ')', encontrado %d\n", yychar); ;}
+#line 202 "lalg.y"
+    { yyerror(")"); ;}
     break;
 
   case 73:
 
 /* Line 1455 of yacc.c  */
-#line 202 "lalg.y"
+#line 203 "lalg.y"
     {;}
     break;
 
   case 74:
 
 /* Line 1455 of yacc.c  */
-#line 206 "lalg.y"
+#line 207 "lalg.y"
     {;}
     break;
 
   case 75:
 
 /* Line 1455 of yacc.c  */
-#line 207 "lalg.y"
-    { yyclearin; yyerrok; printf("Erro sintatico: esperado 'id', encontrado %d\n", yychar); ;}
+#line 208 "lalg.y"
+    { yyclearin; yyerror("id"); ;}
     break;
 
   case 76:
 
 /* Line 1455 of yacc.c  */
-#line 207 "lalg.y"
+#line 208 "lalg.y"
     {;}
     break;
 
   case 77:
 
 /* Line 1455 of yacc.c  */
-#line 211 "lalg.y"
+#line 212 "lalg.y"
     {;}
     break;
 
   case 78:
 
 /* Line 1455 of yacc.c  */
-#line 212 "lalg.y"
+#line 213 "lalg.y"
     {;}
     break;
 
   case 79:
 
 /* Line 1455 of yacc.c  */
-#line 216 "lalg.y"
+#line 217 "lalg.y"
     {;}
     break;
 
   case 84:
 
 /* Line 1455 of yacc.c  */
-#line 229 "lalg.y"
+#line 230 "lalg.y"
     {;}
     break;
 
   case 85:
 
 /* Line 1455 of yacc.c  */
-#line 229 "lalg.y"
+#line 230 "lalg.y"
     {;}
     break;
 
   case 86:
 
 /* Line 1455 of yacc.c  */
-#line 230 "lalg.y"
+#line 231 "lalg.y"
     {;}
     break;
 
   case 87:
 
 /* Line 1455 of yacc.c  */
-#line 230 "lalg.y"
+#line 231 "lalg.y"
     {;}
     break;
 
   case 88:
 
 /* Line 1455 of yacc.c  */
-#line 231 "lalg.y"
+#line 232 "lalg.y"
     {;}
     break;
 
   case 90:
 
 /* Line 1455 of yacc.c  */
-#line 232 "lalg.y"
+#line 233 "lalg.y"
     {;}
     break;
 
   case 91:
 
 /* Line 1455 of yacc.c  */
-#line 232 "lalg.y"
+#line 233 "lalg.y"
     {;}
     break;
 
   case 92:
 
 /* Line 1455 of yacc.c  */
-#line 233 "lalg.y"
+#line 234 "lalg.y"
     {;}
     break;
 
   case 93:
 
 /* Line 1455 of yacc.c  */
-#line 233 "lalg.y"
+#line 234 "lalg.y"
     {;}
     break;
 
   case 94:
 
 /* Line 1455 of yacc.c  */
-#line 234 "lalg.y"
+#line 235 "lalg.y"
     {;}
     break;
 
   case 95:
 
 /* Line 1455 of yacc.c  */
-#line 235 "lalg.y"
+#line 236 "lalg.y"
     {;}
     break;
 
   case 96:
 
 /* Line 1455 of yacc.c  */
-#line 235 "lalg.y"
+#line 236 "lalg.y"
     {;}
     break;
 
   case 97:
 
 /* Line 1455 of yacc.c  */
-#line 236 "lalg.y"
+#line 237 "lalg.y"
     {;}
     break;
 
   case 98:
 
 /* Line 1455 of yacc.c  */
-#line 236 "lalg.y"
+#line 237 "lalg.y"
     {;}
     break;
 
   case 99:
 
 /* Line 1455 of yacc.c  */
-#line 236 "lalg.y"
+#line 237 "lalg.y"
     {;}
     break;
 
   case 100:
 
 /* Line 1455 of yacc.c  */
-#line 239 "lalg.y"
+#line 240 "lalg.y"
     {;}
     break;
 
   case 101:
 
 /* Line 1455 of yacc.c  */
-#line 242 "lalg.y"
+#line 243 "lalg.y"
     {;}
     break;
 
   case 102:
 
 /* Line 1455 of yacc.c  */
-#line 242 "lalg.y"
+#line 243 "lalg.y"
     {;}
     break;
 
   case 104:
 
 /* Line 1455 of yacc.c  */
-#line 248 "lalg.y"
+#line 249 "lalg.y"
     {;}
     break;
 
   case 105:
 
 /* Line 1455 of yacc.c  */
-#line 248 "lalg.y"
+#line 249 "lalg.y"
     {;}
     break;
 
   case 106:
 
 /* Line 1455 of yacc.c  */
-#line 252 "lalg.y"
+#line 253 "lalg.y"
     {;}
     break;
 
   case 107:
 
 /* Line 1455 of yacc.c  */
-#line 256 "lalg.y"
+#line 257 "lalg.y"
     {;}
     break;
 
   case 108:
 
 /* Line 1455 of yacc.c  */
-#line 257 "lalg.y"
+#line 258 "lalg.y"
     {;}
     break;
 
   case 109:
 
 /* Line 1455 of yacc.c  */
-#line 258 "lalg.y"
+#line 259 "lalg.y"
     {;}
     break;
 
   case 110:
 
 /* Line 1455 of yacc.c  */
-#line 259 "lalg.y"
+#line 260 "lalg.y"
     {;}
     break;
 
   case 111:
 
 /* Line 1455 of yacc.c  */
-#line 260 "lalg.y"
+#line 261 "lalg.y"
     {;}
     break;
 
   case 112:
 
 /* Line 1455 of yacc.c  */
-#line 261 "lalg.y"
+#line 262 "lalg.y"
     {;}
     break;
 
   case 113:
 
 /* Line 1455 of yacc.c  */
-#line 262 "lalg.y"
-    { yyerrok; printf("Erro sintatico: esperado 'sinal de relacao', encontrado %d\n", yychar); ;}
+#line 263 "lalg.y"
+    { yyerror("sinal de relacao"); ;}
     break;
 
   case 114:
 
 /* Line 1455 of yacc.c  */
-#line 266 "lalg.y"
+#line 267 "lalg.y"
     {;}
     break;
 
   case 115:
 
 /* Line 1455 of yacc.c  */
-#line 270 "lalg.y"
+#line 271 "lalg.y"
     {;}
     break;
 
   case 116:
 
 /* Line 1455 of yacc.c  */
-#line 271 "lalg.y"
+#line 272 "lalg.y"
     {;}
     break;
 
   case 117:
 
 /* Line 1455 of yacc.c  */
-#line 272 "lalg.y"
+#line 273 "lalg.y"
     {;}
     break;
 
   case 118:
 
 /* Line 1455 of yacc.c  */
-#line 276 "lalg.y"
+#line 277 "lalg.y"
     {;}
     break;
 
   case 119:
 
 /* Line 1455 of yacc.c  */
-#line 277 "lalg.y"
+#line 278 "lalg.y"
     {;}
     break;
 
   case 120:
 
 /* Line 1455 of yacc.c  */
-#line 281 "lalg.y"
+#line 282 "lalg.y"
     {;}
     break;
 
   case 121:
 
 /* Line 1455 of yacc.c  */
-#line 282 "lalg.y"
+#line 283 "lalg.y"
     {;}
     break;
 
   case 122:
 
 /* Line 1455 of yacc.c  */
-#line 286 "lalg.y"
+#line 287 "lalg.y"
     {;}
     break;
 
   case 123:
 
 /* Line 1455 of yacc.c  */
-#line 290 "lalg.y"
+#line 291 "lalg.y"
     {;}
     break;
 
   case 124:
 
 /* Line 1455 of yacc.c  */
-#line 291 "lalg.y"
+#line 292 "lalg.y"
     {;}
     break;
 
   case 125:
 
 /* Line 1455 of yacc.c  */
-#line 295 "lalg.y"
+#line 296 "lalg.y"
     {;}
     break;
 
   case 126:
 
 /* Line 1455 of yacc.c  */
-#line 296 "lalg.y"
+#line 297 "lalg.y"
     {;}
     break;
 
   case 127:
 
 /* Line 1455 of yacc.c  */
-#line 300 "lalg.y"
+#line 301 "lalg.y"
     {;}
     break;
 
   case 128:
 
 /* Line 1455 of yacc.c  */
-#line 301 "lalg.y"
+#line 302 "lalg.y"
     {;}
     break;
 
   case 129:
 
 /* Line 1455 of yacc.c  */
-#line 302 "lalg.y"
+#line 303 "lalg.y"
     {;}
     break;
 
   case 130:
 
 /* Line 1455 of yacc.c  */
-#line 303 "lalg.y"
-    { yyclearin; yyerrok; printf("Erro sintatico: esperado 'sinal de relacao', encontrado %d\n", yychar); ;}
+#line 304 "lalg.y"
+    { yyclearin; yyerror("sinal de relacao"); ;}
     break;
 
   case 131:
 
 /* Line 1455 of yacc.c  */
-#line 307 "lalg.y"
+#line 308 "lalg.y"
     {;}
     break;
 
   case 132:
 
 /* Line 1455 of yacc.c  */
-#line 308 "lalg.y"
-    { yyerrok; printf("Erro sintatico: esperado ')', encontrado %d\n", yychar); ;}
+#line 309 "lalg.y"
+    { yyerror(")"); ;}
     break;
 
   case 133:
-
-/* Line 1455 of yacc.c  */
-#line 312 "lalg.y"
-    {;}
-    break;
-
-  case 134:
 
 /* Line 1455 of yacc.c  */
 #line 313 "lalg.y"
     {;}
     break;
 
+  case 134:
+
+/* Line 1455 of yacc.c  */
+#line 314 "lalg.y"
+    {;}
+    break;
+
 
 
 /* Line 1455 of yacc.c  */
-#line 2305 "lalg.tab.c"
+#line 2306 "lalg.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2513,17 +2514,11 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 316 "lalg.y"
+#line 317 "lalg.y"
 
 
 int main (int argc, char *argv[])
 {
-        register int i=0;
-        extern FILE *yyin;
-        ++argv; 
-        --argc;
-        yyin = fopen( argv[0], "r" ); /*Passa a entrada pelo arquivo de parametro*/
-/*      yydebug = 1;  Utilizado para Degub */
         yyparse();
         if(numerrors==0)
                 printf ( "Parse Completed\n" );
@@ -2536,7 +2531,7 @@ int main (int argc, char *argv[])
 void yyerror (char *s)
 {
         if(strcmp(s,"syntax error")){ /*Descartamos as mensagens padrões "syntax error do Bison*/
-                fprintf (stderr, "Line %d: ERROR: %s\n",0,s);
+                fprintf (stderr, " Erro sintatico: Line %d, Era esperado %s\n", num_lines, s);
                 numerrors++;
         } 
 }
