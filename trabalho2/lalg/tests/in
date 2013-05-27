@@ -1,0 +1,37 @@
+program lalala
+var
+i, j, k: integer;
+r1,r2,r3:real;
+begin
+{Teste de identificadores mal formados}
+a123$##$as := 0;
+a#$$# := 1233;
+fvd#$ $343:= 112;
+i:=0;
+j := 1
+{Teste de numeros inteiros mal formados}
+i := 121#121;
+k := 1234567$#$890##aaa1213sss12a;
+{Teste com numeros reais mal formados}
+r1 := 12#$4.1234;
+r2 := 3.141##516;
+r3:= 12.#####;
+{Teste para identificador com tamanho maior que o permitido}
+Aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+{Teste para numero inteiro com tamanho maior que o permitido}
+99999999999999
+{Teste para numero real com tamanho maior que o permitido}
+9999999.99999999
+{Teste para caracter não pertencente a linguagem}
+@&
+if (j = i)
+writeln(i);
+else if (j >= i);
+writeln(j);
+else
+readln(k);
+{Temos um comentario
+de multiplas linhas
+aqui}
+end.
+{Teste para um comentário não fechado ...

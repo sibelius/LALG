@@ -1,0 +1,6 @@
+program ;
+{teste}
+var a: integer;
+begin
+read(a, @, 1);
+end.
