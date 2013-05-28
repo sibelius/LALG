@@ -2855,8 +2855,10 @@ char *yytext;
 	#include <string.h>
 	#include "lalg.tab.h"
 	
-	int num_lines = 1;
-#line 2860 "lex.yy.c"
+	int num_lines=1;	
+	void count(); /* utilizado para verificar a coluna do erro */
+	void printError(int error, const char* cadeia); /*imprime os erros lexicos */
+#line 2862 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -3038,10 +3040,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 28 "lalg.lex"
+#line 30 "lalg.lex"
 
 
-#line 3045 "lex.yy.c"
+#line 3047 "lex.yy.c"
 
 	if ( !(yy_init) )
 		{
@@ -3136,289 +3138,301 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 30 "lalg.lex"
+#line 32 "lalg.lex"
 {} /* Ignore the comments */ 
 	YY_BREAK
 case 2:
 /* rule 2 can match eol */
 YY_RULE_SETUP
-#line 31 "lalg.lex"
+#line 33 "lalg.lex"
 {
+	count(); 
+	printError(ERR_COMMENT, yytext);
 	return ERR_COMMENT;  /* Error - Comment not closed */ 
 }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 35 "lalg.lex"
-{} /* Eliminate white spaces */
+#line 39 "lalg.lex"
+{count();} /* Eliminate white spaces */
 	YY_BREAK
 case 4:
 /* rule 4 can match eol */
 YY_RULE_SETUP
-#line 37 "lalg.lex"
-{ num_lines++; }	/* Count lines */
+#line 41 "lalg.lex"
+{ count(); num_lines++; }	/* Count lines */
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 39 "lalg.lex"
-{ return T_PROGRAM;}			
+#line 43 "lalg.lex"
+{ count(); return T_PROGRAM;}			
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 40 "lalg.lex"
-{ return T_BEGIN;}
+#line 44 "lalg.lex"
+{ count(); return T_BEGIN;}
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 41 "lalg.lex"
-{ return T_END; }		    
+#line 45 "lalg.lex"
+{ count(); return T_END; }		    
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 42 "lalg.lex"
-{ return T_VAR; }
+#line 46 "lalg.lex"
+{ count(); return T_VAR; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 43 "lalg.lex"
-{ return T_CONST; }		
+#line 47 "lalg.lex"
+{ count(); return T_CONST; }		
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 44 "lalg.lex"
-{return T_REAL;}		
+#line 48 "lalg.lex"
+{ count(); return T_REAL;}		
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 45 "lalg.lex"
-{ return T_INTEGER;}		
+#line 49 "lalg.lex"
+{ count(); return T_INTEGER;}		
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 46 "lalg.lex"
-{ return T_PROCEDURE;}	
+#line 50 "lalg.lex"
+{ count(); return T_PROCEDURE;}	
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 47 "lalg.lex"
-{return T_READ;}		
+#line 51 "lalg.lex"
+{ count(); return T_READ;}		
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 48 "lalg.lex"
-{return T_WRITE;}		
+#line 52 "lalg.lex"
+{ count(); return T_WRITE;}		
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 49 "lalg.lex"
-{return T_WHILE;}		
+#line 53 "lalg.lex"
+{ count(); return T_WHILE;}		
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 50 "lalg.lex"
-{return  T_IF;}		    
+#line 54 "lalg.lex"
+{ count(); return  T_IF;}		    
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 51 "lalg.lex"
-{return T_THEN;}		
+#line 55 "lalg.lex"
+{ count(); return T_THEN;}		
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 52 "lalg.lex"
-{return T_ELSE;}		
+#line 56 "lalg.lex"
+{ count(); return T_ELSE;}		
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 53 "lalg.lex"
-{return  T_FOR;}
+#line 57 "lalg.lex"
+{ count(); return  T_FOR;}
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 54 "lalg.lex"
-{return T_DO;}
+#line 58 "lalg.lex"
+{ count(); return T_DO;}
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 56 "lalg.lex"
+#line 60 "lalg.lex"
 {
-	return T_EQUAL;
+	count(); return T_EQUAL;
 }
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 59 "lalg.lex"
+#line 63 "lalg.lex"
 {
-	return T_DIFF;
+	count(); return T_DIFF;
 }      
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 62 "lalg.lex"
+#line 66 "lalg.lex"
 {
-	return T_GREATER_EQ;
+	count(); return T_GREATER_EQ;
 }
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 65 "lalg.lex"
+#line 69 "lalg.lex"
 {
-	return T_LESSER_EQ;
+	count(); return T_LESSER_EQ;
 } 
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 68 "lalg.lex"
+#line 72 "lalg.lex"
 {
-	return T_GREATER;
+	count(); return T_GREATER;
 }   
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 71 "lalg.lex"
+#line 75 "lalg.lex"
 {
-	return T_LESSER;
+	count(); return T_LESSER;
 }    
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 74 "lalg.lex"
+#line 78 "lalg.lex"
 {
-	return T_PLUS;
+	count(); return T_PLUS;
 }      
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 77 "lalg.lex"
+#line 81 "lalg.lex"
 {
-	return T_MINUS;
+	count(); return T_MINUS;
 }     
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 80 "lalg.lex"
+#line 84 "lalg.lex"
 {
-	return T_TIMES;
+	count(); return T_TIMES;
 }     
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 83 "lalg.lex"
+#line 87 "lalg.lex"
 {
-	return T_DIVISION;
+	count(); return T_DIVISION;
 }  
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 86 "lalg.lex"
+#line 90 "lalg.lex"
 {
-	return T_ASSIGN;
+	count(); return T_ASSIGN;
 }    
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 89 "lalg.lex"
+#line 93 "lalg.lex"
 {
-	return T_SEMICOLON;
+	count(); return T_SEMICOLON;
 } 
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 92 "lalg.lex"
+#line 96 "lalg.lex"
 {
-	return T_COLON;
+	count(); return T_COLON;
 }     
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 95 "lalg.lex"
+#line 99 "lalg.lex"
 {
-	return T_L_PAREN;
+	count(); return T_L_PAREN;
 }          
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 98 "lalg.lex"
+#line 102 "lalg.lex"
 {
-	return T_R_PAREN;
+	count(); return T_R_PAREN;
 }          
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 101 "lalg.lex"
+#line 105 "lalg.lex"
 {
-	return T_COMMA;
+	count(); return T_COMMA;
 }     
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 104 "lalg.lex"
+#line 108 "lalg.lex"
 {
-	return T_DOT;
+	count(); return T_DOT;
 }       
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 108 "lalg.lex"
+#line 112 "lalg.lex"
 {
-	return T_INUMBER;
+	count(); return T_INUMBER;
 }
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 111 "lalg.lex"
+#line 115 "lalg.lex"
 {
-	return T_RNUMBER;
+	count(); return T_RNUMBER;
 }
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 115 "lalg.lex"
+#line 119 "lalg.lex"
 {	
+	count(); 
+	printError(ERR_LONG_ID, yytext);
 	return ERR_LONG_ID;
 }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 118 "lalg.lex"
+#line 124 "lalg.lex"
 {
-	return T_ID; //checkReservedWord(yytext);
+	count(); return T_ID; //checkReservedWord(yytext);
 }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 123 "lalg.lex"
+#line 129 "lalg.lex"
 { 
+	count(); 
+	printError(ERR_MF_INTEGER, yytext);
 	return ERR_MF_INTEGER;
 }
 	YY_BREAK
 case 43:
 YY_RULE_SETUP
-#line 127 "lalg.lex"
+#line 135 "lalg.lex"
 {
+	count(); 
+	printError(ERR_MF_REAL, yytext);
 	return ERR_MF_REAL;
 }
 	YY_BREAK
 case 44:
 YY_RULE_SETUP
-#line 131 "lalg.lex"
+#line 141 "lalg.lex"
 { 
+	count(); 
+	printError(ERR_MF_ID, yytext);
 	return(ERR_MF_ID);
 }
 	YY_BREAK
 case 45:
 YY_RULE_SETUP
-#line 135 "lalg.lex"
+#line 147 "lalg.lex"
 {	
+	count(); 
+	printError(ERR_UNKNOWN, yytext);
 	return ERR_UNKNOWN;
 }
 	YY_BREAK
 case 46:
 YY_RULE_SETUP
-#line 139 "lalg.lex"
+#line 153 "lalg.lex"
 ECHO;
 	YY_BREAK
-#line 3422 "lex.yy.c"
+#line 3436 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -4428,10 +4442,46 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 139 "lalg.lex"
+#line 153 "lalg.lex"
 
 
 
 int yywrap(void){}
 
+int column = 0;
+
+void count()
+{
+	int i;
+
+	for (i = 0; yytext[i] != '\0'; i++)
+		if (yytext[i] == '\n')
+			column = 0;
+		else if (yytext[i] == '\t')
+			column += 8 - (column % 8);
+		else
+			column++;
+
+	ECHO;
+}
+
+void printError(int error, const char* cadeia) {
+	switch(error) {
+		case ERR_MF_INTEGER:
+			printf("Erro Lexico: Linha %d, Coluna: %d. Identificador mal formado: %s\n", num_lines, column, cadeia);
+			break;
+		case ERR_MF_REAL:
+			printf("Erro Lexico: Linha %d, Coluna: %d. Numero real mal formado: %s\n",num_lines, column, cadeia);
+			break;
+		case ERR_LONG_ID:
+			printf("Erro Lexico: Linha %d, Coluna: %d. Identificador muito longo (+50 caracteres): %s\n",num_lines, column, cadeia);
+			break;
+		case ERR_COMMENT:
+			printf("Erro Lexico: Linha %d, Coluna: %d. Comentario nao fechado: %s\n",num_lines, column, cadeia);
+			break;
+		case ERR_UNKNOWN:
+			printf("Erro Lexico: Linha %d, Coluna: %d. Simbolo nao pertence a linguagem: %s\n",num_lines, column, cadeia);
+			break;
+	}
+}
 

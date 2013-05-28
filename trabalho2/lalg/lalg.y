@@ -1,15 +1,17 @@
 %{
 	#define YYSTYPE double
-        #define YYDEBUG 1 /* For Debugging */
+    #define YYDEBUG 1 /* For Debugging */
 
 	#include <math.h>
-        #include <stdio.h>
-        #include <string.h>
-        #include <stdlib.h>	
-        int yylex (void);
-        void yyerror (char *);
-        int numerrors=0;
-        extern int num_lines;
+    #include <stdio.h>
+    #include <string.h>
+    #include <stdlib.h>	
+    int yylex (void);
+    void yyerror (char *);
+    int numerrors=0;
+    extern int num_lines;
+    extern char *yytext;
+	extern int column;
 %}
 
 /* Token utilizado para verificar fim de arquivo */
@@ -320,9 +322,9 @@ int main (int argc, char *argv[])
 {
         yyparse();
         if(numerrors==0)
-                printf ( "Parse Completed\n" );
+                printf ( "Analise Sintatica Completada\n" );
         else
-                printf ( "Parse Completed with %d errors\n", numerrors);
+                printf ( "Analise Sintatica Completada Com %d Erros\n", numerrors);
 
         return 0;
 }
@@ -330,7 +332,7 @@ int main (int argc, char *argv[])
 void yyerror (char *s)
 {
         if(strcmp(s,"syntax error")){ /*Descartamos as mensagens padrões "syntax error do Bison*/
-                fprintf (stderr, " Erro sintatico: Line %d, Era esperado %s\n", num_lines, s);
+                fprintf (stderr, "Erro Sintatico: Linha %d, Coluna %d. Era esperado %s, foi encontrado %s\n", num_lines, column, s, yytext);
                 numerrors++;
         } 
 }

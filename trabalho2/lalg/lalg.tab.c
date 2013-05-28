@@ -71,20 +71,22 @@
 #line 1 "lalg.y"
 
 	#define YYSTYPE double
-        #define YYDEBUG 1 /* For Debugging */
+    #define YYDEBUG 1 /* For Debugging */
 
 	#include <math.h>
-        #include <stdio.h>
-        #include <string.h>
-        #include <stdlib.h>	
-        int yylex (void);
-        void yyerror (char *);
-        int numerrors=0;
-        extern int num_lines;
+    #include <stdio.h>
+    #include <string.h>
+    #include <stdlib.h>	
+    int yylex (void);
+    void yyerror (char *);
+    int numerrors=0;
+    extern int num_lines;
+    extern char *yytext;
+	extern int column;
 
 
 /* Line 189 of yacc.c  */
-#line 88 "lalg.tab.c"
+#line 90 "lalg.tab.c"
 
 /* Enabling traces.  */
 #ifndef YYDEBUG
@@ -171,7 +173,7 @@
 
 
 /* Line 264 of yacc.c  */
-#line 175 "lalg.tab.c"
+#line 177 "lalg.tab.c"
 
 #ifdef short
 # undef short
@@ -506,20 +508,20 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    74,    74,    75,    78,    78,    79,    79,    80,    83,
-      84,    87,    88,    92,    93,    96,   100,   104,   105,   108,
-     108,   109,   109,   110,   113,   114,   117,   118,   121,   122,
-     126,   127,   130,   130,   131,   134,   135,   139,   140,   141,
-     145,   146,   146,   150,   151,   155,   155,   156,   159,   159,
-     159,   160,   160,   163,   164,   164,   168,   169,   170,   174,
-     178,   179,   183,   184,   184,   185,   188,   189,   192,   193,
-     197,   201,   202,   203,   207,   208,   208,   212,   213,   217,
-     217,   218,   222,   225,   230,   230,   231,   231,   232,   232,
-     233,   233,   234,   234,   235,   236,   236,   237,   237,   237,
-     240,   243,   243,   246,   249,   249,   253,   257,   258,   259,
-     260,   261,   262,   263,   267,   271,   272,   273,   277,   278,
-     282,   283,   287,   291,   292,   296,   297,   301,   302,   303,
-     304,   308,   309,   313,   314
+       0,    76,    76,    77,    80,    80,    81,    81,    82,    85,
+      86,    89,    90,    94,    95,    98,   102,   106,   107,   110,
+     110,   111,   111,   112,   115,   116,   119,   120,   123,   124,
+     128,   129,   132,   132,   133,   136,   137,   141,   142,   143,
+     147,   148,   148,   152,   153,   157,   157,   158,   161,   161,
+     161,   162,   162,   165,   166,   166,   170,   171,   172,   176,
+     180,   181,   185,   186,   186,   187,   190,   191,   194,   195,
+     199,   203,   204,   205,   209,   210,   210,   214,   215,   219,
+     219,   220,   224,   227,   232,   232,   233,   233,   234,   234,
+     235,   235,   236,   236,   237,   238,   238,   239,   239,   239,
+     242,   245,   245,   248,   251,   251,   255,   259,   260,   261,
+     262,   263,   264,   265,   269,   273,   274,   275,   279,   280,
+     284,   285,   289,   293,   294,   298,   299,   303,   304,   305,
+     306,   310,   311,   315,   316
 };
 #endif
 
@@ -1574,735 +1576,735 @@ yyreduce:
         case 3:
 
 /* Line 1455 of yacc.c  */
-#line 75 "lalg.y"
+#line 77 "lalg.y"
     { yyerror("program"); yyclearin;;}
     break;
 
   case 4:
 
 /* Line 1455 of yacc.c  */
-#line 78 "lalg.y"
+#line 80 "lalg.y"
     {;}
     break;
 
   case 5:
 
 /* Line 1455 of yacc.c  */
-#line 78 "lalg.y"
+#line 80 "lalg.y"
     {;}
     break;
 
   case 6:
 
 /* Line 1455 of yacc.c  */
-#line 79 "lalg.y"
+#line 81 "lalg.y"
     { yyerror("id"); yyclearin;;}
     break;
 
   case 8:
 
 /* Line 1455 of yacc.c  */
-#line 80 "lalg.y"
+#line 82 "lalg.y"
     { yyerror("program1"); yyclearin; ;}
     break;
 
   case 9:
 
 /* Line 1455 of yacc.c  */
-#line 83 "lalg.y"
+#line 85 "lalg.y"
     {;}
     break;
 
   case 10:
 
 /* Line 1455 of yacc.c  */
-#line 84 "lalg.y"
+#line 86 "lalg.y"
     { yyerror("program2"); yyclearin; ;}
     break;
 
   case 11:
 
 /* Line 1455 of yacc.c  */
-#line 87 "lalg.y"
+#line 89 "lalg.y"
     {;}
     break;
 
   case 12:
 
 /* Line 1455 of yacc.c  */
-#line 88 "lalg.y"
+#line 90 "lalg.y"
     { yyerror("program3"); yyclearin; ;}
     break;
 
   case 14:
 
 /* Line 1455 of yacc.c  */
-#line 93 "lalg.y"
+#line 95 "lalg.y"
     { yyerror("begin"); ;}
     break;
 
   case 19:
 
 /* Line 1455 of yacc.c  */
-#line 108 "lalg.y"
+#line 110 "lalg.y"
     {;}
     break;
 
   case 20:
 
 /* Line 1455 of yacc.c  */
-#line 108 "lalg.y"
+#line 110 "lalg.y"
     {;}
     break;
 
   case 21:
 
 /* Line 1455 of yacc.c  */
-#line 109 "lalg.y"
+#line 111 "lalg.y"
     { yyerror("id"); ;}
     break;
 
   case 23:
 
 /* Line 1455 of yacc.c  */
-#line 110 "lalg.y"
+#line 112 "lalg.y"
     { yyerror("id"); ;}
     break;
 
   case 24:
 
 /* Line 1455 of yacc.c  */
-#line 113 "lalg.y"
+#line 115 "lalg.y"
     {;}
     break;
 
   case 25:
 
 /* Line 1455 of yacc.c  */
-#line 114 "lalg.y"
+#line 116 "lalg.y"
     { yyerror("="); ;}
     break;
 
   case 26:
 
 /* Line 1455 of yacc.c  */
-#line 117 "lalg.y"
+#line 119 "lalg.y"
     {;}
     break;
 
   case 27:
 
 /* Line 1455 of yacc.c  */
-#line 118 "lalg.y"
+#line 120 "lalg.y"
     { yyerror("numero"); ;}
     break;
 
   case 29:
 
 /* Line 1455 of yacc.c  */
-#line 122 "lalg.y"
+#line 124 "lalg.y"
     { yyerror(";"); ;}
     break;
 
   case 32:
 
 /* Line 1455 of yacc.c  */
-#line 130 "lalg.y"
+#line 132 "lalg.y"
     {;}
     break;
 
   case 33:
 
 /* Line 1455 of yacc.c  */
-#line 130 "lalg.y"
+#line 132 "lalg.y"
     {;}
     break;
 
   case 34:
 
 /* Line 1455 of yacc.c  */
-#line 131 "lalg.y"
+#line 133 "lalg.y"
     { yyerror(":"); ;}
     break;
 
   case 36:
 
 /* Line 1455 of yacc.c  */
-#line 135 "lalg.y"
+#line 137 "lalg.y"
     { yyerror(";"); ;}
     break;
 
   case 37:
 
 /* Line 1455 of yacc.c  */
-#line 139 "lalg.y"
+#line 141 "lalg.y"
     {;}
     break;
 
   case 38:
 
 /* Line 1455 of yacc.c  */
-#line 140 "lalg.y"
+#line 142 "lalg.y"
     {;}
     break;
 
   case 39:
 
 /* Line 1455 of yacc.c  */
-#line 141 "lalg.y"
+#line 143 "lalg.y"
     { yyerror("tipo"); ;}
     break;
 
   case 40:
 
 /* Line 1455 of yacc.c  */
-#line 145 "lalg.y"
+#line 147 "lalg.y"
     {;}
     break;
 
   case 41:
 
 /* Line 1455 of yacc.c  */
-#line 146 "lalg.y"
+#line 148 "lalg.y"
     { yyclearin; yyerror("id"); ;}
     break;
 
   case 42:
 
 /* Line 1455 of yacc.c  */
-#line 146 "lalg.y"
+#line 148 "lalg.y"
     {;}
     break;
 
   case 43:
 
 /* Line 1455 of yacc.c  */
-#line 150 "lalg.y"
+#line 152 "lalg.y"
     {;}
     break;
 
   case 44:
 
 /* Line 1455 of yacc.c  */
-#line 151 "lalg.y"
+#line 153 "lalg.y"
     {;}
     break;
 
   case 45:
 
 /* Line 1455 of yacc.c  */
-#line 155 "lalg.y"
+#line 157 "lalg.y"
     {;}
     break;
 
   case 48:
 
 /* Line 1455 of yacc.c  */
-#line 159 "lalg.y"
+#line 161 "lalg.y"
     {;}
     break;
 
   case 49:
 
 /* Line 1455 of yacc.c  */
-#line 159 "lalg.y"
+#line 161 "lalg.y"
     {;}
     break;
 
   case 51:
 
 /* Line 1455 of yacc.c  */
-#line 160 "lalg.y"
+#line 162 "lalg.y"
     { yyclearin; yyerror("id"); ;}
     break;
 
   case 54:
 
 /* Line 1455 of yacc.c  */
-#line 164 "lalg.y"
+#line 166 "lalg.y"
     { yyclearin; yyerror(";"); ;}
     break;
 
   case 56:
 
 /* Line 1455 of yacc.c  */
-#line 168 "lalg.y"
+#line 170 "lalg.y"
     {;}
     break;
 
   case 57:
 
 /* Line 1455 of yacc.c  */
-#line 169 "lalg.y"
+#line 171 "lalg.y"
     { yyclearin; yyerror(")"); ;}
     break;
 
   case 58:
 
 /* Line 1455 of yacc.c  */
-#line 170 "lalg.y"
+#line 172 "lalg.y"
     {;}
     break;
 
   case 59:
 
 /* Line 1455 of yacc.c  */
-#line 174 "lalg.y"
+#line 176 "lalg.y"
     {;}
     break;
 
   case 60:
 
 /* Line 1455 of yacc.c  */
-#line 178 "lalg.y"
+#line 180 "lalg.y"
     {;}
     break;
 
   case 61:
 
 /* Line 1455 of yacc.c  */
-#line 179 "lalg.y"
+#line 181 "lalg.y"
     {;}
     break;
 
   case 63:
 
 /* Line 1455 of yacc.c  */
-#line 184 "lalg.y"
+#line 186 "lalg.y"
     { yyerror("begin"); ;}
     break;
 
   case 65:
 
 /* Line 1455 of yacc.c  */
-#line 185 "lalg.y"
+#line 187 "lalg.y"
     { yyerror("begin"); ;}
     break;
 
   case 67:
 
 /* Line 1455 of yacc.c  */
-#line 189 "lalg.y"
+#line 191 "lalg.y"
     { yyerror("end"); ;}
     break;
 
   case 69:
 
 /* Line 1455 of yacc.c  */
-#line 193 "lalg.y"
+#line 195 "lalg.y"
     { yyerror(";"); ;}
     break;
 
   case 71:
 
 /* Line 1455 of yacc.c  */
-#line 201 "lalg.y"
+#line 203 "lalg.y"
     {;}
     break;
 
   case 72:
 
 /* Line 1455 of yacc.c  */
-#line 202 "lalg.y"
+#line 204 "lalg.y"
     { yyerror(")"); ;}
     break;
 
   case 73:
 
 /* Line 1455 of yacc.c  */
-#line 203 "lalg.y"
+#line 205 "lalg.y"
     {;}
     break;
 
   case 74:
 
 /* Line 1455 of yacc.c  */
-#line 207 "lalg.y"
+#line 209 "lalg.y"
     {;}
     break;
 
   case 75:
 
 /* Line 1455 of yacc.c  */
-#line 208 "lalg.y"
+#line 210 "lalg.y"
     { yyclearin; yyerror("id"); ;}
     break;
 
   case 76:
 
 /* Line 1455 of yacc.c  */
-#line 208 "lalg.y"
+#line 210 "lalg.y"
     {;}
     break;
 
   case 77:
 
 /* Line 1455 of yacc.c  */
-#line 212 "lalg.y"
+#line 214 "lalg.y"
     {;}
     break;
 
   case 78:
 
 /* Line 1455 of yacc.c  */
-#line 213 "lalg.y"
+#line 215 "lalg.y"
     {;}
     break;
 
   case 79:
 
 /* Line 1455 of yacc.c  */
-#line 217 "lalg.y"
+#line 219 "lalg.y"
     {;}
     break;
 
   case 84:
 
 /* Line 1455 of yacc.c  */
-#line 230 "lalg.y"
+#line 232 "lalg.y"
     {;}
     break;
 
   case 85:
 
 /* Line 1455 of yacc.c  */
-#line 230 "lalg.y"
+#line 232 "lalg.y"
     {;}
     break;
 
   case 86:
 
 /* Line 1455 of yacc.c  */
-#line 231 "lalg.y"
+#line 233 "lalg.y"
     {;}
     break;
 
   case 87:
 
 /* Line 1455 of yacc.c  */
-#line 231 "lalg.y"
+#line 233 "lalg.y"
     {;}
     break;
 
   case 88:
 
 /* Line 1455 of yacc.c  */
-#line 232 "lalg.y"
+#line 234 "lalg.y"
     {;}
     break;
 
   case 90:
 
 /* Line 1455 of yacc.c  */
-#line 233 "lalg.y"
+#line 235 "lalg.y"
     {;}
     break;
 
   case 91:
 
 /* Line 1455 of yacc.c  */
-#line 233 "lalg.y"
+#line 235 "lalg.y"
     {;}
     break;
 
   case 92:
 
 /* Line 1455 of yacc.c  */
-#line 234 "lalg.y"
+#line 236 "lalg.y"
     {;}
     break;
 
   case 93:
 
 /* Line 1455 of yacc.c  */
-#line 234 "lalg.y"
+#line 236 "lalg.y"
     {;}
     break;
 
   case 94:
 
 /* Line 1455 of yacc.c  */
-#line 235 "lalg.y"
+#line 237 "lalg.y"
     {;}
     break;
 
   case 95:
 
 /* Line 1455 of yacc.c  */
-#line 236 "lalg.y"
+#line 238 "lalg.y"
     {;}
     break;
 
   case 96:
 
 /* Line 1455 of yacc.c  */
-#line 236 "lalg.y"
+#line 238 "lalg.y"
     {;}
     break;
 
   case 97:
 
 /* Line 1455 of yacc.c  */
-#line 237 "lalg.y"
+#line 239 "lalg.y"
     {;}
     break;
 
   case 98:
 
 /* Line 1455 of yacc.c  */
-#line 237 "lalg.y"
+#line 239 "lalg.y"
     {;}
     break;
 
   case 99:
 
 /* Line 1455 of yacc.c  */
-#line 237 "lalg.y"
+#line 239 "lalg.y"
     {;}
     break;
 
   case 100:
 
 /* Line 1455 of yacc.c  */
-#line 240 "lalg.y"
+#line 242 "lalg.y"
     {;}
     break;
 
   case 101:
 
 /* Line 1455 of yacc.c  */
-#line 243 "lalg.y"
+#line 245 "lalg.y"
     {;}
     break;
 
   case 102:
 
 /* Line 1455 of yacc.c  */
-#line 243 "lalg.y"
+#line 245 "lalg.y"
     {;}
     break;
 
   case 104:
 
 /* Line 1455 of yacc.c  */
-#line 249 "lalg.y"
+#line 251 "lalg.y"
     {;}
     break;
 
   case 105:
 
 /* Line 1455 of yacc.c  */
-#line 249 "lalg.y"
+#line 251 "lalg.y"
     {;}
     break;
 
   case 106:
 
 /* Line 1455 of yacc.c  */
-#line 253 "lalg.y"
+#line 255 "lalg.y"
     {;}
     break;
 
   case 107:
 
 /* Line 1455 of yacc.c  */
-#line 257 "lalg.y"
+#line 259 "lalg.y"
     {;}
     break;
 
   case 108:
 
 /* Line 1455 of yacc.c  */
-#line 258 "lalg.y"
+#line 260 "lalg.y"
     {;}
     break;
 
   case 109:
 
 /* Line 1455 of yacc.c  */
-#line 259 "lalg.y"
+#line 261 "lalg.y"
     {;}
     break;
 
   case 110:
 
 /* Line 1455 of yacc.c  */
-#line 260 "lalg.y"
+#line 262 "lalg.y"
     {;}
     break;
 
   case 111:
 
 /* Line 1455 of yacc.c  */
-#line 261 "lalg.y"
+#line 263 "lalg.y"
     {;}
     break;
 
   case 112:
 
 /* Line 1455 of yacc.c  */
-#line 262 "lalg.y"
+#line 264 "lalg.y"
     {;}
     break;
 
   case 113:
 
 /* Line 1455 of yacc.c  */
-#line 263 "lalg.y"
+#line 265 "lalg.y"
     { yyerror("sinal de relacao"); ;}
     break;
 
   case 114:
 
 /* Line 1455 of yacc.c  */
-#line 267 "lalg.y"
+#line 269 "lalg.y"
     {;}
     break;
 
   case 115:
 
 /* Line 1455 of yacc.c  */
-#line 271 "lalg.y"
+#line 273 "lalg.y"
     {;}
     break;
 
   case 116:
 
 /* Line 1455 of yacc.c  */
-#line 272 "lalg.y"
+#line 274 "lalg.y"
     {;}
     break;
 
   case 117:
 
 /* Line 1455 of yacc.c  */
-#line 273 "lalg.y"
+#line 275 "lalg.y"
     {;}
     break;
 
   case 118:
 
 /* Line 1455 of yacc.c  */
-#line 277 "lalg.y"
+#line 279 "lalg.y"
     {;}
     break;
 
   case 119:
 
 /* Line 1455 of yacc.c  */
-#line 278 "lalg.y"
+#line 280 "lalg.y"
     {;}
     break;
 
   case 120:
 
 /* Line 1455 of yacc.c  */
-#line 282 "lalg.y"
+#line 284 "lalg.y"
     {;}
     break;
 
   case 121:
 
 /* Line 1455 of yacc.c  */
-#line 283 "lalg.y"
+#line 285 "lalg.y"
     {;}
     break;
 
   case 122:
 
 /* Line 1455 of yacc.c  */
-#line 287 "lalg.y"
+#line 289 "lalg.y"
     {;}
     break;
 
   case 123:
 
 /* Line 1455 of yacc.c  */
-#line 291 "lalg.y"
+#line 293 "lalg.y"
     {;}
     break;
 
   case 124:
 
 /* Line 1455 of yacc.c  */
-#line 292 "lalg.y"
+#line 294 "lalg.y"
     {;}
     break;
 
   case 125:
 
 /* Line 1455 of yacc.c  */
-#line 296 "lalg.y"
+#line 298 "lalg.y"
     {;}
     break;
 
   case 126:
 
 /* Line 1455 of yacc.c  */
-#line 297 "lalg.y"
+#line 299 "lalg.y"
     {;}
     break;
 
   case 127:
 
 /* Line 1455 of yacc.c  */
-#line 301 "lalg.y"
+#line 303 "lalg.y"
     {;}
     break;
 
   case 128:
 
 /* Line 1455 of yacc.c  */
-#line 302 "lalg.y"
+#line 304 "lalg.y"
     {;}
     break;
 
   case 129:
 
 /* Line 1455 of yacc.c  */
-#line 303 "lalg.y"
+#line 305 "lalg.y"
     {;}
     break;
 
   case 130:
 
 /* Line 1455 of yacc.c  */
-#line 304 "lalg.y"
+#line 306 "lalg.y"
     { yyclearin; yyerror("sinal de relacao"); ;}
     break;
 
   case 131:
 
 /* Line 1455 of yacc.c  */
-#line 308 "lalg.y"
+#line 310 "lalg.y"
     {;}
     break;
 
   case 132:
 
 /* Line 1455 of yacc.c  */
-#line 309 "lalg.y"
+#line 311 "lalg.y"
     { yyerror(")"); ;}
     break;
 
   case 133:
 
 /* Line 1455 of yacc.c  */
-#line 313 "lalg.y"
+#line 315 "lalg.y"
     {;}
     break;
 
   case 134:
 
 /* Line 1455 of yacc.c  */
-#line 314 "lalg.y"
+#line 316 "lalg.y"
     {;}
     break;
 
 
 
 /* Line 1455 of yacc.c  */
-#line 2306 "lalg.tab.c"
+#line 2308 "lalg.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2514,16 +2516,16 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 317 "lalg.y"
+#line 319 "lalg.y"
 
 
 int main (int argc, char *argv[])
 {
         yyparse();
         if(numerrors==0)
-                printf ( "Parse Completed\n" );
+                printf ( "Analise Sintatica Completada\n" );
         else
-                printf ( "Parse Completed with %d errors\n", numerrors);
+                printf ( "Analise Sintatica Completada Com %d Erros\n", numerrors);
 
         return 0;
 }
@@ -2531,7 +2533,7 @@ int main (int argc, char *argv[])
 void yyerror (char *s)
 {
         if(strcmp(s,"syntax error")){ /*Descartamos as mensagens padrões "syntax error do Bison*/
-                fprintf (stderr, " Erro sintatico: Line %d, Era esperado %s\n", num_lines, s);
+                fprintf (stderr, "Erro Sintatico: Linha %d, Coluna %d. Era esperado %s, foi encontrado %s\n", num_lines, column, s, yytext);
                 numerrors++;
         } 
 }
