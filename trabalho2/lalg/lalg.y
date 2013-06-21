@@ -1,6 +1,6 @@
 %{
 	#define YYSTYPE double
-    #define YYDEBUG 1 /* For Debugging */
+    #define YYDEBUG 1 /*For Debugging */
 
 	#include <math.h>
     #include <stdio.h>
@@ -73,37 +73,38 @@
 ;*/
 
 /* Regra 1 <programa> ::= program ident ; <corpo> . */
-programa : T_PROGRAM programa1
-    | error T_DOT { yyerror("program"); yyclearin;}
+programa : T_PROGRAM programa1 {}
+	| error T_SEMICOLON { yyerror("program"); } corpo programa3
+    | error T_DOT { yyerror("program");}
     ;
 
 programa1 : T_ID {} programa2 {}
-    | error T_SEMICOLON { yyerror("id"); yyclearin;} corpo programa3
-    | error T_DOT { yyerror("program1"); yyclearin; }
+    | error T_SEMICOLON { yyerror("id");} corpo programa3
+    | error T_DOT { yyerror("id");}
     ;
     
 programa2 : T_SEMICOLON corpo programa3 {}
-    | error T_DOT { yyerror("program2"); yyclearin; }
+    | error T_DOT { yyerror(";");}
     ;
     
 programa3 : T_DOT {}
-    | error { yyerror("program3"); yyclearin; }
+    | error { yyerror(".");}
     ;
 
 /* Regra 2 <corpo> ::= <dc> begin <comandos> end */
-corpo : dc T_BEGIN comandos corpo1
+corpo : dc T_BEGIN comandos corpo1 {}
     | dc error T_END { yyerror("begin"); }
     ;
     
-corpo1 : T_END
+corpo1 : T_END {}
     ;
     
 /* Regra 3 <dc> ::= <dc_c> <dc_v> <dc_p> */
-dc : dc_c dc_v dc_p
+dc : dc_c dc_v dc_p {}
     ;
 
 /* Regra 4 <dc_c> ::= const ident = <numero> ; <dc_c> | lambda */
-dc_c : dc_c0 dc_c
+dc_c : dc_c0 dc_c {}
     |
     ;
 
@@ -120,12 +121,12 @@ dc_c2 : numero dc_c3 {}
     | error T_SEMICOLON { yyerror("numero"); }
     ;
     
-dc_c3 : T_SEMICOLON
+dc_c3 : T_SEMICOLON {}
     | error { yyerror(";"); }
     ;
 
 /* Regra 5 <dc_v> ::= var <variaveis> : <tipo_var> ; <dc_v> | lambda */
-dc_v : dc_v0 dc_v
+dc_v : dc_v0 dc_v {}
     |
     ;
 
@@ -133,7 +134,7 @@ dc_v0 : T_VAR variaveis {} T_COLON tipo_var dc_v1 {}
     | T_VAR variaveis error T_SEMICOLON { yyerror(":"); }
     ;
     
-dc_v1 : T_SEMICOLON
+dc_v1 : T_SEMICOLON {}
     | error { yyerror(";"); }
     ;
 
@@ -162,7 +163,7 @@ dc_p0 : T_PROCEDURE {} T_ID parametros {} dc_p1
     | T_PROCEDURE error T_SEMICOLON { yyclearin; yyerror("id"); } corpo_p
     ;
    
-dc_p1 : T_SEMICOLON corpo_p
+dc_p1 : T_SEMICOLON corpo_p {}
     | error { yyclearin; yyerror(";"); } corpo_p
     ; 
 
@@ -182,12 +183,12 @@ mais_par : T_SEMICOLON lista_par {}
     ;
 
 /* Regra 13 <corpo_p> ::= <dc_loc> begin <comandos> end ; */
-corpo_p : dc_loc T_BEGIN comandos corpo_p1
+corpo_p : dc_loc T_BEGIN comandos corpo_p1 {}
     | dc_loc error T_END { yyerror("begin"); } corpo_p2
     | dc_loc error T_SEMICOLON { yyerror("begin"); }
     ;
     
-corpo_p1 : T_END corpo_p2
+corpo_p1 : T_END corpo_p2 {}
     | error T_SEMICOLON { yyerror("end"); }
     ;
     
@@ -222,8 +223,8 @@ pfalsa : T_ELSE {} cmd
 
 /* Regra 19 <comandos> ::= <cmd> ; <comandos> | lambda */
 comandos : cmd T_SEMICOLON comandos
-    //| cmd error { yyerror("  ';', encontrado %d\n", yychar); } comandos
-    //| error T_SEMICOLON { yyerror("  'cmd', encontrado %d\n", yychar); } comandos
+    //| cmd error { yyerror(";"); } comandos
+    //| error T_SEMICOLON { yyerror("cmd"); } comandos
     | /* empty */ 
     ;
 
@@ -248,7 +249,7 @@ cmd_if : condicao T_THEN {} cmd pfalsa {}
 cmd_begin : comandos T_END
     ;
 
-cmd_while : condicao T_DO {} cmd {}
+cmd_while : T_L_PAREN condicao T_R_PAREN T_DO {} cmd {}
     ;
 
 /* Regra 21 <condicao> ::= <expressao> <relacao> <expressao> */
@@ -332,7 +333,7 @@ int main (int argc, char *argv[])
 void yyerror (char *s)
 {
         if(strcmp(s,"syntax error")){ /*Descartamos as mensagens padrões "syntax error do Bison*/
-                fprintf (stderr, "Erro Sintatico: Linha %d, Coluna %d. Era esperado %s, foi encontrado %s\n", num_lines, column, s, yytext);
+                fprintf (stderr, "Erro Sintatico: Linha %d, Coluna %d. Era esperado %s, encontrado: %s\n", num_lines, column, s, yytext);
                 numerrors++;
         } 
 }

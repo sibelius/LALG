@@ -167,26 +167,24 @@ void count()
 			column += 8 - (column % 8);
 		else
 			column++;
-
-	ECHO;
 }
 
 void printError(int error, const char* cadeia) {
 	switch(error) {
 		case ERR_MF_INTEGER:
-			printf("Erro Lexico: Linha %d, Coluna: %d. Identificador mal formado: %s\n", num_lines, column, cadeia);
+			printf("Erro Lexico:    Linha %d, Coluna: %d. Identificador mal formado\n", num_lines, column);
 			break;
 		case ERR_MF_REAL:
-			printf("Erro Lexico: Linha %d, Coluna: %d. Numero real mal formado: %s\n",num_lines, column, cadeia);
+			printf("Erro Lexico:    Linha %d, Coluna: %d. Numero real mal formado\n",num_lines, column);
 			break;
 		case ERR_LONG_ID:
-			printf("Erro Lexico: Linha %d, Coluna: %d. Identificador muito longo (+50 caracteres): %s\n",num_lines, column, cadeia);
+			printf("Erro Lexico:    Linha %d, Coluna: %d. Identificador muito longo (+50 caracteres)\n",num_lines, column);
 			break;
 		case ERR_COMMENT:
-			printf("Erro Lexico: Linha %d, Coluna: %d. Comentario nao fechado: %s\n",num_lines, column, cadeia);
+			printf("Erro Lexico:    Linha %d, Coluna: %d. Comentario nao fechado\n",num_lines, column);
 			break;
 		case ERR_UNKNOWN:
-			printf("Erro Lexico: Linha %d, Coluna: %d. Simbolo nao pertence a linguagem: %s\n",num_lines, column, cadeia);
+			printf("Erro Lexico:    Linha %d, Coluna: %d. Simbolo nao pertence a linguagem\n",num_lines, column);
 			break;
 	}
 }

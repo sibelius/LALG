@@ -1,0 +1,4 @@
+ident;
+begin
+read(a,b);
+end.

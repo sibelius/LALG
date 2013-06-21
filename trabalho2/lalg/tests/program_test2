@@ -1,0 +1,4 @@
+program ;
+begin
+read(a,b);
+end.
