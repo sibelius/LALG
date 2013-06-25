@@ -1,6 +1,6 @@
 %{
 	#define YYSTYPE double
-    #define YYDEBUG 1 /*For Debugging */
+    #define YYDEBUG 0 /*For Debugging */
 
 	#include <math.h>
     #include <stdio.h>

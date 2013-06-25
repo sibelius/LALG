@@ -71,7 +71,7 @@
 #line 1 "lalg.y"
 
 	#define YYSTYPE double
-    #define YYDEBUG 1 /*For Debugging */
+    #define YYDEBUG 0 /*For Debugging */
 
 	#include <math.h>
     #include <stdio.h>
@@ -2607,9 +2607,9 @@ yyreturn:
 
 int main (int argc, char *argv[])
 {
-//#ifdef YYDEBUG
-//	yydebug=1;
-//#endif
+#ifdef YYDEBUG
+	yydebug=1;
+#endif
         yyparse();
         if(numerrors==0)
                 printf ( "Analise Sintatica Completada\n" );

@@ -1,0 +1,28 @@
+program prog;
+var a: integer;
+procedure meu_proc(x: real);
+var a, c: integer;
+begin
+	read(c, a);
+	if a<x+c then
+	begin
+		a:= c+x;
+		write(a);
+	end
+	else c:= a+x;
+end;
+begin {procedimento dentro do main}
+    procedure dentro();
+    var a: integer;
+    begin
+        a := 2;
+    end;
+	while (a > 10) do
+	begin
+	    write(a);
+	    read(a);
+	    a := a +1;
+	end;
+	
+	meu_proc(a);
+end.
