@@ -23,5 +23,5 @@ begin
     b := 5.7;
     meu_proc1(a);
     meu_proc(b);
-end.
+end
 

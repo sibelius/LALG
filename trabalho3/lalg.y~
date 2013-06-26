@@ -357,7 +357,7 @@ fator : T_ID { /*$$ = new ExpressionTree;*/ /*$$->type = VALUE; $$->name = strdu
       */}
       
     | T_L_PAREN fator_exp { /*$$ = $2;*/ }
-    | error { yyclearin; yyerror("sinal de relacao"); /*$$ = new ExpressionTree;*/ /*$$->type = ERROR;*/ }
+    | error { yyclearin; yyerror("sinal de relacao"); /*$$ = new ExpressionTree;*/ $$->type = ERROR; }
     ;
 
 fator_exp

@@ -1,0 +1,12 @@
+program p9;
+var a : integer;
+var b : real;
+
+begin
+    read(a,a);
+    write(b,b);
+    read(a,b);	{ read com variaveis de tipo diferentes }
+    write(a,b); { read com variaveis de tipo diferentes }
+    
+end.
+

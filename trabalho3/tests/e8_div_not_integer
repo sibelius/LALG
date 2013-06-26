@@ -1,0 +1,16 @@
+program p8;
+var a, c, d : integer;
+var b : real;
+
+begin
+    a := 10;
+    c := 2;
+    b := 5.7;
+    
+    a := a / c;
+    b := a / c;
+    
+    b := b / a; { divisao que nao eh entre numeros inteiros }
+    c := a / d;
+end.
+

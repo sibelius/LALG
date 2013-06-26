@@ -1,0 +1,16 @@
+program p7;
+var a : integer;
+var b : real;
+
+begin
+    a := 10;
+    b:= a;
+    
+    b := 5.7;
+    a := b;  { atribuicao de real a inteiro }
+    
+    b := b + a;
+    a := b + a; { atribuicao de real a inteiro }
+    
+end.
+

@@ -1,0 +1,31 @@
+program p6;
+var a : integer;
+var b : real;
+
+procedure meu_proc(x: real);
+var d : integer;
+
+begin
+	d := 4;
+    x := 2.5;
+    a := 10;
+    c := 2;	{ variavel declarada dentro de meu_proc 1 }
+end;
+
+procedure meu_proc1(x: integer);
+var c : integer;
+
+begin
+    x := 2;
+    d := 3; { variavel declarada dentro de meu_proc }
+end;
+
+begin
+    a := 10;
+    b := 5.7;
+    meu_proc1(a);
+    
+    c := 5;	{ variavel declarada dentro de meu_proc 1 }
+    
+    meu_proc(b);
+end.
