@@ -5,7 +5,9 @@
 	#include <math.h>
     #include <stdio.h>
     #include <string.h>
-    #include <stdlib.h>	
+    #include <stdlib.h>
+    #include "simbolTable.h"
+
     int yylex (void);
     void yyerror (char *);
 
@@ -30,6 +32,11 @@
     extern int num_lines;
     extern char *yytext;
 	extern int column;
+
+
+    /* Manipulacao da Tabela de simbolos */
+    void addInTable( char *name, int type, int i_value, float f_value );
+
 %}
 
 %union YYSTYPE{
@@ -93,13 +100,16 @@
 %token ERR_UNKNOWN /* Simbolo não pertence a linguagem */      
 /*%nonassoc error*/
 
+/* Tipo terminais */
 %token<name> T_ID "identificador"
 %token<i_number> T_INUMBER "numero inteiro"
 %token<r_number> T_RNUMBER "numero real"
 
-/* Regras da gramatica */
+/* Tipo dos nao terminais */
+
 %%
 
+/* Regras da gramatica */
 /* Regra 1 <programa> ::= program ident ; <corpo> . */
 programa : T_PROGRAM programa1 {}
 	| error T_SEMICOLON { yyerror("program"); } corpo programa3
@@ -341,13 +351,13 @@ fator : T_ID {}
     ;
 
 fator_exp
-    : expressao T_R_PAREN {}
-    | expressao error { yyerror(")"); }
+    : expressao T_R_PAREN { $$ = $1; }
+    | expressao error { yyerror(")"); $$ = $1; }
     ;
     
 /* Regra 31 <numero> ::= numero_int | numero_real */
-numero : T_INUMBER {}
-    | T_RNUMBER {}
+numero : T_INUMBER { $$.type = INTEGER; $$.i_value = $1; }
+    | T_RNUMBER { $$.type = REAL; $$.f_value = $1; }
     ;
 
 %%
@@ -402,8 +412,12 @@ int main (int argc, char *argv[])
 
 void yyerror (char *s)
 {
-        if(strcmp(s,"syntax error")){ /*Descartamos as mensagens padrões "syntax error do Bison*/
-                fprintf (stderr, "Erro Sintatico: Linha %d, Coluna %d. Era esperado %s, encontrado: %s\n", num_lines, column, s, yytext);
-                numerrors++;
-        } 
+    code_generate = 0;
+    /*Descartamos as mensagens padrões "syntax error do Bison*/
+    if(strcmp(s,"syntax error")){
+        fprintf (stderr, 
+        "Erro Sintatico: Linha %d, Coluna %d. Era esperado %s, encontrado: %s\n", 
+        num_lines, column, s, yytext);
+        numerrors++;
+    } 
 }
