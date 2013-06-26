@@ -5,11 +5,13 @@
 /*%option noyywrap*/
 
 %{
-	#define YYSTYPE double
-
 	#include <stdio.h>
 	#include <string.h>
 	#include "lalg.tab.h"
+	
+	extern YYSTYPE yylval;
+	
+	int comment = 0;
 	
 	int num_lines=1;	
 	void count(); /* utilizado para verificar a coluna do erro */
@@ -17,6 +19,7 @@
 %}
 %option yylineno
 
+/* definindo as expressoes auxiliares */
 letter [a-zA-z]
 digit [0-9]
 nonblank [^ \t]
@@ -111,10 +114,11 @@ seq_nao_literal  [!-~]{-}[:<>;.=:,+\-*/()]
 }       
 
 {digit}+ {
-	count(); return T_INUMBER;
+	yylval.i_number = atoi(yytext); count(); return T_INUMBER;
 }
+
 {digit}+"."{digit}+	{
-	count(); return T_RNUMBER;
+	yylval.r_number = atof(yytext); count(); return T_RNUMBER;
 }
 
 {letter}+({letter}|{digit}){50,}			{	
@@ -122,8 +126,9 @@ seq_nao_literal  [!-~]{-}[:<>;.=:,+\-*/()]
 	printError(ERR_LONG_ID, yytext);
 	return ERR_LONG_ID;
 }
+
 {letter}+({letter}|{digit})* {
-	count(); return T_ID; //checkReservedWord(yytext);
+	yylval.name = strdup( yytext ); count(); return T_ID; //checkReservedWord(yytext);
 }
 
 

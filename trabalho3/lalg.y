@@ -32,6 +32,19 @@
 	extern int column;
 %}
 
+%union YYSTYPE{
+	int i_number;
+	float r_number;
+	char* name;
+	int type;
+	struct snode {
+		int i_value;
+		float f_value;
+		int type;
+	} snode;
+	char math_op;
+}
+
 /* Token utilizado para verificar fim de arquivo */
 %token T_EOF
 
