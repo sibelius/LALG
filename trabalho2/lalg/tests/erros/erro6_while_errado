@@ -11,15 +11,13 @@ begin
 	end
 	else c:= a+x;
 end;
-begin {procedimento dentro do main}
-    procedure dentro();
-    var a: integer;
-    begin
-        a := 2;
-    end;
-	while (a > 10) do
+begin
+	while (a > 10)      {while incorreto!}
 	begin
-	    write(a);
+	    for a:=1 to 2 do
+		begin  
+   	    	    write(a);
+		end;
 	    read(a);
 	    a := a +1;
 	end;

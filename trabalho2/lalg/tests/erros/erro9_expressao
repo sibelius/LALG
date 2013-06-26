@@ -1,0 +1,5 @@
+program p1;
+begin
+    a := (2 + 1 * 7 +
+    b := 1;
+end.

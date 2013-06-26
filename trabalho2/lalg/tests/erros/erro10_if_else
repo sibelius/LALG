@@ -1,0 +1,10 @@
+program p1;
+begin
+    if a <= 2 then
+    begin
+        write(t);
+    end
+    else
+    begin
+        read(a);
+end.

@@ -8,7 +8,7 @@
     #include <stdlib.h>	
     int yylex (void);
     void yyerror (char *);
-    int numerrors=0;
+        int numerrors=0;
     extern int num_lines;
     extern char *yytext;
 	extern int column;
@@ -324,18 +324,33 @@ numero : T_INUMBER {}
 
 %%
 
+extern FILE *yyin;
+
 int main (int argc, char *argv[])
 {
 #ifdef YYDEBUG
 	yydebug=0;
 #endif
-        yyparse();
-        if(numerrors==0)
-                printf ( "Analise Sintatica Completada\n" );
-        else
-                printf ( "Analise Sintatica Completada Com %d Erros\n", numerrors);
+    if(argc != 2) {
+        printf("Uso: %s programa.lalg\n", argv[0]);
+        return -1;
+    }
 
-        return 0;
+    FILE *entrada = fopen(argv[1], "r");
+    if(!entrada) {
+        printf("Nao foi possivel abrir o arquivo %s\n", argv[1]);
+        return -1;
+    }
+    // Lex ira ler arquivo de entrada inves do STDIN
+    yyin = entrada;
+
+    yyparse();
+    if(numerrors==0)
+        printf ( "Analise Sintatica Completada\n" );
+    else
+        printf ( "Analise Sintatica Completada Com %d Erros\n", numerrors);
+
+    return 0;
 }
 
 void yyerror (char *s)

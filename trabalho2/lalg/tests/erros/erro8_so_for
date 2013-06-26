@@ -1,0 +1,7 @@
+program prog;
+begin
+    for a:=1 to 2 do
+    begin
+	    write(a);
+    end;
+end.

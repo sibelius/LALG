@@ -1,5 +1,4 @@
-program prog;
-var a: integer;
+var a: integer; {id esperado}
 procedure meu_proc(x: real);
 var a, c: integer;
 begin
@@ -12,12 +11,9 @@ begin
 	else c:= a+x;
 end;
 begin
-	while (a > 10)     {while incorreto!}
+	while (a > 10) do
 	begin
-	    for a:=1 to 2 do
-		begin  
-   	    	    write(a);
-		end;
+	    write(a);
 	    read(a);
 	    a := a +1;
 	end;

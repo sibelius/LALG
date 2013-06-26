@@ -1,0 +1,8 @@
+program prog;
+begin
+	while (a > 10) do    {while correto???}
+	begin
+	    read(a);
+        a := a + 1;
+	end;
+end.
