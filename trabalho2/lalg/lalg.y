@@ -1,6 +1,6 @@
 %{
 	#define YYSTYPE double
-    #define YYDEBUG 0 /*For Debugging */
+    #define YYDEBUG 1 /*For Debugging */
 
 	#include <math.h>
     #include <stdio.h>
@@ -224,7 +224,7 @@ pfalsa : T_ELSE {} cmd
 /* Regra 19 <comandos> ::= <cmd> ; <comandos> | lambda */
 comandos : cmd T_SEMICOLON comandos
     //| cmd error { yyerror(";"); } comandos
-    //| error T_SEMICOLON { yyerror("cmd"); } comandos
+    | error T_SEMICOLON { yyerror("cmd"); } comandos
     | /* empty */ 
     ;
 
@@ -238,6 +238,7 @@ cmd : T_READ {} cmd_param {}
     | T_BEGIN cmd_begin {}
     | T_WHILE {} cmd_while {}
     | T_FOR {} T_ID {} T_ASSIGN expressao T_TO expressao T_DO cmd {}
+//	| error { yyerror("cmd"); }
     ;
 
 cmd_param : T_L_PAREN variaveis T_R_PAREN {}
@@ -322,7 +323,7 @@ numero : T_INUMBER {}
 int main (int argc, char *argv[])
 {
 #ifdef YYDEBUG
-	yydebug=1;
+	yydebug=0;
 #endif
         yyparse();
         if(numerrors==0)

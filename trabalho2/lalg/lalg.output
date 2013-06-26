@@ -9,25 +9,27 @@ Terminals unused in grammar
    ERR_UNKNOWN
 
 
-Estado 179conflitos: 1 de deslocamento/redução
+State 75 conflicts: 1 shift/reduce
+State 180 conflicts: 1 shift/reduce
+State 189 conflicts: 1 shift/reduce
 
 
-Gramática
+Grammar
 
     0 $accept: programa $end
 
     1 programa: "program" programa1
 
-    2 $@1: /* vazio */
+    2 $@1: /* empty */
 
     3 programa: error ";" $@1 corpo programa3
     4         | error "."
 
-    5 $@2: /* vazio */
+    5 $@2: /* empty */
 
     6 programa1: "identificador" $@2 programa2
 
-    7 $@3: /* vazio */
+    7 $@3: /* empty */
 
     8 programa1: error ";" $@3 corpo programa3
     9          | error "."
@@ -46,13 +48,13 @@ Gramática
    17 dc: dc_c dc_v dc_p
 
    18 dc_c: dc_c0 dc_c
-   19     | /* vazio */
+   19     | /* empty */
 
-   20 $@4: /* vazio */
+   20 $@4: /* empty */
 
    21 dc_c0: "const" $@4 "identificador" dc_c1
 
-   22 $@5: /* vazio */
+   22 $@5: /* empty */
 
    23 dc_c0: "const" error "=" $@5 numero ";"
    24      | "const" error ";"
@@ -67,9 +69,9 @@ Gramática
    30      | error
 
    31 dc_v: dc_v0 dc_v
-   32     | /* vazio */
+   32     | /* empty */
 
-   33 $@6: /* vazio */
+   33 $@6: /* empty */
 
    34 dc_v0: "var" variaveis $@6 ":" tipo_var dc_v1
    35      | "var" variaveis error ";"
@@ -83,46 +85,46 @@ Gramática
 
    41 variaveis: "identificador" mais_var
 
-   42 $@7: /* vazio */
+   42 $@7: /* empty */
 
    43 variaveis: error $@7 mais_var
 
    44 mais_var: "," variaveis
-   45         | /* vazio */
+   45         | /* empty */
 
-   46 $@8: /* vazio */
+   46 $@8: /* empty */
 
    47 dc_p: dc_p0 $@8 dc_p
-   48     | /* vazio */
+   48     | /* empty */
 
-   49 $@9: /* vazio */
+   49 $@9: /* empty */
 
-   50 $@10: /* vazio */
+   50 $@10: /* empty */
 
    51 dc_p0: "procedure" $@9 "identificador" parametros $@10 dc_p1
 
-   52 $@11: /* vazio */
+   52 $@11: /* empty */
 
    53 dc_p0: "procedure" error ";" $@11 corpo_p
 
    54 dc_p1: ";" corpo_p
 
-   55 $@12: /* vazio */
+   55 $@12: /* empty */
 
    56 dc_p1: error $@12 corpo_p
 
    57 parametros: "(" lista_par ")"
    58           | "(" lista_par error
-   59           | /* vazio */
+   59           | /* empty */
 
    60 lista_par: variaveis ":" tipo_var mais_par
 
    61 mais_par: ";" lista_par
-   62         | /* vazio */
+   62         | /* empty */
 
    63 corpo_p: dc_loc "begin" comandos corpo_p1
 
-   64 $@13: /* vazio */
+   64 $@13: /* empty */
 
    65 corpo_p: dc_loc error "end" $@13 corpo_p2
    66        | dc_loc error ";"
@@ -137,119 +139,120 @@ Gramática
 
    72 lista_arg: "(" argumentos ")"
    73          | "(" argumentos error
-   74          | /* vazio */
+   74          | /* empty */
 
    75 argumentos: "identificador" mais_ident
 
-   76 $@14: /* vazio */
+   76 $@14: /* empty */
 
    77 argumentos: error $@14 mais_ident
 
    78 mais_ident: ";" argumentos
-   79           | /* vazio */
+   79           | /* empty */
 
-   80 $@15: /* vazio */
+   80 $@15: /* empty */
 
    81 pfalsa: "else" $@15 cmd
-   82       | /* vazio */
+   82       | /* empty */
 
    83 comandos: cmd ";" comandos
-   84         | /* vazio */
+   84         | /* empty */
 
-   85 $@16: /* vazio */
+   85 $@16: /* empty */
 
    86 cmd: "read" $@16 cmd_param
 
-   87 $@17: /* vazio */
+   87 $@17: /* empty */
 
    88 cmd: "write" $@17 cmd_param
 
-   89 $@18: /* vazio */
+   89 $@18: /* empty */
 
    90 cmd: "if" $@18 cmd_if
 
-   91 $@19: /* vazio */
+   91 $@19: /* empty */
 
    92 cmd: "identificador" $@19 ":=" expressao
 
-   93 $@20: /* vazio */
+   93 $@20: /* empty */
 
    94 cmd: "identificador" $@20 lista_arg
    95    | "begin" cmd_begin
 
-   96 $@21: /* vazio */
+   96 $@21: /* empty */
 
    97 cmd: "while" $@21 cmd_while
 
-   98 $@22: /* vazio */
+   98 $@22: /* empty */
 
-   99 $@23: /* vazio */
+   99 $@23: /* empty */
 
   100 cmd: "for" $@22 "identificador" $@23 ":=" expressao "to" expressao "do" cmd
+  101    | error
 
-  101 cmd_param: "(" variaveis ")"
+  102 cmd_param: "(" variaveis ")"
 
-  102 $@24: /* vazio */
+  103 $@24: /* empty */
 
-  103 cmd_if: condicao "then" $@24 cmd pfalsa
+  104 cmd_if: condicao "then" $@24 cmd pfalsa
 
-  104 cmd_begin: comandos "end"
+  105 cmd_begin: comandos "end"
 
-  105 $@25: /* vazio */
+  106 $@25: /* empty */
 
-  106 cmd_while: "(" condicao ")" "do" $@25 cmd
+  107 cmd_while: "(" condicao ")" "do" $@25 cmd
 
-  107 condicao: expressao relacao expressao
+  108 condicao: expressao relacao expressao
 
-  108 relacao: "="
-  109        | "<>"
-  110        | ">="
-  111        | "<="
-  112        | ">"
-  113        | "<"
-  114        | error
+  109 relacao: "="
+  110        | "<>"
+  111        | ">="
+  112        | "<="
+  113        | ">"
+  114        | "<"
+  115        | error
 
-  115 expressao: termo outros_termos
+  116 expressao: termo outros_termos
 
-  116 op_un: "+"
-  117      | "-"
-  118      | /* vazio */
+  117 op_un: "+"
+  118      | "-"
+  119      | /* empty */
 
-  119 outros_termos: op_ad termo outros_termos
-  120              | /* vazio */
+  120 outros_termos: op_ad termo outros_termos
+  121              | /* empty */
 
-  121 op_ad: "+"
-  122      | "-"
+  122 op_ad: "+"
+  123      | "-"
 
-  123 termo: op_un fator mais_fatores
+  124 termo: op_un fator mais_fatores
 
-  124 mais_fatores: op_mul fator mais_fatores
-  125             | /* vazio */
+  125 mais_fatores: op_mul fator mais_fatores
+  126             | /* empty */
 
-  126 op_mul: "*"
-  127       | "/"
+  127 op_mul: "*"
+  128       | "/"
 
-  128 fator: "identificador"
-  129      | numero
-  130      | "(" fator_exp
-  131      | error
+  129 fator: "identificador"
+  130      | numero
+  131      | "(" fator_exp
+  132      | error
 
-  132 fator_exp: expressao ")"
-  133          | expressao error
+  133 fator_exp: expressao ")"
+  134          | expressao error
 
-  134 numero: "numero inteiro"
-  135       | "numero real"
+  135 numero: "numero inteiro"
+  136       | "numero real"
 
 
-Terminais, com as regras onde eles aparecem
+Terminals, with rules where they appear
 
 $end (0) 0
 error (256) 3 4 8 9 11 13 15 23 24 26 28 30 35 37 40 43 53 56 58 65
-    66 68 70 73 77 114 131 133
+    66 68 70 73 77 101 115 132 134
 T_EOF (258)
 "program" (259) 1
 "begin" (260) 14 63 95
-"end" (261) 15 16 65 67 104
+"end" (261) 15 16 65 67 105
 "var" (262) 34 35
 "const" (263) 21 23 24
 "real" (264) 38
@@ -259,26 +262,26 @@ T_EOF (258)
 "write" (268) 88
 "while" (269) 97
 "if" (270) 90
-"then" (271) 103
+"then" (271) 104
 "else" (272) 81
 "for" (273) 100
 "to" (274) 100
-"do" (275) 100 106
-"=" (276) 23 25 108
-"<>" (277) 109
-">=" (278) 110
-"<=" (279) 111
-">" (280) 112
-"<" (281) 113
-"+" (282) 116 121
-"-" (283) 117 122
-"*" (284) 126
-"/" (285) 127
+"do" (275) 100 107
+"=" (276) 23 25 109
+"<>" (277) 110
+">=" (278) 111
+"<=" (279) 112
+">" (280) 113
+"<" (281) 114
+"+" (282) 117 122
+"-" (283) 118 123
+"*" (284) 127
+"/" (285) 128
 ":=" (286) 92 100
 ";" (287) 3 8 10 23 24 26 28 29 35 36 53 54 61 66 68 69 78 83
 ":" (288) 34 60
-"(" (289) 57 58 72 73 101 106 130
-")" (290) 57 72 101 106 132
+"(" (289) 57 58 72 73 102 107 131
+")" (290) 57 72 102 107 133
 "," (291) 44
 "." (292) 4 9 11 12
 ERR_MF_INTEGER (293)
@@ -287,2189 +290,2206 @@ ERR_MF_ID (295)
 ERR_LONG_ID (296)
 ERR_COMMENT (297)
 ERR_UNKNOWN (298)
-"identificador" (299) 6 21 41 51 75 92 94 100 128
-"numero inteiro" (300) 134
-"numero real" (301) 135
+"identificador" (299) 6 21 41 51 75 92 94 100 129
+"numero inteiro" (300) 135
+"numero real" (301) 136
 
 
-Não-terminais com as regras onde eles aparecem
+Nonterminals, with rules where they appear
 
 $accept (47)
-    à esquerda: 0
+    on left: 0
 programa (48)
-    à esquerda: 1 3 4, à direita: 0
+    on left: 1 3 4, on right: 0
 $@1 (49)
-    à esquerda: 2, à direita: 3
+    on left: 2, on right: 3
 programa1 (50)
-    à esquerda: 6 8 9, à direita: 1
+    on left: 6 8 9, on right: 1
 $@2 (51)
-    à esquerda: 5, à direita: 6
+    on left: 5, on right: 6
 $@3 (52)
-    à esquerda: 7, à direita: 8
+    on left: 7, on right: 8
 programa2 (53)
-    à esquerda: 10 11, à direita: 6
+    on left: 10 11, on right: 6
 programa3 (54)
-    à esquerda: 12 13, à direita: 3 8 10
+    on left: 12 13, on right: 3 8 10
 corpo (55)
-    à esquerda: 14 15, à direita: 3 8 10
+    on left: 14 15, on right: 3 8 10
 corpo1 (56)
-    à esquerda: 16, à direita: 14
+    on left: 16, on right: 14
 dc (57)
-    à esquerda: 17, à direita: 14 15
+    on left: 17, on right: 14 15
 dc_c (58)
-    à esquerda: 18 19, à direita: 17 18
+    on left: 18 19, on right: 17 18
 dc_c0 (59)
-    à esquerda: 21 23 24, à direita: 18
+    on left: 21 23 24, on right: 18
 $@4 (60)
-    à esquerda: 20, à direita: 21
+    on left: 20, on right: 21
 $@5 (61)
-    à esquerda: 22, à direita: 23
+    on left: 22, on right: 23
 dc_c1 (62)
-    à esquerda: 25 26, à direita: 21
+    on left: 25 26, on right: 21
 dc_c2 (63)
-    à esquerda: 27 28, à direita: 25
+    on left: 27 28, on right: 25
 dc_c3 (64)
-    à esquerda: 29 30, à direita: 27
+    on left: 29 30, on right: 27
 dc_v (65)
-    à esquerda: 31 32, à direita: 17 31 71
+    on left: 31 32, on right: 17 31 71
 dc_v0 (66)
-    à esquerda: 34 35, à direita: 31
+    on left: 34 35, on right: 31
 $@6 (67)
-    à esquerda: 33, à direita: 34
+    on left: 33, on right: 34
 dc_v1 (68)
-    à esquerda: 36 37, à direita: 34
+    on left: 36 37, on right: 34
 tipo_var (69)
-    à esquerda: 38 39 40, à direita: 34 60
+    on left: 38 39 40, on right: 34 60
 variaveis (70)
-    à esquerda: 41 43, à direita: 34 35 44 60 101
+    on left: 41 43, on right: 34 35 44 60 102
 $@7 (71)
-    à esquerda: 42, à direita: 43
+    on left: 42, on right: 43
 mais_var (72)
-    à esquerda: 44 45, à direita: 41 43
+    on left: 44 45, on right: 41 43
 dc_p (73)
-    à esquerda: 47 48, à direita: 17 47
+    on left: 47 48, on right: 17 47
 $@8 (74)
-    à esquerda: 46, à direita: 47
+    on left: 46, on right: 47
 dc_p0 (75)
-    à esquerda: 51 53, à direita: 47
+    on left: 51 53, on right: 47
 $@9 (76)
-    à esquerda: 49, à direita: 51
+    on left: 49, on right: 51
 $@10 (77)
-    à esquerda: 50, à direita: 51
+    on left: 50, on right: 51
 $@11 (78)
-    à esquerda: 52, à direita: 53
+    on left: 52, on right: 53
 dc_p1 (79)
-    à esquerda: 54 56, à direita: 51
+    on left: 54 56, on right: 51
 $@12 (80)
-    à esquerda: 55, à direita: 56
+    on left: 55, on right: 56
 parametros (81)
-    à esquerda: 57 58 59, à direita: 51
+    on left: 57 58 59, on right: 51
 lista_par (82)
-    à esquerda: 60, à direita: 57 58 61
+    on left: 60, on right: 57 58 61
 mais_par (83)
-    à esquerda: 61 62, à direita: 60
+    on left: 61 62, on right: 60
 corpo_p (84)
-    à esquerda: 63 65 66, à direita: 53 54 56
+    on left: 63 65 66, on right: 53 54 56
 $@13 (85)
-    à esquerda: 64, à direita: 65
+    on left: 64, on right: 65
 corpo_p1 (86)
-    à esquerda: 67 68, à direita: 63
+    on left: 67 68, on right: 63
 corpo_p2 (87)
-    à esquerda: 69 70, à direita: 65 67
+    on left: 69 70, on right: 65 67
 dc_loc (88)
-    à esquerda: 71, à direita: 63 65 66
+    on left: 71, on right: 63 65 66
 lista_arg (89)
-    à esquerda: 72 73 74, à direita: 94
+    on left: 72 73 74, on right: 94
 argumentos (90)
-    à esquerda: 75 77, à direita: 72 73 78
+    on left: 75 77, on right: 72 73 78
 $@14 (91)
-    à esquerda: 76, à direita: 77
+    on left: 76, on right: 77
 mais_ident (92)
-    à esquerda: 78 79, à direita: 75 77
+    on left: 78 79, on right: 75 77
 pfalsa (93)
-    à esquerda: 81 82, à direita: 103
+    on left: 81 82, on right: 104
 $@15 (94)
-    à esquerda: 80, à direita: 81
+    on left: 80, on right: 81
 comandos (95)
-    à esquerda: 83 84, à direita: 14 63 83 104
+    on left: 83 84, on right: 14 63 83 105
 cmd (96)
-    à esquerda: 86 88 90 92 94 95 97 100, à direita: 81 83 100 103
-    106
+    on left: 86 88 90 92 94 95 97 100 101, on right: 81 83 100 104
+    107
 $@16 (97)
-    à esquerda: 85, à direita: 86
+    on left: 85, on right: 86
 $@17 (98)
-    à esquerda: 87, à direita: 88
+    on left: 87, on right: 88
 $@18 (99)
-    à esquerda: 89, à direita: 90
+    on left: 89, on right: 90
 $@19 (100)
-    à esquerda: 91, à direita: 92
+    on left: 91, on right: 92
 $@20 (101)
-    à esquerda: 93, à direita: 94
+    on left: 93, on right: 94
 $@21 (102)
-    à esquerda: 96, à direita: 97
+    on left: 96, on right: 97
 $@22 (103)
-    à esquerda: 98, à direita: 100
+    on left: 98, on right: 100
 $@23 (104)
-    à esquerda: 99, à direita: 100
+    on left: 99, on right: 100
 cmd_param (105)
-    à esquerda: 101, à direita: 86 88
+    on left: 102, on right: 86 88
 cmd_if (106)
-    à esquerda: 103, à direita: 90
+    on left: 104, on right: 90
 $@24 (107)
-    à esquerda: 102, à direita: 103
+    on left: 103, on right: 104
 cmd_begin (108)
-    à esquerda: 104, à direita: 95
+    on left: 105, on right: 95
 cmd_while (109)
-    à esquerda: 106, à direita: 97
+    on left: 107, on right: 97
 $@25 (110)
-    à esquerda: 105, à direita: 106
+    on left: 106, on right: 107
 condicao (111)
-    à esquerda: 107, à direita: 103 106
+    on left: 108, on right: 104 107
 relacao (112)
-    à esquerda: 108 109 110 111 112 113 114, à direita: 107
+    on left: 109 110 111 112 113 114 115, on right: 108
 expressao (113)
-    à esquerda: 115, à direita: 92 100 107 132 133
+    on left: 116, on right: 92 100 108 133 134
 op_un (114)
-    à esquerda: 116 117 118, à direita: 123
+    on left: 117 118 119, on right: 124
 outros_termos (115)
-    à esquerda: 119 120, à direita: 115 119
+    on left: 120 121, on right: 116 120
 op_ad (116)
-    à esquerda: 121 122, à direita: 119
+    on left: 122 123, on right: 120
 termo (117)
-    à esquerda: 123, à direita: 115 119
+    on left: 124, on right: 116 120
 mais_fatores (118)
-    à esquerda: 124 125, à direita: 123 124
+    on left: 125 126, on right: 124 125
 op_mul (119)
-    à esquerda: 126 127, à direita: 124
+    on left: 127 128, on right: 125
 fator (120)
-    à esquerda: 128 129 130 131, à direita: 123 124
+    on left: 129 130 131 132, on right: 124 125
 fator_exp (121)
-    à esquerda: 132 133, à direita: 130
+    on left: 133 134, on right: 131
 numero (122)
-    à esquerda: 134 135, à direita: 23 27 129
+    on left: 135 136, on right: 23 27 130
 
 
-estado 0
+state 0
 
     0 $accept: . programa $end
 
-    error      deslocar, e ir ao estado 1
-    "program"  deslocar, e ir ao estado 2
+    error      shift, and go to state 1
+    "program"  shift, and go to state 2
 
-    programa  ir ao estado 3
+    programa  go to state 3
 
 
-estado 1
+state 1
 
     3 programa: error . ";" $@1 corpo programa3
     4         | error . "."
 
-    ";"  deslocar, e ir ao estado 4
-    "."  deslocar, e ir ao estado 5
+    ";"  shift, and go to state 4
+    "."  shift, and go to state 5
 
 
-estado 2
+state 2
 
     1 programa: "program" . programa1
 
-    error            deslocar, e ir ao estado 6
-    "identificador"  deslocar, e ir ao estado 7
+    error            shift, and go to state 6
+    "identificador"  shift, and go to state 7
 
-    programa1  ir ao estado 8
+    programa1  go to state 8
 
 
-estado 3
+state 3
 
     0 $accept: programa . $end
 
-    $end  deslocar, e ir ao estado 9
+    $end  shift, and go to state 9
 
 
-estado 4
+state 4
 
     3 programa: error ";" . $@1 corpo programa3
 
-    $padrão  reduzir usando a regra 2 ($@1)
+    $default  reduce using rule 2 ($@1)
 
-    $@1  ir ao estado 10
+    $@1  go to state 10
 
 
-estado 5
+state 5
 
     4 programa: error "." .
 
-    $padrão  reduzir usando a regra 4 (programa)
+    $default  reduce using rule 4 (programa)
 
 
-estado 6
+state 6
 
     8 programa1: error . ";" $@3 corpo programa3
     9          | error . "."
 
-    ";"  deslocar, e ir ao estado 11
-    "."  deslocar, e ir ao estado 12
+    ";"  shift, and go to state 11
+    "."  shift, and go to state 12
 
 
-estado 7
+state 7
 
     6 programa1: "identificador" . $@2 programa2
 
-    $padrão  reduzir usando a regra 5 ($@2)
+    $default  reduce using rule 5 ($@2)
 
-    $@2  ir ao estado 13
+    $@2  go to state 13
 
 
-estado 8
+state 8
 
     1 programa: "program" programa1 .
 
-    $padrão  reduzir usando a regra 1 (programa)
+    $default  reduce using rule 1 (programa)
 
 
-estado 9
+state 9
 
     0 $accept: programa $end .
 
-    $padrão  aceitar
+    $default  accept
 
 
-estado 10
+state 10
 
     3 programa: error ";" $@1 . corpo programa3
 
-    "const"  deslocar, e ir ao estado 14
+    "const"  shift, and go to state 14
 
-    $padrão  reduzir usando a regra 19 (dc_c)
+    $default  reduce using rule 19 (dc_c)
 
-    corpo  ir ao estado 15
-    dc     ir ao estado 16
-    dc_c   ir ao estado 17
-    dc_c0  ir ao estado 18
+    corpo  go to state 15
+    dc     go to state 16
+    dc_c   go to state 17
+    dc_c0  go to state 18
 
 
-estado 11
+state 11
 
     8 programa1: error ";" . $@3 corpo programa3
 
-    $padrão  reduzir usando a regra 7 ($@3)
+    $default  reduce using rule 7 ($@3)
 
-    $@3  ir ao estado 19
+    $@3  go to state 19
 
 
-estado 12
+state 12
 
     9 programa1: error "." .
 
-    $padrão  reduzir usando a regra 9 (programa1)
+    $default  reduce using rule 9 (programa1)
 
 
-estado 13
+state 13
 
     6 programa1: "identificador" $@2 . programa2
 
-    error  deslocar, e ir ao estado 20
-    ";"    deslocar, e ir ao estado 21
+    error  shift, and go to state 20
+    ";"    shift, and go to state 21
 
-    programa2  ir ao estado 22
+    programa2  go to state 22
 
 
-estado 14
+state 14
 
    21 dc_c0: "const" . $@4 "identificador" dc_c1
    23      | "const" . error "=" $@5 numero ";"
    24      | "const" . error ";"
 
-    error  deslocar, e ir ao estado 23
+    error  shift, and go to state 23
 
-    "identificador"  reduzir usando a regra 20 ($@4)
+    "identificador"  reduce using rule 20 ($@4)
 
-    $@4  ir ao estado 24
+    $@4  go to state 24
 
 
-estado 15
+state 15
 
     3 programa: error ";" $@1 corpo . programa3
 
-    error  deslocar, e ir ao estado 25
-    "."    deslocar, e ir ao estado 26
+    error  shift, and go to state 25
+    "."    shift, and go to state 26
 
-    programa3  ir ao estado 27
+    programa3  go to state 27
 
 
-estado 16
+state 16
 
    14 corpo: dc . "begin" comandos corpo1
    15      | dc . error "end"
 
-    error    deslocar, e ir ao estado 28
-    "begin"  deslocar, e ir ao estado 29
+    error    shift, and go to state 28
+    "begin"  shift, and go to state 29
 
 
-estado 17
+state 17
 
    17 dc: dc_c . dc_v dc_p
 
-    "var"  deslocar, e ir ao estado 30
+    "var"  shift, and go to state 30
 
-    $padrão  reduzir usando a regra 32 (dc_v)
+    $default  reduce using rule 32 (dc_v)
 
-    dc_v   ir ao estado 31
-    dc_v0  ir ao estado 32
+    dc_v   go to state 31
+    dc_v0  go to state 32
 
 
-estado 18
+state 18
 
    18 dc_c: dc_c0 . dc_c
 
-    "const"  deslocar, e ir ao estado 14
+    "const"  shift, and go to state 14
 
-    $padrão  reduzir usando a regra 19 (dc_c)
+    $default  reduce using rule 19 (dc_c)
 
-    dc_c   ir ao estado 33
-    dc_c0  ir ao estado 18
+    dc_c   go to state 33
+    dc_c0  go to state 18
 
 
-estado 19
+state 19
 
     8 programa1: error ";" $@3 . corpo programa3
 
-    "const"  deslocar, e ir ao estado 14
+    "const"  shift, and go to state 14
 
-    $padrão  reduzir usando a regra 19 (dc_c)
+    $default  reduce using rule 19 (dc_c)
 
-    corpo  ir ao estado 34
-    dc     ir ao estado 16
-    dc_c   ir ao estado 17
-    dc_c0  ir ao estado 18
+    corpo  go to state 34
+    dc     go to state 16
+    dc_c   go to state 17
+    dc_c0  go to state 18
 
 
-estado 20
+state 20
 
    11 programa2: error . "."
 
-    "."  deslocar, e ir ao estado 35
+    "."  shift, and go to state 35
 
 
-estado 21
+state 21
 
    10 programa2: ";" . corpo programa3
 
-    "const"  deslocar, e ir ao estado 14
+    "const"  shift, and go to state 14
 
-    $padrão  reduzir usando a regra 19 (dc_c)
+    $default  reduce using rule 19 (dc_c)
 
-    corpo  ir ao estado 36
-    dc     ir ao estado 16
-    dc_c   ir ao estado 17
-    dc_c0  ir ao estado 18
+    corpo  go to state 36
+    dc     go to state 16
+    dc_c   go to state 17
+    dc_c0  go to state 18
 
 
-estado 22
+state 22
 
     6 programa1: "identificador" $@2 programa2 .
 
-    $padrão  reduzir usando a regra 6 (programa1)
+    $default  reduce using rule 6 (programa1)
 
 
-estado 23
+state 23
 
    23 dc_c0: "const" error . "=" $@5 numero ";"
    24      | "const" error . ";"
 
-    "="  deslocar, e ir ao estado 37
-    ";"  deslocar, e ir ao estado 38
+    "="  shift, and go to state 37
+    ";"  shift, and go to state 38
 
 
-estado 24
+state 24
 
    21 dc_c0: "const" $@4 . "identificador" dc_c1
 
-    "identificador"  deslocar, e ir ao estado 39
+    "identificador"  shift, and go to state 39
 
 
-estado 25
+state 25
 
    13 programa3: error .
 
-    $padrão  reduzir usando a regra 13 (programa3)
+    $default  reduce using rule 13 (programa3)
 
 
-estado 26
+state 26
 
    12 programa3: "." .
 
-    $padrão  reduzir usando a regra 12 (programa3)
+    $default  reduce using rule 12 (programa3)
 
 
-estado 27
+state 27
 
     3 programa: error ";" $@1 corpo programa3 .
 
-    $padrão  reduzir usando a regra 3 (programa)
+    $default  reduce using rule 3 (programa)
 
 
-estado 28
+state 28
 
    15 corpo: dc error . "end"
 
-    "end"  deslocar, e ir ao estado 40
+    "end"  shift, and go to state 40
 
 
-estado 29
+state 29
 
    14 corpo: dc "begin" . comandos corpo1
 
-    "begin"          deslocar, e ir ao estado 41
-    "read"           deslocar, e ir ao estado 42
-    "write"          deslocar, e ir ao estado 43
-    "while"          deslocar, e ir ao estado 44
-    "if"             deslocar, e ir ao estado 45
-    "for"            deslocar, e ir ao estado 46
-    "identificador"  deslocar, e ir ao estado 47
+    error            shift, and go to state 41
+    "begin"          shift, and go to state 42
+    "read"           shift, and go to state 43
+    "write"          shift, and go to state 44
+    "while"          shift, and go to state 45
+    "if"             shift, and go to state 46
+    "for"            shift, and go to state 47
+    "identificador"  shift, and go to state 48
 
-    $padrão  reduzir usando a regra 84 (comandos)
+    "end"  reduce using rule 84 (comandos)
 
-    comandos  ir ao estado 48
-    cmd       ir ao estado 49
+    comandos  go to state 49
+    cmd       go to state 50
 
 
-estado 30
+state 30
 
    34 dc_v0: "var" . variaveis $@6 ":" tipo_var dc_v1
    35      | "var" . variaveis error ";"
 
-    error            deslocar, e ir ao estado 50
-    "identificador"  deslocar, e ir ao estado 51
+    error            shift, and go to state 51
+    "identificador"  shift, and go to state 52
 
-    variaveis  ir ao estado 52
+    variaveis  go to state 53
 
 
-estado 31
+state 31
 
    17 dc: dc_c dc_v . dc_p
 
-    "procedure"  deslocar, e ir ao estado 53
+    "procedure"  shift, and go to state 54
 
-    $padrão  reduzir usando a regra 48 (dc_p)
+    $default  reduce using rule 48 (dc_p)
 
-    dc_p   ir ao estado 54
-    dc_p0  ir ao estado 55
+    dc_p   go to state 55
+    dc_p0  go to state 56
 
 
-estado 32
+state 32
 
    31 dc_v: dc_v0 . dc_v
 
-    "var"  deslocar, e ir ao estado 30
+    "var"  shift, and go to state 30
 
-    $padrão  reduzir usando a regra 32 (dc_v)
+    $default  reduce using rule 32 (dc_v)
 
-    dc_v   ir ao estado 56
-    dc_v0  ir ao estado 32
+    dc_v   go to state 57
+    dc_v0  go to state 32
 
 
-estado 33
+state 33
 
    18 dc_c: dc_c0 dc_c .
 
-    $padrão  reduzir usando a regra 18 (dc_c)
+    $default  reduce using rule 18 (dc_c)
 
 
-estado 34
+state 34
 
     8 programa1: error ";" $@3 corpo . programa3
 
-    error  deslocar, e ir ao estado 25
-    "."    deslocar, e ir ao estado 26
+    error  shift, and go to state 25
+    "."    shift, and go to state 26
 
-    programa3  ir ao estado 57
+    programa3  go to state 58
 
 
-estado 35
+state 35
 
    11 programa2: error "." .
 
-    $padrão  reduzir usando a regra 11 (programa2)
+    $default  reduce using rule 11 (programa2)
 
 
-estado 36
+state 36
 
    10 programa2: ";" corpo . programa3
 
-    error  deslocar, e ir ao estado 25
-    "."    deslocar, e ir ao estado 26
+    error  shift, and go to state 25
+    "."    shift, and go to state 26
 
-    programa3  ir ao estado 58
+    programa3  go to state 59
 
 
-estado 37
+state 37
 
    23 dc_c0: "const" error "=" . $@5 numero ";"
 
-    $padrão  reduzir usando a regra 22 ($@5)
+    $default  reduce using rule 22 ($@5)
 
-    $@5  ir ao estado 59
+    $@5  go to state 60
 
 
-estado 38
+state 38
 
    24 dc_c0: "const" error ";" .
 
-    $padrão  reduzir usando a regra 24 (dc_c0)
+    $default  reduce using rule 24 (dc_c0)
 
 
-estado 39
+state 39
 
    21 dc_c0: "const" $@4 "identificador" . dc_c1
 
-    error  deslocar, e ir ao estado 60
-    "="    deslocar, e ir ao estado 61
+    error  shift, and go to state 61
+    "="    shift, and go to state 62
 
-    dc_c1  ir ao estado 62
+    dc_c1  go to state 63
 
 
-estado 40
+state 40
 
    15 corpo: dc error "end" .
 
-    $padrão  reduzir usando a regra 15 (corpo)
+    $default  reduce using rule 15 (corpo)
 
 
-estado 41
+state 41
+
+  101 cmd: error .
+
+    $default  reduce using rule 101 (cmd)
+
+
+state 42
 
    95 cmd: "begin" . cmd_begin
 
-    "begin"          deslocar, e ir ao estado 41
-    "read"           deslocar, e ir ao estado 42
-    "write"          deslocar, e ir ao estado 43
-    "while"          deslocar, e ir ao estado 44
-    "if"             deslocar, e ir ao estado 45
-    "for"            deslocar, e ir ao estado 46
-    "identificador"  deslocar, e ir ao estado 47
+    error            shift, and go to state 41
+    "begin"          shift, and go to state 42
+    "read"           shift, and go to state 43
+    "write"          shift, and go to state 44
+    "while"          shift, and go to state 45
+    "if"             shift, and go to state 46
+    "for"            shift, and go to state 47
+    "identificador"  shift, and go to state 48
 
-    $padrão  reduzir usando a regra 84 (comandos)
+    "end"  reduce using rule 84 (comandos)
 
-    comandos   ir ao estado 63
-    cmd        ir ao estado 49
-    cmd_begin  ir ao estado 64
+    comandos   go to state 64
+    cmd        go to state 50
+    cmd_begin  go to state 65
 
 
-estado 42
+state 43
 
    86 cmd: "read" . $@16 cmd_param
 
-    $padrão  reduzir usando a regra 85 ($@16)
+    $default  reduce using rule 85 ($@16)
 
-    $@16  ir ao estado 65
+    $@16  go to state 66
 
 
-estado 43
+state 44
 
    88 cmd: "write" . $@17 cmd_param
 
-    $padrão  reduzir usando a regra 87 ($@17)
+    $default  reduce using rule 87 ($@17)
 
-    $@17  ir ao estado 66
+    $@17  go to state 67
 
 
-estado 44
+state 45
 
    97 cmd: "while" . $@21 cmd_while
 
-    $padrão  reduzir usando a regra 96 ($@21)
+    $default  reduce using rule 96 ($@21)
 
-    $@21  ir ao estado 67
+    $@21  go to state 68
 
 
-estado 45
+state 46
 
    90 cmd: "if" . $@18 cmd_if
 
-    $padrão  reduzir usando a regra 89 ($@18)
+    $default  reduce using rule 89 ($@18)
 
-    $@18  ir ao estado 68
+    $@18  go to state 69
 
 
-estado 46
+state 47
 
   100 cmd: "for" . $@22 "identificador" $@23 ":=" expressao "to" expressao "do" cmd
 
-    $padrão  reduzir usando a regra 98 ($@22)
+    $default  reduce using rule 98 ($@22)
 
-    $@22  ir ao estado 69
+    $@22  go to state 70
 
 
-estado 47
+state 48
 
    92 cmd: "identificador" . $@19 ":=" expressao
    94    | "identificador" . $@20 lista_arg
 
-    ":="      reduzir usando a regra 91 ($@19)
-    $padrão  reduzir usando a regra 93 ($@20)
+    ":="      reduce using rule 91 ($@19)
+    $default  reduce using rule 93 ($@20)
 
-    $@19  ir ao estado 70
-    $@20  ir ao estado 71
+    $@19  go to state 71
+    $@20  go to state 72
 
 
-estado 48
+state 49
 
    14 corpo: dc "begin" comandos . corpo1
 
-    "end"  deslocar, e ir ao estado 72
+    "end"  shift, and go to state 73
 
-    corpo1  ir ao estado 73
+    corpo1  go to state 74
 
 
-estado 49
+state 50
 
    83 comandos: cmd . ";" comandos
 
-    ";"  deslocar, e ir ao estado 74
+    ";"  shift, and go to state 75
 
 
-estado 50
+state 51
 
    43 variaveis: error . $@7 mais_var
 
-    $padrão  reduzir usando a regra 42 ($@7)
+    $default  reduce using rule 42 ($@7)
 
-    $@7  ir ao estado 75
+    $@7  go to state 76
 
 
-estado 51
+state 52
 
    41 variaveis: "identificador" . mais_var
 
-    ","  deslocar, e ir ao estado 76
+    ","  shift, and go to state 77
 
-    $padrão  reduzir usando a regra 45 (mais_var)
+    $default  reduce using rule 45 (mais_var)
 
-    mais_var  ir ao estado 77
+    mais_var  go to state 78
 
 
-estado 52
+state 53
 
    34 dc_v0: "var" variaveis . $@6 ":" tipo_var dc_v1
    35      | "var" variaveis . error ";"
 
-    error  deslocar, e ir ao estado 78
+    error  shift, and go to state 79
 
-    ":"  reduzir usando a regra 33 ($@6)
+    ":"  reduce using rule 33 ($@6)
 
-    $@6  ir ao estado 79
+    $@6  go to state 80
 
 
-estado 53
+state 54
 
    51 dc_p0: "procedure" . $@9 "identificador" parametros $@10 dc_p1
    53      | "procedure" . error ";" $@11 corpo_p
 
-    error  deslocar, e ir ao estado 80
+    error  shift, and go to state 81
 
-    "identificador"  reduzir usando a regra 49 ($@9)
+    "identificador"  reduce using rule 49 ($@9)
 
-    $@9  ir ao estado 81
+    $@9  go to state 82
 
 
-estado 54
+state 55
 
    17 dc: dc_c dc_v dc_p .
 
-    $padrão  reduzir usando a regra 17 (dc)
+    $default  reduce using rule 17 (dc)
 
 
-estado 55
+state 56
 
    47 dc_p: dc_p0 . $@8 dc_p
 
-    $padrão  reduzir usando a regra 46 ($@8)
+    $default  reduce using rule 46 ($@8)
 
-    $@8  ir ao estado 82
+    $@8  go to state 83
 
 
-estado 56
+state 57
 
    31 dc_v: dc_v0 dc_v .
 
-    $padrão  reduzir usando a regra 31 (dc_v)
+    $default  reduce using rule 31 (dc_v)
 
 
-estado 57
+state 58
 
     8 programa1: error ";" $@3 corpo programa3 .
 
-    $padrão  reduzir usando a regra 8 (programa1)
+    $default  reduce using rule 8 (programa1)
 
 
-estado 58
+state 59
 
    10 programa2: ";" corpo programa3 .
 
-    $padrão  reduzir usando a regra 10 (programa2)
+    $default  reduce using rule 10 (programa2)
 
 
-estado 59
+state 60
 
    23 dc_c0: "const" error "=" $@5 . numero ";"
 
-    "numero inteiro"  deslocar, e ir ao estado 83
-    "numero real"     deslocar, e ir ao estado 84
+    "numero inteiro"  shift, and go to state 84
+    "numero real"     shift, and go to state 85
 
-    numero  ir ao estado 85
+    numero  go to state 86
 
 
-estado 60
+state 61
 
    26 dc_c1: error . ";"
 
-    ";"  deslocar, e ir ao estado 86
+    ";"  shift, and go to state 87
 
 
-estado 61
+state 62
 
    25 dc_c1: "=" . dc_c2
 
-    error             deslocar, e ir ao estado 87
-    "numero inteiro"  deslocar, e ir ao estado 83
-    "numero real"     deslocar, e ir ao estado 84
+    error             shift, and go to state 88
+    "numero inteiro"  shift, and go to state 84
+    "numero real"     shift, and go to state 85
 
-    dc_c2   ir ao estado 88
-    numero  ir ao estado 89
+    dc_c2   go to state 89
+    numero  go to state 90
 
 
-estado 62
+state 63
 
    21 dc_c0: "const" $@4 "identificador" dc_c1 .
 
-    $padrão  reduzir usando a regra 21 (dc_c0)
+    $default  reduce using rule 21 (dc_c0)
 
 
-estado 63
+state 64
 
-  104 cmd_begin: comandos . "end"
+  105 cmd_begin: comandos . "end"
 
-    "end"  deslocar, e ir ao estado 90
+    "end"  shift, and go to state 91
 
 
-estado 64
+state 65
 
    95 cmd: "begin" cmd_begin .
 
-    $padrão  reduzir usando a regra 95 (cmd)
+    $default  reduce using rule 95 (cmd)
 
 
-estado 65
+state 66
 
    86 cmd: "read" $@16 . cmd_param
 
-    "("  deslocar, e ir ao estado 91
+    "("  shift, and go to state 92
 
-    cmd_param  ir ao estado 92
+    cmd_param  go to state 93
 
 
-estado 66
+state 67
 
    88 cmd: "write" $@17 . cmd_param
 
-    "("  deslocar, e ir ao estado 91
+    "("  shift, and go to state 92
 
-    cmd_param  ir ao estado 93
+    cmd_param  go to state 94
 
 
-estado 67
+state 68
 
    97 cmd: "while" $@21 . cmd_while
 
-    "("  deslocar, e ir ao estado 94
+    "("  shift, and go to state 95
 
-    cmd_while  ir ao estado 95
+    cmd_while  go to state 96
 
 
-estado 68
+state 69
 
    90 cmd: "if" $@18 . cmd_if
 
-    "+"  deslocar, e ir ao estado 96
-    "-"  deslocar, e ir ao estado 97
+    "+"  shift, and go to state 97
+    "-"  shift, and go to state 98
 
-    $padrão  reduzir usando a regra 118 (op_un)
+    $default  reduce using rule 119 (op_un)
 
-    cmd_if     ir ao estado 98
-    condicao   ir ao estado 99
-    expressao  ir ao estado 100
-    op_un      ir ao estado 101
-    termo      ir ao estado 102
+    cmd_if     go to state 99
+    condicao   go to state 100
+    expressao  go to state 101
+    op_un      go to state 102
+    termo      go to state 103
 
 
-estado 69
+state 70
 
   100 cmd: "for" $@22 . "identificador" $@23 ":=" expressao "to" expressao "do" cmd
 
-    "identificador"  deslocar, e ir ao estado 103
+    "identificador"  shift, and go to state 104
 
 
-estado 70
+state 71
 
    92 cmd: "identificador" $@19 . ":=" expressao
 
-    ":="  deslocar, e ir ao estado 104
+    ":="  shift, and go to state 105
 
 
-estado 71
+state 72
 
    94 cmd: "identificador" $@20 . lista_arg
 
-    "("  deslocar, e ir ao estado 105
+    "("  shift, and go to state 106
 
-    $padrão  reduzir usando a regra 74 (lista_arg)
+    $default  reduce using rule 74 (lista_arg)
 
-    lista_arg  ir ao estado 106
+    lista_arg  go to state 107
 
 
-estado 72
+state 73
 
    16 corpo1: "end" .
 
-    $padrão  reduzir usando a regra 16 (corpo1)
+    $default  reduce using rule 16 (corpo1)
 
 
-estado 73
+state 74
 
    14 corpo: dc "begin" comandos corpo1 .
 
-    $padrão  reduzir usando a regra 14 (corpo)
+    $default  reduce using rule 14 (corpo)
 
 
-estado 74
+state 75
 
    83 comandos: cmd ";" . comandos
 
-    "begin"          deslocar, e ir ao estado 41
-    "read"           deslocar, e ir ao estado 42
-    "write"          deslocar, e ir ao estado 43
-    "while"          deslocar, e ir ao estado 44
-    "if"             deslocar, e ir ao estado 45
-    "for"            deslocar, e ir ao estado 46
-    "identificador"  deslocar, e ir ao estado 47
+    error            shift, and go to state 41
+    "begin"          shift, and go to state 42
+    "read"           shift, and go to state 43
+    "write"          shift, and go to state 44
+    "while"          shift, and go to state 45
+    "if"             shift, and go to state 46
+    "for"            shift, and go to state 47
+    "identificador"  shift, and go to state 48
 
-    $padrão  reduzir usando a regra 84 (comandos)
+    error  [reduce using rule 84 (comandos)]
+    "end"  reduce using rule 84 (comandos)
 
-    comandos  ir ao estado 107
-    cmd       ir ao estado 49
+    comandos  go to state 108
+    cmd       go to state 50
 
 
-estado 75
+state 76
 
    43 variaveis: error $@7 . mais_var
 
-    ","  deslocar, e ir ao estado 76
+    ","  shift, and go to state 77
 
-    $padrão  reduzir usando a regra 45 (mais_var)
+    $default  reduce using rule 45 (mais_var)
 
-    mais_var  ir ao estado 108
+    mais_var  go to state 109
 
 
-estado 76
+state 77
 
    44 mais_var: "," . variaveis
 
-    error            deslocar, e ir ao estado 50
-    "identificador"  deslocar, e ir ao estado 51
+    error            shift, and go to state 51
+    "identificador"  shift, and go to state 52
 
-    variaveis  ir ao estado 109
+    variaveis  go to state 110
 
 
-estado 77
+state 78
 
    41 variaveis: "identificador" mais_var .
 
-    $padrão  reduzir usando a regra 41 (variaveis)
+    $default  reduce using rule 41 (variaveis)
 
 
-estado 78
+state 79
 
    35 dc_v0: "var" variaveis error . ";"
 
-    ";"  deslocar, e ir ao estado 110
+    ";"  shift, and go to state 111
 
 
-estado 79
+state 80
 
    34 dc_v0: "var" variaveis $@6 . ":" tipo_var dc_v1
 
-    ":"  deslocar, e ir ao estado 111
+    ":"  shift, and go to state 112
 
 
-estado 80
+state 81
 
    53 dc_p0: "procedure" error . ";" $@11 corpo_p
 
-    ";"  deslocar, e ir ao estado 112
+    ";"  shift, and go to state 113
 
 
-estado 81
+state 82
 
    51 dc_p0: "procedure" $@9 . "identificador" parametros $@10 dc_p1
 
-    "identificador"  deslocar, e ir ao estado 113
+    "identificador"  shift, and go to state 114
 
 
-estado 82
+state 83
 
    47 dc_p: dc_p0 $@8 . dc_p
 
-    "procedure"  deslocar, e ir ao estado 53
+    "procedure"  shift, and go to state 54
 
-    $padrão  reduzir usando a regra 48 (dc_p)
+    $default  reduce using rule 48 (dc_p)
 
-    dc_p   ir ao estado 114
-    dc_p0  ir ao estado 55
-
-
-estado 83
-
-  134 numero: "numero inteiro" .
-
-    $padrão  reduzir usando a regra 134 (numero)
+    dc_p   go to state 115
+    dc_p0  go to state 56
 
 
-estado 84
+state 84
 
-  135 numero: "numero real" .
+  135 numero: "numero inteiro" .
 
-    $padrão  reduzir usando a regra 135 (numero)
+    $default  reduce using rule 135 (numero)
 
 
-estado 85
+state 85
+
+  136 numero: "numero real" .
+
+    $default  reduce using rule 136 (numero)
+
+
+state 86
 
    23 dc_c0: "const" error "=" $@5 numero . ";"
 
-    ";"  deslocar, e ir ao estado 115
+    ";"  shift, and go to state 116
 
 
-estado 86
+state 87
 
    26 dc_c1: error ";" .
 
-    $padrão  reduzir usando a regra 26 (dc_c1)
+    $default  reduce using rule 26 (dc_c1)
 
 
-estado 87
+state 88
 
    28 dc_c2: error . ";"
 
-    ";"  deslocar, e ir ao estado 116
+    ";"  shift, and go to state 117
 
 
-estado 88
+state 89
 
    25 dc_c1: "=" dc_c2 .
 
-    $padrão  reduzir usando a regra 25 (dc_c1)
+    $default  reduce using rule 25 (dc_c1)
 
 
-estado 89
+state 90
 
    27 dc_c2: numero . dc_c3
 
-    error  deslocar, e ir ao estado 117
-    ";"    deslocar, e ir ao estado 118
+    error  shift, and go to state 118
+    ";"    shift, and go to state 119
 
-    dc_c3  ir ao estado 119
-
-
-estado 90
-
-  104 cmd_begin: comandos "end" .
-
-    $padrão  reduzir usando a regra 104 (cmd_begin)
+    dc_c3  go to state 120
 
 
-estado 91
+state 91
 
-  101 cmd_param: "(" . variaveis ")"
+  105 cmd_begin: comandos "end" .
 
-    error            deslocar, e ir ao estado 50
-    "identificador"  deslocar, e ir ao estado 51
-
-    variaveis  ir ao estado 120
+    $default  reduce using rule 105 (cmd_begin)
 
 
-estado 92
+state 92
+
+  102 cmd_param: "(" . variaveis ")"
+
+    error            shift, and go to state 51
+    "identificador"  shift, and go to state 52
+
+    variaveis  go to state 121
+
+
+state 93
 
    86 cmd: "read" $@16 cmd_param .
 
-    $padrão  reduzir usando a regra 86 (cmd)
+    $default  reduce using rule 86 (cmd)
 
 
-estado 93
+state 94
 
    88 cmd: "write" $@17 cmd_param .
 
-    $padrão  reduzir usando a regra 88 (cmd)
+    $default  reduce using rule 88 (cmd)
 
 
-estado 94
+state 95
 
-  106 cmd_while: "(" . condicao ")" "do" $@25 cmd
+  107 cmd_while: "(" . condicao ")" "do" $@25 cmd
 
-    "+"  deslocar, e ir ao estado 96
-    "-"  deslocar, e ir ao estado 97
+    "+"  shift, and go to state 97
+    "-"  shift, and go to state 98
 
-    $padrão  reduzir usando a regra 118 (op_un)
+    $default  reduce using rule 119 (op_un)
 
-    condicao   ir ao estado 121
-    expressao  ir ao estado 100
-    op_un      ir ao estado 101
-    termo      ir ao estado 102
+    condicao   go to state 122
+    expressao  go to state 101
+    op_un      go to state 102
+    termo      go to state 103
 
 
-estado 95
+state 96
 
    97 cmd: "while" $@21 cmd_while .
 
-    $padrão  reduzir usando a regra 97 (cmd)
+    $default  reduce using rule 97 (cmd)
 
 
-estado 96
+state 97
 
-  116 op_un: "+" .
+  117 op_un: "+" .
 
-    $padrão  reduzir usando a regra 116 (op_un)
-
-
-estado 97
-
-  117 op_un: "-" .
-
-    $padrão  reduzir usando a regra 117 (op_un)
+    $default  reduce using rule 117 (op_un)
 
 
-estado 98
+state 98
+
+  118 op_un: "-" .
+
+    $default  reduce using rule 118 (op_un)
+
+
+state 99
 
    90 cmd: "if" $@18 cmd_if .
 
-    $padrão  reduzir usando a regra 90 (cmd)
+    $default  reduce using rule 90 (cmd)
 
 
-estado 99
+state 100
 
-  103 cmd_if: condicao . "then" $@24 cmd pfalsa
+  104 cmd_if: condicao . "then" $@24 cmd pfalsa
 
-    "then"  deslocar, e ir ao estado 122
-
-
-estado 100
-
-  107 condicao: expressao . relacao expressao
-
-    error  deslocar, e ir ao estado 123
-    "="    deslocar, e ir ao estado 124
-    "<>"   deslocar, e ir ao estado 125
-    ">="   deslocar, e ir ao estado 126
-    "<="   deslocar, e ir ao estado 127
-    ">"    deslocar, e ir ao estado 128
-    "<"    deslocar, e ir ao estado 129
-
-    relacao  ir ao estado 130
+    "then"  shift, and go to state 123
 
 
-estado 101
+state 101
 
-  123 termo: op_un . fator mais_fatores
+  108 condicao: expressao . relacao expressao
 
-    error             deslocar, e ir ao estado 131
-    "("               deslocar, e ir ao estado 132
-    "identificador"   deslocar, e ir ao estado 133
-    "numero inteiro"  deslocar, e ir ao estado 83
-    "numero real"     deslocar, e ir ao estado 84
+    error  shift, and go to state 124
+    "="    shift, and go to state 125
+    "<>"   shift, and go to state 126
+    ">="   shift, and go to state 127
+    "<="   shift, and go to state 128
+    ">"    shift, and go to state 129
+    "<"    shift, and go to state 130
 
-    fator   ir ao estado 134
-    numero  ir ao estado 135
-
-
-estado 102
-
-  115 expressao: termo . outros_termos
-
-    "+"  deslocar, e ir ao estado 136
-    "-"  deslocar, e ir ao estado 137
-
-    $padrão  reduzir usando a regra 120 (outros_termos)
-
-    outros_termos  ir ao estado 138
-    op_ad          ir ao estado 139
+    relacao  go to state 131
 
 
-estado 103
+state 102
+
+  124 termo: op_un . fator mais_fatores
+
+    error             shift, and go to state 132
+    "("               shift, and go to state 133
+    "identificador"   shift, and go to state 134
+    "numero inteiro"  shift, and go to state 84
+    "numero real"     shift, and go to state 85
+
+    fator   go to state 135
+    numero  go to state 136
+
+
+state 103
+
+  116 expressao: termo . outros_termos
+
+    "+"  shift, and go to state 137
+    "-"  shift, and go to state 138
+
+    $default  reduce using rule 121 (outros_termos)
+
+    outros_termos  go to state 139
+    op_ad          go to state 140
+
+
+state 104
 
   100 cmd: "for" $@22 "identificador" . $@23 ":=" expressao "to" expressao "do" cmd
 
-    $padrão  reduzir usando a regra 99 ($@23)
+    $default  reduce using rule 99 ($@23)
 
-    $@23  ir ao estado 140
+    $@23  go to state 141
 
 
-estado 104
+state 105
 
    92 cmd: "identificador" $@19 ":=" . expressao
 
-    "+"  deslocar, e ir ao estado 96
-    "-"  deslocar, e ir ao estado 97
+    "+"  shift, and go to state 97
+    "-"  shift, and go to state 98
 
-    $padrão  reduzir usando a regra 118 (op_un)
+    $default  reduce using rule 119 (op_un)
 
-    expressao  ir ao estado 141
-    op_un      ir ao estado 101
-    termo      ir ao estado 102
+    expressao  go to state 142
+    op_un      go to state 102
+    termo      go to state 103
 
 
-estado 105
+state 106
 
    72 lista_arg: "(" . argumentos ")"
    73          | "(" . argumentos error
 
-    error            deslocar, e ir ao estado 142
-    "identificador"  deslocar, e ir ao estado 143
+    error            shift, and go to state 143
+    "identificador"  shift, and go to state 144
 
-    argumentos  ir ao estado 144
+    argumentos  go to state 145
 
 
-estado 106
+state 107
 
    94 cmd: "identificador" $@20 lista_arg .
 
-    $padrão  reduzir usando a regra 94 (cmd)
+    $default  reduce using rule 94 (cmd)
 
 
-estado 107
+state 108
 
    83 comandos: cmd ";" comandos .
 
-    $padrão  reduzir usando a regra 83 (comandos)
+    $default  reduce using rule 83 (comandos)
 
 
-estado 108
+state 109
 
    43 variaveis: error $@7 mais_var .
 
-    $padrão  reduzir usando a regra 43 (variaveis)
+    $default  reduce using rule 43 (variaveis)
 
 
-estado 109
+state 110
 
    44 mais_var: "," variaveis .
 
-    $padrão  reduzir usando a regra 44 (mais_var)
+    $default  reduce using rule 44 (mais_var)
 
 
-estado 110
+state 111
 
    35 dc_v0: "var" variaveis error ";" .
 
-    $padrão  reduzir usando a regra 35 (dc_v0)
+    $default  reduce using rule 35 (dc_v0)
 
 
-estado 111
+state 112
 
    34 dc_v0: "var" variaveis $@6 ":" . tipo_var dc_v1
 
-    error      deslocar, e ir ao estado 145
-    "real"     deslocar, e ir ao estado 146
-    "integer"  deslocar, e ir ao estado 147
+    error      shift, and go to state 146
+    "real"     shift, and go to state 147
+    "integer"  shift, and go to state 148
 
-    tipo_var  ir ao estado 148
+    tipo_var  go to state 149
 
 
-estado 112
+state 113
 
    53 dc_p0: "procedure" error ";" . $@11 corpo_p
 
-    $padrão  reduzir usando a regra 52 ($@11)
+    $default  reduce using rule 52 ($@11)
 
-    $@11  ir ao estado 149
+    $@11  go to state 150
 
 
-estado 113
+state 114
 
    51 dc_p0: "procedure" $@9 "identificador" . parametros $@10 dc_p1
 
-    "("  deslocar, e ir ao estado 150
+    "("  shift, and go to state 151
 
-    $padrão  reduzir usando a regra 59 (parametros)
+    $default  reduce using rule 59 (parametros)
 
-    parametros  ir ao estado 151
+    parametros  go to state 152
 
 
-estado 114
+state 115
 
    47 dc_p: dc_p0 $@8 dc_p .
 
-    $padrão  reduzir usando a regra 47 (dc_p)
+    $default  reduce using rule 47 (dc_p)
 
 
-estado 115
+state 116
 
    23 dc_c0: "const" error "=" $@5 numero ";" .
 
-    $padrão  reduzir usando a regra 23 (dc_c0)
+    $default  reduce using rule 23 (dc_c0)
 
 
-estado 116
+state 117
 
    28 dc_c2: error ";" .
 
-    $padrão  reduzir usando a regra 28 (dc_c2)
+    $default  reduce using rule 28 (dc_c2)
 
 
-estado 117
+state 118
 
    30 dc_c3: error .
 
-    $padrão  reduzir usando a regra 30 (dc_c3)
+    $default  reduce using rule 30 (dc_c3)
 
 
-estado 118
+state 119
 
    29 dc_c3: ";" .
 
-    $padrão  reduzir usando a regra 29 (dc_c3)
+    $default  reduce using rule 29 (dc_c3)
 
 
-estado 119
+state 120
 
    27 dc_c2: numero dc_c3 .
 
-    $padrão  reduzir usando a regra 27 (dc_c2)
+    $default  reduce using rule 27 (dc_c2)
 
 
-estado 120
+state 121
 
-  101 cmd_param: "(" variaveis . ")"
+  102 cmd_param: "(" variaveis . ")"
 
-    ")"  deslocar, e ir ao estado 152
+    ")"  shift, and go to state 153
 
 
-estado 121
+state 122
 
-  106 cmd_while: "(" condicao . ")" "do" $@25 cmd
+  107 cmd_while: "(" condicao . ")" "do" $@25 cmd
 
-    ")"  deslocar, e ir ao estado 153
+    ")"  shift, and go to state 154
 
 
-estado 122
+state 123
 
-  103 cmd_if: condicao "then" . $@24 cmd pfalsa
+  104 cmd_if: condicao "then" . $@24 cmd pfalsa
 
-    $padrão  reduzir usando a regra 102 ($@24)
+    $default  reduce using rule 103 ($@24)
 
-    $@24  ir ao estado 154
+    $@24  go to state 155
 
 
-estado 123
+state 124
 
-  114 relacao: error .
+  115 relacao: error .
 
-    $padrão  reduzir usando a regra 114 (relacao)
+    $default  reduce using rule 115 (relacao)
 
 
-estado 124
+state 125
 
-  108 relacao: "=" .
+  109 relacao: "=" .
 
-    $padrão  reduzir usando a regra 108 (relacao)
+    $default  reduce using rule 109 (relacao)
 
 
-estado 125
+state 126
 
-  109 relacao: "<>" .
+  110 relacao: "<>" .
 
-    $padrão  reduzir usando a regra 109 (relacao)
+    $default  reduce using rule 110 (relacao)
 
 
-estado 126
+state 127
 
-  110 relacao: ">=" .
+  111 relacao: ">=" .
 
-    $padrão  reduzir usando a regra 110 (relacao)
+    $default  reduce using rule 111 (relacao)
 
 
-estado 127
+state 128
 
-  111 relacao: "<=" .
+  112 relacao: "<=" .
 
-    $padrão  reduzir usando a regra 111 (relacao)
+    $default  reduce using rule 112 (relacao)
 
 
-estado 128
+state 129
 
-  112 relacao: ">" .
+  113 relacao: ">" .
 
-    $padrão  reduzir usando a regra 112 (relacao)
+    $default  reduce using rule 113 (relacao)
 
 
-estado 129
+state 130
 
-  113 relacao: "<" .
+  114 relacao: "<" .
 
-    $padrão  reduzir usando a regra 113 (relacao)
+    $default  reduce using rule 114 (relacao)
 
 
-estado 130
+state 131
 
-  107 condicao: expressao relacao . expressao
+  108 condicao: expressao relacao . expressao
 
-    "+"  deslocar, e ir ao estado 96
-    "-"  deslocar, e ir ao estado 97
+    "+"  shift, and go to state 97
+    "-"  shift, and go to state 98
 
-    $padrão  reduzir usando a regra 118 (op_un)
+    $default  reduce using rule 119 (op_un)
 
-    expressao  ir ao estado 155
-    op_un      ir ao estado 101
-    termo      ir ao estado 102
+    expressao  go to state 156
+    op_un      go to state 102
+    termo      go to state 103
 
 
-estado 131
+state 132
 
-  131 fator: error .
+  132 fator: error .
 
-    $padrão  reduzir usando a regra 131 (fator)
+    $default  reduce using rule 132 (fator)
 
 
-estado 132
+state 133
 
-  130 fator: "(" . fator_exp
+  131 fator: "(" . fator_exp
 
-    "+"  deslocar, e ir ao estado 96
-    "-"  deslocar, e ir ao estado 97
+    "+"  shift, and go to state 97
+    "-"  shift, and go to state 98
 
-    $padrão  reduzir usando a regra 118 (op_un)
+    $default  reduce using rule 119 (op_un)
 
-    expressao  ir ao estado 156
-    op_un      ir ao estado 101
-    termo      ir ao estado 102
-    fator_exp  ir ao estado 157
+    expressao  go to state 157
+    op_un      go to state 102
+    termo      go to state 103
+    fator_exp  go to state 158
 
 
-estado 133
+state 134
 
-  128 fator: "identificador" .
+  129 fator: "identificador" .
 
-    $padrão  reduzir usando a regra 128 (fator)
+    $default  reduce using rule 129 (fator)
 
 
-estado 134
+state 135
 
-  123 termo: op_un fator . mais_fatores
+  124 termo: op_un fator . mais_fatores
 
-    "*"  deslocar, e ir ao estado 158
-    "/"  deslocar, e ir ao estado 159
+    "*"  shift, and go to state 159
+    "/"  shift, and go to state 160
 
-    $padrão  reduzir usando a regra 125 (mais_fatores)
+    $default  reduce using rule 126 (mais_fatores)
 
-    mais_fatores  ir ao estado 160
-    op_mul        ir ao estado 161
+    mais_fatores  go to state 161
+    op_mul        go to state 162
 
 
-estado 135
+state 136
 
-  129 fator: numero .
+  130 fator: numero .
 
-    $padrão  reduzir usando a regra 129 (fator)
+    $default  reduce using rule 130 (fator)
 
 
-estado 136
+state 137
 
-  121 op_ad: "+" .
+  122 op_ad: "+" .
 
-    $padrão  reduzir usando a regra 121 (op_ad)
+    $default  reduce using rule 122 (op_ad)
 
 
-estado 137
+state 138
 
-  122 op_ad: "-" .
+  123 op_ad: "-" .
 
-    $padrão  reduzir usando a regra 122 (op_ad)
+    $default  reduce using rule 123 (op_ad)
 
 
-estado 138
+state 139
 
-  115 expressao: termo outros_termos .
+  116 expressao: termo outros_termos .
 
-    $padrão  reduzir usando a regra 115 (expressao)
+    $default  reduce using rule 116 (expressao)
 
 
-estado 139
+state 140
 
-  119 outros_termos: op_ad . termo outros_termos
+  120 outros_termos: op_ad . termo outros_termos
 
-    "+"  deslocar, e ir ao estado 96
-    "-"  deslocar, e ir ao estado 97
+    "+"  shift, and go to state 97
+    "-"  shift, and go to state 98
 
-    $padrão  reduzir usando a regra 118 (op_un)
+    $default  reduce using rule 119 (op_un)
 
-    op_un  ir ao estado 101
-    termo  ir ao estado 162
+    op_un  go to state 102
+    termo  go to state 163
 
 
-estado 140
+state 141
 
   100 cmd: "for" $@22 "identificador" $@23 . ":=" expressao "to" expressao "do" cmd
 
-    ":="  deslocar, e ir ao estado 163
+    ":="  shift, and go to state 164
 
 
-estado 141
+state 142
 
    92 cmd: "identificador" $@19 ":=" expressao .
 
-    $padrão  reduzir usando a regra 92 (cmd)
+    $default  reduce using rule 92 (cmd)
 
 
-estado 142
+state 143
 
    77 argumentos: error . $@14 mais_ident
 
-    $padrão  reduzir usando a regra 76 ($@14)
+    $default  reduce using rule 76 ($@14)
 
-    $@14  ir ao estado 164
+    $@14  go to state 165
 
 
-estado 143
+state 144
 
    75 argumentos: "identificador" . mais_ident
 
-    ";"  deslocar, e ir ao estado 165
+    ";"  shift, and go to state 166
 
-    $padrão  reduzir usando a regra 79 (mais_ident)
+    $default  reduce using rule 79 (mais_ident)
 
-    mais_ident  ir ao estado 166
+    mais_ident  go to state 167
 
 
-estado 144
+state 145
 
    72 lista_arg: "(" argumentos . ")"
    73          | "(" argumentos . error
 
-    error  deslocar, e ir ao estado 167
-    ")"    deslocar, e ir ao estado 168
+    error  shift, and go to state 168
+    ")"    shift, and go to state 169
 
 
-estado 145
+state 146
 
    40 tipo_var: error .
 
-    $padrão  reduzir usando a regra 40 (tipo_var)
+    $default  reduce using rule 40 (tipo_var)
 
 
-estado 146
+state 147
 
    38 tipo_var: "real" .
 
-    $padrão  reduzir usando a regra 38 (tipo_var)
+    $default  reduce using rule 38 (tipo_var)
 
 
-estado 147
+state 148
 
    39 tipo_var: "integer" .
 
-    $padrão  reduzir usando a regra 39 (tipo_var)
+    $default  reduce using rule 39 (tipo_var)
 
 
-estado 148
+state 149
 
    34 dc_v0: "var" variaveis $@6 ":" tipo_var . dc_v1
 
-    error  deslocar, e ir ao estado 169
-    ";"    deslocar, e ir ao estado 170
+    error  shift, and go to state 170
+    ";"    shift, and go to state 171
 
-    dc_v1  ir ao estado 171
+    dc_v1  go to state 172
 
 
-estado 149
+state 150
 
    53 dc_p0: "procedure" error ";" $@11 . corpo_p
 
-    "var"  deslocar, e ir ao estado 30
+    "var"  shift, and go to state 30
 
-    $padrão  reduzir usando a regra 32 (dc_v)
+    $default  reduce using rule 32 (dc_v)
 
-    dc_v     ir ao estado 172
-    dc_v0    ir ao estado 32
-    corpo_p  ir ao estado 173
-    dc_loc   ir ao estado 174
+    dc_v     go to state 173
+    dc_v0    go to state 32
+    corpo_p  go to state 174
+    dc_loc   go to state 175
 
 
-estado 150
+state 151
 
    57 parametros: "(" . lista_par ")"
    58           | "(" . lista_par error
 
-    error            deslocar, e ir ao estado 50
-    "identificador"  deslocar, e ir ao estado 51
+    error            shift, and go to state 51
+    "identificador"  shift, and go to state 52
 
-    variaveis  ir ao estado 175
-    lista_par  ir ao estado 176
+    variaveis  go to state 176
+    lista_par  go to state 177
 
 
-estado 151
+state 152
 
    51 dc_p0: "procedure" $@9 "identificador" parametros . $@10 dc_p1
 
-    $padrão  reduzir usando a regra 50 ($@10)
+    $default  reduce using rule 50 ($@10)
 
-    $@10  ir ao estado 177
-
-
-estado 152
-
-  101 cmd_param: "(" variaveis ")" .
-
-    $padrão  reduzir usando a regra 101 (cmd_param)
+    $@10  go to state 178
 
 
-estado 153
+state 153
 
-  106 cmd_while: "(" condicao ")" . "do" $@25 cmd
+  102 cmd_param: "(" variaveis ")" .
 
-    "do"  deslocar, e ir ao estado 178
-
-
-estado 154
-
-  103 cmd_if: condicao "then" $@24 . cmd pfalsa
-
-    "begin"          deslocar, e ir ao estado 41
-    "read"           deslocar, e ir ao estado 42
-    "write"          deslocar, e ir ao estado 43
-    "while"          deslocar, e ir ao estado 44
-    "if"             deslocar, e ir ao estado 45
-    "for"            deslocar, e ir ao estado 46
-    "identificador"  deslocar, e ir ao estado 47
-
-    cmd  ir ao estado 179
+    $default  reduce using rule 102 (cmd_param)
 
 
-estado 155
+state 154
 
-  107 condicao: expressao relacao expressao .
+  107 cmd_while: "(" condicao ")" . "do" $@25 cmd
 
-    $padrão  reduzir usando a regra 107 (condicao)
-
-
-estado 156
-
-  132 fator_exp: expressao . ")"
-  133          | expressao . error
-
-    error  deslocar, e ir ao estado 180
-    ")"    deslocar, e ir ao estado 181
+    "do"  shift, and go to state 179
 
 
-estado 157
+state 155
 
-  130 fator: "(" fator_exp .
+  104 cmd_if: condicao "then" $@24 . cmd pfalsa
 
-    $padrão  reduzir usando a regra 130 (fator)
+    error            shift, and go to state 41
+    "begin"          shift, and go to state 42
+    "read"           shift, and go to state 43
+    "write"          shift, and go to state 44
+    "while"          shift, and go to state 45
+    "if"             shift, and go to state 46
+    "for"            shift, and go to state 47
+    "identificador"  shift, and go to state 48
 
-
-estado 158
-
-  126 op_mul: "*" .
-
-    $padrão  reduzir usando a regra 126 (op_mul)
-
-
-estado 159
-
-  127 op_mul: "/" .
-
-    $padrão  reduzir usando a regra 127 (op_mul)
+    cmd  go to state 180
 
 
-estado 160
+state 156
 
-  123 termo: op_un fator mais_fatores .
+  108 condicao: expressao relacao expressao .
 
-    $padrão  reduzir usando a regra 123 (termo)
-
-
-estado 161
-
-  124 mais_fatores: op_mul . fator mais_fatores
-
-    error             deslocar, e ir ao estado 131
-    "("               deslocar, e ir ao estado 132
-    "identificador"   deslocar, e ir ao estado 133
-    "numero inteiro"  deslocar, e ir ao estado 83
-    "numero real"     deslocar, e ir ao estado 84
-
-    fator   ir ao estado 182
-    numero  ir ao estado 135
+    $default  reduce using rule 108 (condicao)
 
 
-estado 162
+state 157
 
-  119 outros_termos: op_ad termo . outros_termos
+  133 fator_exp: expressao . ")"
+  134          | expressao . error
 
-    "+"  deslocar, e ir ao estado 136
-    "-"  deslocar, e ir ao estado 137
-
-    $padrão  reduzir usando a regra 120 (outros_termos)
-
-    outros_termos  ir ao estado 183
-    op_ad          ir ao estado 139
+    error  shift, and go to state 181
+    ")"    shift, and go to state 182
 
 
-estado 163
+state 158
+
+  131 fator: "(" fator_exp .
+
+    $default  reduce using rule 131 (fator)
+
+
+state 159
+
+  127 op_mul: "*" .
+
+    $default  reduce using rule 127 (op_mul)
+
+
+state 160
+
+  128 op_mul: "/" .
+
+    $default  reduce using rule 128 (op_mul)
+
+
+state 161
+
+  124 termo: op_un fator mais_fatores .
+
+    $default  reduce using rule 124 (termo)
+
+
+state 162
+
+  125 mais_fatores: op_mul . fator mais_fatores
+
+    error             shift, and go to state 132
+    "("               shift, and go to state 133
+    "identificador"   shift, and go to state 134
+    "numero inteiro"  shift, and go to state 84
+    "numero real"     shift, and go to state 85
+
+    fator   go to state 183
+    numero  go to state 136
+
+
+state 163
+
+  120 outros_termos: op_ad termo . outros_termos
+
+    "+"  shift, and go to state 137
+    "-"  shift, and go to state 138
+
+    $default  reduce using rule 121 (outros_termos)
+
+    outros_termos  go to state 184
+    op_ad          go to state 140
+
+
+state 164
 
   100 cmd: "for" $@22 "identificador" $@23 ":=" . expressao "to" expressao "do" cmd
 
-    "+"  deslocar, e ir ao estado 96
-    "-"  deslocar, e ir ao estado 97
+    "+"  shift, and go to state 97
+    "-"  shift, and go to state 98
 
-    $padrão  reduzir usando a regra 118 (op_un)
+    $default  reduce using rule 119 (op_un)
 
-    expressao  ir ao estado 184
-    op_un      ir ao estado 101
-    termo      ir ao estado 102
+    expressao  go to state 185
+    op_un      go to state 102
+    termo      go to state 103
 
 
-estado 164
+state 165
 
    77 argumentos: error $@14 . mais_ident
 
-    ";"  deslocar, e ir ao estado 165
+    ";"  shift, and go to state 166
 
-    $padrão  reduzir usando a regra 79 (mais_ident)
+    $default  reduce using rule 79 (mais_ident)
 
-    mais_ident  ir ao estado 185
+    mais_ident  go to state 186
 
 
-estado 165
+state 166
 
    78 mais_ident: ";" . argumentos
 
-    error            deslocar, e ir ao estado 142
-    "identificador"  deslocar, e ir ao estado 143
+    error            shift, and go to state 143
+    "identificador"  shift, and go to state 144
 
-    argumentos  ir ao estado 186
+    argumentos  go to state 187
 
 
-estado 166
+state 167
 
    75 argumentos: "identificador" mais_ident .
 
-    $padrão  reduzir usando a regra 75 (argumentos)
+    $default  reduce using rule 75 (argumentos)
 
 
-estado 167
+state 168
 
    73 lista_arg: "(" argumentos error .
 
-    $padrão  reduzir usando a regra 73 (lista_arg)
+    $default  reduce using rule 73 (lista_arg)
 
 
-estado 168
+state 169
 
    72 lista_arg: "(" argumentos ")" .
 
-    $padrão  reduzir usando a regra 72 (lista_arg)
+    $default  reduce using rule 72 (lista_arg)
 
 
-estado 169
+state 170
 
    37 dc_v1: error .
 
-    $padrão  reduzir usando a regra 37 (dc_v1)
+    $default  reduce using rule 37 (dc_v1)
 
 
-estado 170
+state 171
 
    36 dc_v1: ";" .
 
-    $padrão  reduzir usando a regra 36 (dc_v1)
+    $default  reduce using rule 36 (dc_v1)
 
 
-estado 171
+state 172
 
    34 dc_v0: "var" variaveis $@6 ":" tipo_var dc_v1 .
 
-    $padrão  reduzir usando a regra 34 (dc_v0)
+    $default  reduce using rule 34 (dc_v0)
 
 
-estado 172
+state 173
 
    71 dc_loc: dc_v .
 
-    $padrão  reduzir usando a regra 71 (dc_loc)
+    $default  reduce using rule 71 (dc_loc)
 
 
-estado 173
+state 174
 
    53 dc_p0: "procedure" error ";" $@11 corpo_p .
 
-    $padrão  reduzir usando a regra 53 (dc_p0)
+    $default  reduce using rule 53 (dc_p0)
 
 
-estado 174
+state 175
 
    63 corpo_p: dc_loc . "begin" comandos corpo_p1
    65        | dc_loc . error "end" $@13 corpo_p2
    66        | dc_loc . error ";"
 
-    error    deslocar, e ir ao estado 187
-    "begin"  deslocar, e ir ao estado 188
+    error    shift, and go to state 188
+    "begin"  shift, and go to state 189
 
 
-estado 175
+state 176
 
    60 lista_par: variaveis . ":" tipo_var mais_par
 
-    ":"  deslocar, e ir ao estado 189
+    ":"  shift, and go to state 190
 
 
-estado 176
+state 177
 
    57 parametros: "(" lista_par . ")"
    58           | "(" lista_par . error
 
-    error  deslocar, e ir ao estado 190
-    ")"    deslocar, e ir ao estado 191
+    error  shift, and go to state 191
+    ")"    shift, and go to state 192
 
 
-estado 177
+state 178
 
    51 dc_p0: "procedure" $@9 "identificador" parametros $@10 . dc_p1
 
-    error  deslocar, e ir ao estado 192
-    ";"    deslocar, e ir ao estado 193
+    error  shift, and go to state 193
+    ";"    shift, and go to state 194
 
-    dc_p1  ir ao estado 194
-
-
-estado 178
-
-  106 cmd_while: "(" condicao ")" "do" . $@25 cmd
-
-    $padrão  reduzir usando a regra 105 ($@25)
-
-    $@25  ir ao estado 195
+    dc_p1  go to state 195
 
 
-estado 179
+state 179
 
-  103 cmd_if: condicao "then" $@24 cmd . pfalsa
+  107 cmd_while: "(" condicao ")" "do" . $@25 cmd
 
-    "else"  deslocar, e ir ao estado 196
+    $default  reduce using rule 106 ($@25)
 
-    "else"    [reduzir usando a regra 82 (pfalsa)]
-    $padrão  reduzir usando a regra 82 (pfalsa)
-
-    pfalsa  ir ao estado 197
+    $@25  go to state 196
 
 
-estado 180
+state 180
 
-  133 fator_exp: expressao error .
+  104 cmd_if: condicao "then" $@24 cmd . pfalsa
 
-    $padrão  reduzir usando a regra 133 (fator_exp)
+    "else"  shift, and go to state 197
 
+    "else"    [reduce using rule 82 (pfalsa)]
+    $default  reduce using rule 82 (pfalsa)
 
-estado 181
-
-  132 fator_exp: expressao ")" .
-
-    $padrão  reduzir usando a regra 132 (fator_exp)
+    pfalsa  go to state 198
 
 
-estado 182
+state 181
 
-  124 mais_fatores: op_mul fator . mais_fatores
+  134 fator_exp: expressao error .
 
-    "*"  deslocar, e ir ao estado 158
-    "/"  deslocar, e ir ao estado 159
-
-    $padrão  reduzir usando a regra 125 (mais_fatores)
-
-    mais_fatores  ir ao estado 198
-    op_mul        ir ao estado 161
+    $default  reduce using rule 134 (fator_exp)
 
 
-estado 183
+state 182
 
-  119 outros_termos: op_ad termo outros_termos .
+  133 fator_exp: expressao ")" .
 
-    $padrão  reduzir usando a regra 119 (outros_termos)
+    $default  reduce using rule 133 (fator_exp)
 
 
-estado 184
+state 183
+
+  125 mais_fatores: op_mul fator . mais_fatores
+
+    "*"  shift, and go to state 159
+    "/"  shift, and go to state 160
+
+    $default  reduce using rule 126 (mais_fatores)
+
+    mais_fatores  go to state 199
+    op_mul        go to state 162
+
+
+state 184
+
+  120 outros_termos: op_ad termo outros_termos .
+
+    $default  reduce using rule 120 (outros_termos)
+
+
+state 185
 
   100 cmd: "for" $@22 "identificador" $@23 ":=" expressao . "to" expressao "do" cmd
 
-    "to"  deslocar, e ir ao estado 199
+    "to"  shift, and go to state 200
 
 
-estado 185
+state 186
 
    77 argumentos: error $@14 mais_ident .
 
-    $padrão  reduzir usando a regra 77 (argumentos)
+    $default  reduce using rule 77 (argumentos)
 
 
-estado 186
+state 187
 
    78 mais_ident: ";" argumentos .
 
-    $padrão  reduzir usando a regra 78 (mais_ident)
+    $default  reduce using rule 78 (mais_ident)
 
 
-estado 187
+state 188
 
    65 corpo_p: dc_loc error . "end" $@13 corpo_p2
    66        | dc_loc error . ";"
 
-    "end"  deslocar, e ir ao estado 200
-    ";"    deslocar, e ir ao estado 201
+    "end"  shift, and go to state 201
+    ";"    shift, and go to state 202
 
 
-estado 188
+state 189
 
    63 corpo_p: dc_loc "begin" . comandos corpo_p1
 
-    "begin"          deslocar, e ir ao estado 41
-    "read"           deslocar, e ir ao estado 42
-    "write"          deslocar, e ir ao estado 43
-    "while"          deslocar, e ir ao estado 44
-    "if"             deslocar, e ir ao estado 45
-    "for"            deslocar, e ir ao estado 46
-    "identificador"  deslocar, e ir ao estado 47
+    error            shift, and go to state 41
+    "begin"          shift, and go to state 42
+    "read"           shift, and go to state 43
+    "write"          shift, and go to state 44
+    "while"          shift, and go to state 45
+    "if"             shift, and go to state 46
+    "for"            shift, and go to state 47
+    "identificador"  shift, and go to state 48
 
-    $padrão  reduzir usando a regra 84 (comandos)
+    error  [reduce using rule 84 (comandos)]
+    "end"  reduce using rule 84 (comandos)
 
-    comandos  ir ao estado 202
-    cmd       ir ao estado 49
+    comandos  go to state 203
+    cmd       go to state 50
 
 
-estado 189
+state 190
 
    60 lista_par: variaveis ":" . tipo_var mais_par
 
-    error      deslocar, e ir ao estado 145
-    "real"     deslocar, e ir ao estado 146
-    "integer"  deslocar, e ir ao estado 147
+    error      shift, and go to state 146
+    "real"     shift, and go to state 147
+    "integer"  shift, and go to state 148
 
-    tipo_var  ir ao estado 203
+    tipo_var  go to state 204
 
 
-estado 190
+state 191
 
    58 parametros: "(" lista_par error .
 
-    $padrão  reduzir usando a regra 58 (parametros)
+    $default  reduce using rule 58 (parametros)
 
 
-estado 191
+state 192
 
    57 parametros: "(" lista_par ")" .
 
-    $padrão  reduzir usando a regra 57 (parametros)
+    $default  reduce using rule 57 (parametros)
 
 
-estado 192
+state 193
 
    56 dc_p1: error . $@12 corpo_p
 
-    $padrão  reduzir usando a regra 55 ($@12)
+    $default  reduce using rule 55 ($@12)
 
-    $@12  ir ao estado 204
+    $@12  go to state 205
 
 
-estado 193
+state 194
 
    54 dc_p1: ";" . corpo_p
 
-    "var"  deslocar, e ir ao estado 30
+    "var"  shift, and go to state 30
 
-    $padrão  reduzir usando a regra 32 (dc_v)
+    $default  reduce using rule 32 (dc_v)
 
-    dc_v     ir ao estado 172
-    dc_v0    ir ao estado 32
-    corpo_p  ir ao estado 205
-    dc_loc   ir ao estado 174
+    dc_v     go to state 173
+    dc_v0    go to state 32
+    corpo_p  go to state 206
+    dc_loc   go to state 175
 
 
-estado 194
+state 195
 
    51 dc_p0: "procedure" $@9 "identificador" parametros $@10 dc_p1 .
 
-    $padrão  reduzir usando a regra 51 (dc_p0)
+    $default  reduce using rule 51 (dc_p0)
 
 
-estado 195
+state 196
 
-  106 cmd_while: "(" condicao ")" "do" $@25 . cmd
+  107 cmd_while: "(" condicao ")" "do" $@25 . cmd
 
-    "begin"          deslocar, e ir ao estado 41
-    "read"           deslocar, e ir ao estado 42
-    "write"          deslocar, e ir ao estado 43
-    "while"          deslocar, e ir ao estado 44
-    "if"             deslocar, e ir ao estado 45
-    "for"            deslocar, e ir ao estado 46
-    "identificador"  deslocar, e ir ao estado 47
+    error            shift, and go to state 41
+    "begin"          shift, and go to state 42
+    "read"           shift, and go to state 43
+    "write"          shift, and go to state 44
+    "while"          shift, and go to state 45
+    "if"             shift, and go to state 46
+    "for"            shift, and go to state 47
+    "identificador"  shift, and go to state 48
 
-    cmd  ir ao estado 206
+    cmd  go to state 207
 
 
-estado 196
+state 197
 
    81 pfalsa: "else" . $@15 cmd
 
-    $padrão  reduzir usando a regra 80 ($@15)
+    $default  reduce using rule 80 ($@15)
 
-    $@15  ir ao estado 207
-
-
-estado 197
-
-  103 cmd_if: condicao "then" $@24 cmd pfalsa .
-
-    $padrão  reduzir usando a regra 103 (cmd_if)
+    $@15  go to state 208
 
 
-estado 198
+state 198
 
-  124 mais_fatores: op_mul fator mais_fatores .
+  104 cmd_if: condicao "then" $@24 cmd pfalsa .
 
-    $padrão  reduzir usando a regra 124 (mais_fatores)
+    $default  reduce using rule 104 (cmd_if)
 
 
-estado 199
+state 199
+
+  125 mais_fatores: op_mul fator mais_fatores .
+
+    $default  reduce using rule 125 (mais_fatores)
+
+
+state 200
 
   100 cmd: "for" $@22 "identificador" $@23 ":=" expressao "to" . expressao "do" cmd
 
-    "+"  deslocar, e ir ao estado 96
-    "-"  deslocar, e ir ao estado 97
+    "+"  shift, and go to state 97
+    "-"  shift, and go to state 98
 
-    $padrão  reduzir usando a regra 118 (op_un)
+    $default  reduce using rule 119 (op_un)
 
-    expressao  ir ao estado 208
-    op_un      ir ao estado 101
-    termo      ir ao estado 102
+    expressao  go to state 209
+    op_un      go to state 102
+    termo      go to state 103
 
 
-estado 200
+state 201
 
    65 corpo_p: dc_loc error "end" . $@13 corpo_p2
 
-    $padrão  reduzir usando a regra 64 ($@13)
+    $default  reduce using rule 64 ($@13)
 
-    $@13  ir ao estado 209
+    $@13  go to state 210
 
 
-estado 201
+state 202
 
    66 corpo_p: dc_loc error ";" .
 
-    $padrão  reduzir usando a regra 66 (corpo_p)
+    $default  reduce using rule 66 (corpo_p)
 
 
-estado 202
+state 203
 
    63 corpo_p: dc_loc "begin" comandos . corpo_p1
 
-    error  deslocar, e ir ao estado 210
-    "end"  deslocar, e ir ao estado 211
+    error  shift, and go to state 211
+    "end"  shift, and go to state 212
 
-    corpo_p1  ir ao estado 212
+    corpo_p1  go to state 213
 
 
-estado 203
+state 204
 
    60 lista_par: variaveis ":" tipo_var . mais_par
 
-    ";"  deslocar, e ir ao estado 213
+    ";"  shift, and go to state 214
 
-    $padrão  reduzir usando a regra 62 (mais_par)
+    $default  reduce using rule 62 (mais_par)
 
-    mais_par  ir ao estado 214
+    mais_par  go to state 215
 
 
-estado 204
+state 205
 
    56 dc_p1: error $@12 . corpo_p
 
-    "var"  deslocar, e ir ao estado 30
+    "var"  shift, and go to state 30
 
-    $padrão  reduzir usando a regra 32 (dc_v)
+    $default  reduce using rule 32 (dc_v)
 
-    dc_v     ir ao estado 172
-    dc_v0    ir ao estado 32
-    corpo_p  ir ao estado 215
-    dc_loc   ir ao estado 174
+    dc_v     go to state 173
+    dc_v0    go to state 32
+    corpo_p  go to state 216
+    dc_loc   go to state 175
 
 
-estado 205
+state 206
 
    54 dc_p1: ";" corpo_p .
 
-    $padrão  reduzir usando a regra 54 (dc_p1)
+    $default  reduce using rule 54 (dc_p1)
 
 
-estado 206
+state 207
 
-  106 cmd_while: "(" condicao ")" "do" $@25 cmd .
+  107 cmd_while: "(" condicao ")" "do" $@25 cmd .
 
-    $padrão  reduzir usando a regra 106 (cmd_while)
+    $default  reduce using rule 107 (cmd_while)
 
 
-estado 207
+state 208
 
    81 pfalsa: "else" $@15 . cmd
 
-    "begin"          deslocar, e ir ao estado 41
-    "read"           deslocar, e ir ao estado 42
-    "write"          deslocar, e ir ao estado 43
-    "while"          deslocar, e ir ao estado 44
-    "if"             deslocar, e ir ao estado 45
-    "for"            deslocar, e ir ao estado 46
-    "identificador"  deslocar, e ir ao estado 47
+    error            shift, and go to state 41
+    "begin"          shift, and go to state 42
+    "read"           shift, and go to state 43
+    "write"          shift, and go to state 44
+    "while"          shift, and go to state 45
+    "if"             shift, and go to state 46
+    "for"            shift, and go to state 47
+    "identificador"  shift, and go to state 48
 
-    cmd  ir ao estado 216
+    cmd  go to state 217
 
 
-estado 208
+state 209
 
   100 cmd: "for" $@22 "identificador" $@23 ":=" expressao "to" expressao . "do" cmd
 
-    "do"  deslocar, e ir ao estado 217
+    "do"  shift, and go to state 218
 
 
-estado 209
+state 210
 
    65 corpo_p: dc_loc error "end" $@13 . corpo_p2
 
-    error  deslocar, e ir ao estado 218
-    ";"    deslocar, e ir ao estado 219
+    error  shift, and go to state 219
+    ";"    shift, and go to state 220
 
-    corpo_p2  ir ao estado 220
+    corpo_p2  go to state 221
 
 
-estado 210
+state 211
 
    68 corpo_p1: error . ";"
 
-    ";"  deslocar, e ir ao estado 221
+    ";"  shift, and go to state 222
 
 
-estado 211
+state 212
 
    67 corpo_p1: "end" . corpo_p2
 
-    error  deslocar, e ir ao estado 218
-    ";"    deslocar, e ir ao estado 219
+    error  shift, and go to state 219
+    ";"    shift, and go to state 220
 
-    corpo_p2  ir ao estado 222
+    corpo_p2  go to state 223
 
 
-estado 212
+state 213
 
    63 corpo_p: dc_loc "begin" comandos corpo_p1 .
 
-    $padrão  reduzir usando a regra 63 (corpo_p)
+    $default  reduce using rule 63 (corpo_p)
 
 
-estado 213
+state 214
 
    61 mais_par: ";" . lista_par
 
-    error            deslocar, e ir ao estado 50
-    "identificador"  deslocar, e ir ao estado 51
+    error            shift, and go to state 51
+    "identificador"  shift, and go to state 52
 
-    variaveis  ir ao estado 175
-    lista_par  ir ao estado 223
+    variaveis  go to state 176
+    lista_par  go to state 224
 
 
-estado 214
+state 215
 
    60 lista_par: variaveis ":" tipo_var mais_par .
 
-    $padrão  reduzir usando a regra 60 (lista_par)
+    $default  reduce using rule 60 (lista_par)
 
 
-estado 215
+state 216
 
    56 dc_p1: error $@12 corpo_p .
 
-    $padrão  reduzir usando a regra 56 (dc_p1)
+    $default  reduce using rule 56 (dc_p1)
 
 
-estado 216
+state 217
 
    81 pfalsa: "else" $@15 cmd .
 
-    $padrão  reduzir usando a regra 81 (pfalsa)
+    $default  reduce using rule 81 (pfalsa)
 
 
-estado 217
+state 218
 
   100 cmd: "for" $@22 "identificador" $@23 ":=" expressao "to" expressao "do" . cmd
 
-    "begin"          deslocar, e ir ao estado 41
-    "read"           deslocar, e ir ao estado 42
-    "write"          deslocar, e ir ao estado 43
-    "while"          deslocar, e ir ao estado 44
-    "if"             deslocar, e ir ao estado 45
-    "for"            deslocar, e ir ao estado 46
-    "identificador"  deslocar, e ir ao estado 47
+    error            shift, and go to state 41
+    "begin"          shift, and go to state 42
+    "read"           shift, and go to state 43
+    "write"          shift, and go to state 44
+    "while"          shift, and go to state 45
+    "if"             shift, and go to state 46
+    "for"            shift, and go to state 47
+    "identificador"  shift, and go to state 48
 
-    cmd  ir ao estado 224
+    cmd  go to state 225
 
 
-estado 218
+state 219
 
    70 corpo_p2: error .
 
-    $padrão  reduzir usando a regra 70 (corpo_p2)
+    $default  reduce using rule 70 (corpo_p2)
 
 
-estado 219
+state 220
 
    69 corpo_p2: ";" .
 
-    $padrão  reduzir usando a regra 69 (corpo_p2)
+    $default  reduce using rule 69 (corpo_p2)
 
 
-estado 220
+state 221
 
    65 corpo_p: dc_loc error "end" $@13 corpo_p2 .
 
-    $padrão  reduzir usando a regra 65 (corpo_p)
+    $default  reduce using rule 65 (corpo_p)
 
 
-estado 221
+state 222
 
    68 corpo_p1: error ";" .
 
-    $padrão  reduzir usando a regra 68 (corpo_p1)
+    $default  reduce using rule 68 (corpo_p1)
 
 
-estado 222
+state 223
 
    67 corpo_p1: "end" corpo_p2 .
 
-    $padrão  reduzir usando a regra 67 (corpo_p1)
+    $default  reduce using rule 67 (corpo_p1)
 
 
-estado 223
+state 224
 
    61 mais_par: ";" lista_par .
 
-    $padrão  reduzir usando a regra 61 (mais_par)
+    $default  reduce using rule 61 (mais_par)
 
 
-estado 224
+state 225
 
   100 cmd: "for" $@22 "identificador" $@23 ":=" expressao "to" expressao "do" cmd .
 
-    $padrão  reduzir usando a regra 100 (cmd)
+    $default  reduce using rule 100 (cmd)

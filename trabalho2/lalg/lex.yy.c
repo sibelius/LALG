@@ -4479,8 +4479,11 @@ void count()
 
 void printError(int error, const char* cadeia) {
 	switch(error) {
-		case ERR_MF_INTEGER:
+		case ERR_MF_ID:
 			printf("Erro Lexico:    Linha %d, Coluna: %d. Identificador mal formado\n", num_lines, column);
+			break;
+		case ERR_MF_INTEGER:
+			printf("Erro Lexico:    Linha %d, Coluna: %d. Numero inteiro mal formado\n",num_lines, column);
 			break;
 		case ERR_MF_REAL:
 			printf("Erro Lexico:    Linha %d, Coluna: %d. Numero real mal formado\n",num_lines, column);
