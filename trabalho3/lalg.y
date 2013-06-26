@@ -8,7 +8,25 @@
     #include <stdlib.h>	
     int yylex (void);
     void yyerror (char *);
-        int numerrors=0;
+
+    /* Contador de erros */
+    int numerrors;
+
+    /* Flag para continuar ou parar a execucao de codigo */
+    int code_generate;
+
+    /* Proxima posicao na memoria */
+    int next_position;
+
+    /* Arquivo onde sera armazenado o codigo */
+    FILE *code_file;
+
+    struct SNode {
+        int i_value;
+        float f_value;
+        int type;
+    } SNode;
+
     extern int num_lines;
     extern char *yytext;
 	extern int column;
@@ -68,9 +86,6 @@
 
 /* Regras da gramatica */
 %%
-
-/*testes : T_L_PAREN T_ID T_R_PAREN { fprintf(stderr, "%s\n", s); }
-;*/
 
 /* Regra 1 <programa> ::= program ident ; <corpo> . */
 programa : T_PROGRAM programa1 {}
@@ -344,13 +359,32 @@ int main (int argc, char *argv[])
     // Lex ira ler arquivo de entrada inves do STDIN
     yyin = entrada;
 
-    yyparse();
+    /* Inicia a tabela de simbolos */
+    /*init();*/
+
+    /* Inicializando variaveis auxiliarer */
+    numerrors = 0;
+    code_generate = 1;
+    next_position = 0;
+
+    /* Abrindo o arquivo de codigo */
+    code_file = fopen("code.p", "w");
+    fprintf( code_file, "INPP\n");
+
+    int res = yyparse();
+
+    fclose( code_file );
+
     if(numerrors==0)
         printf ( "Analise Sintatica Completada\n" );
     else
         printf ( "Analise Sintatica Completada Com %d Erros\n", numerrors);
 
-    return 0;
+    /* Remove o arquivo, caso a geracao tenha parado */
+    if (!code_generate)
+        remove( "code.p");
+
+    return res;
 }
 
 void yyerror (char *s)
