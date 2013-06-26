@@ -1,0 +1,13 @@
+program p1;
+var a : integer;
+var b : real;
+procedure meu_proc(x: integer; y:real);
+begin
+    x := 10;
+end;
+begin
+    a := 10;
+    b := 2.7;
+    meu_proc(a,b);
+    meu_proc(b,a); {Mais parametros que o esperado}
+end.

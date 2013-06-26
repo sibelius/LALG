@@ -1,0 +1,27 @@
+program p4;
+var a : integer;
+var b : real;
+procedure meu_proc(x: real);
+begin
+    x := 2.5;
+end;
+
+procedure meu_proc1(x: integer);
+begin
+    x := 2;
+end;
+
+{Procedimento redeclarado}
+procedure meu_proc(x: real);
+begin
+    x := 4;
+end;
+
+
+begin
+    a := 10;
+    b := 5.7;
+    meu_proc1(a);
+    meu_proc(b);
+end
+

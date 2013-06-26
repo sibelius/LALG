@@ -1,0 +1,23 @@
+program prog;
+var a: integer;
+procedure meu_proc(x: real);
+var a, c: integer;
+begin
+	read(c, a);
+	if a<x+c then
+	begin
+		a:= c+x;
+		write(a);
+	end
+	else c:= a+x;
+end;
+begin
+	while (a > 10) do
+	begin
+	    write(&a); {erro lexico}
+	    read(a);
+	    a := a +1;
+	end;
+	
+	meu_proc(a);
+end.

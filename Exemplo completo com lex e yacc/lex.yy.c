@@ -473,7 +473,7 @@ char *yytext;
 #line 1 "sample.l"
 #line 3 "sample.l"
 	//definicoes
-	#include "y.tab.h"
+	#include "sample.tab.h"
 	#include <string.h>
 
 	extern YYSTYPE yylval;

@@ -1,0 +1,5 @@
+program p2;
+var b: integer;
+begin
+    meu_proc; {procedimento nao declarado}
+end.

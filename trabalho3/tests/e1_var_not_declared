@@ -1,0 +1,4 @@
+program prog;
+begin
+    a := 2; {Variavel nao declarada}
+end.

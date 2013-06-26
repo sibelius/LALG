@@ -1,7 +1,7 @@
 
 %{
 	//definicoes
-	#include "y.tab.h"
+	#include "sample.tab.h"
 	#include <string.h>
 
 	extern YYSTYPE yylval;

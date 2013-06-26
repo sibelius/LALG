@@ -1,0 +1,10 @@
+program p1;
+var a : real;
+procedure meu_proc(x: integer);
+begin
+    x := 10;
+end
+begin
+    a := 4.5;
+    meu_proc(a); {Tipo de parametro errado}
+end.
