@@ -23,28 +23,21 @@
     /* Arquivo onde sera armazenado o codigo */
     FILE *code_file;
 
-    struct SNode {
-        int i_value;
-        float f_value;
-        int type;
-    } SNode;
-
     extern int num_lines;
     extern char *yytext;
 	extern int column;
-
 
     /* Manipulacao da Tabela de simbolos */
     void addInTable( char *name, int type, int i_value, float f_value );
 
 %}
 
-%union YYSTYPE{
+%union YYSTYPE {
 	int i_number;
 	float r_number;
 	char* name;
 	int type;
-	struct snode {
+    struct snode {
 		int i_value;
 		float f_value;
 		int type;
@@ -101,14 +94,16 @@
 /*%nonassoc error*/
 
 /* Tipo terminais */
-%token<name> T_ID "identificador"
-%token<i_number> T_INUMBER "numero inteiro"
-%token<r_number> T_RNUMBER "numero real"
+%token<name> T_ID /*"identificador"*/
+%token<i_number> T_INUMBER /*"numero inteiro"*/
+%token<r_number> T_RNUMBER /*"numero real"*/
 
 /* Tipo dos nao terminais */
 %type <snode> numero
 %type <snode> fator
 %type <math_op> op_mul
+%type <snode> expressao
+%type <snode> fator_exp
 
 %%
 
@@ -173,7 +168,7 @@ dc_v : dc_v0 dc_v {}
     |
     ;
 
-dc_v0 : T_VAR variaveis {} T_COLON tipo_var dc_v1 {}
+dc_v0 : T_VAR variaveis T_COLON tipo_var dc_v1 {  }
     | T_VAR variaveis error T_SEMICOLON { yyerror(":"); }
     ;
     
@@ -349,20 +344,39 @@ op_mul : T_TIMES { /*$$ = new ExpressionTree;*/ /*$$->type = OPERATOR; $$->math_
     ;
 
 /* Regra 30 <fator> ::= ident | <numero> | ( <expressao> ) */
-fator : T_ID { /*$$ = new ExpressionTree;*/ /*$$->type = VALUE; $$->name = strdup(*$1);*/ }
-    | numero { 
-    	//$$ = new ExpressionTree;
-        /*if($1.type = INTEGER) { $$->type = INTEGER; $$->i_val = $1.i_value; }
-        else { $$->type = REAL; $$->f_value = $1.f_value; }
-      */}
-      
-    | T_L_PAREN fator_exp { /*$$ = $2;*/ }
+fator : T_ID 
+        { 
+            /* Verificando se o identificador foi declarado */
+            Node* ident = find( $1 );
+            if ( ident == NULL ) {
+                code_generate = FALSE;
+                fprintf (stderr, 
+                "Erro Semantico: Linha %d, Coluna %d. Identificador %s nao declarado\n", 
+                num_lines, column, $1);
+
+                $$.type = INDEFINED;
+            } else {
+                $$.type = ident->type;
+                /* buildReadMemory */
+            }
+        } 
+    | numero 
+        { 
+            if($1.type == INTEGER) {
+                $$.type = INTEGER;
+                $$.i_value = $1.i_value;
+            } else {
+                $$.type = REAL;
+                $$.i_value = $1.f_value;
+            }
+        }  
+    | T_L_PAREN fator_exp { $$ = $2; }
     | error { yyclearin; yyerror("sinal de relacao"); /*$$ = new ExpressionTree;*/ /*$$->type = ERROR;*/ }
     ;
 
 fator_exp
-    : expressao T_R_PAREN { /*$$ = $1;*/ }
-    | expressao error { yyerror(")"); /*$$ = $1;*/ }
+    : expressao T_R_PAREN { $$ = $1; }
+    | expressao error { yyerror(")"); $$ = $1; }
     ;
     
 /* Regra 31 <numero> ::= numero_int | numero_real */
@@ -377,13 +391,14 @@ extern FILE *yyin;
 int main (int argc, char *argv[])
 {
 #ifdef YYDEBUG
-	yydebug=0;
+	yydebug=1;
 #endif
-    if(argc != 2) {
+   /*
+   if(argc != 2) {
         printf("Uso: %s programa.lalg\n", argv[0]);
         return -1;
     }
-
+*/
     FILE *entrada = fopen(argv[1], "r");
     if(!entrada) {
         printf("Nao foi possivel abrir o arquivo %s\n", argv[1]);
@@ -393,7 +408,7 @@ int main (int argc, char *argv[])
     yyin = entrada;
 
     /* Inicia a tabela de simbolos */
-    /*init();*/
+    init();
 
     /* Inicializando variaveis auxiliarer */
     numerrors = 0;

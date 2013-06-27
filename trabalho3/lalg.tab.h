@@ -91,18 +91,18 @@
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union 
 /* Line 1676 of yacc.c  */
-#line 42 "lalg.y"
+#line 35 "lalg.y"
 YYSTYPE
 {
 
 /* Line 1676 of yacc.c  */
-#line 42 "lalg.y"
+#line 35 "lalg.y"
 
 	int i_number;
 	float r_number;
 	char* name;
 	int type;
-	struct snode {
+    struct snode {
 		int i_value;
 		float f_value;
 		int type;

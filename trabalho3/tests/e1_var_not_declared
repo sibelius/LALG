@@ -1,4 +1,5 @@
 program prog;
 begin
     a := 2; {Variavel nao declarada}
+    a := b; {Variavel nao declarada}
 end.

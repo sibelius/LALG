@@ -66,7 +66,7 @@
 
 %}
 
-%union YYSTYPE{
+%union {
 	int i_number;
 	float r_number;
 	char* name;
