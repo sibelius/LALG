@@ -106,8 +106,9 @@
 %token<r_number> T_RNUMBER "numero real"
 
 /* Tipo dos nao terminais */
+%type <snode> expressao
+%type <snode> fator_exp
 %type <snode> numero
-%type <snode> fator
 %type <math_op> op_mul
 
 %%
@@ -357,12 +358,12 @@ fator : T_ID { /*$$ = new ExpressionTree;*/ /*$$->type = VALUE; $$->name = strdu
       */}
       
     | T_L_PAREN fator_exp { /*$$ = $2;*/ }
-    | error { yyclearin; yyerror("sinal de relacao"); /*$$ = new ExpressionTree;*/ $$->type = ERROR; }
+    | error { yyclearin; yyerror("sinal de relacao"); /*$$ = new ExpressionTree;*/ /*$$->type = ERROR;*/ }
     ;
 
 fator_exp
-    : expressao T_R_PAREN { /*$$ = $1;*/ }
-    | expressao error { yyerror(")"); /*$$ = $1;*/ }
+    : expressao T_R_PAREN { $$ = $1; }
+    | expressao error { yyerror(")"); $$ = $1; }
     ;
     
 /* Regra 31 <numero> ::= numero_int | numero_real */
