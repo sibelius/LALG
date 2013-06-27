@@ -59,3 +59,15 @@ int addIdent( char* name, int type ){
 	return FALSE;
 	
 }
+
+int addVariables( ListaLigadaVar variables, int type) {
+    /* Percorre a lista de variaveis e adiciona na tabela de simbolos */
+    NoVar *paux = lista->inicio;                                                    
+    while (paux != NULL) {
+        if ( addIdent( paux->variable.name, type ) == FALSE ) {
+        }
+
+        printf("%s - %d\n", paux->variable.name, paux->variable.type);
+        paux = paux->proximo;
+    }
+}

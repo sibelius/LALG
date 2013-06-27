@@ -1,23 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "ListaLigada.h"
+#include "ListaLigadaInt.h"
 
-void criar(LISTA_LIGADA *lista) {
+void lli_criar(ListaLigadaInt *lista) {
   lista->inicio = NULL;
   lista->fim = NULL;
 }
 
-int vazia(LISTA_LIGADA *lista) {
+int lli_vazia(ListaLigadaInt *lista) {
   return (lista->inicio == NULL);
 }
 
-void apagar_lista(LISTA_LIGADA *lista) {
-  if (!vazia(lista)) {
-    NO *paux = lista->inicio;
+void lli_apagar_lista(ListaLigadaInt *lista) {
+  if (!lli_vazia(lista)) {
+    NoInt *paux = lista->inicio;
 
     while (paux != NULL) {
-      NO *prem = paux;
+      NoInt *prem = paux;
       paux = paux->proximo;
       free(prem);
     }
@@ -27,21 +27,21 @@ void apagar_lista(LISTA_LIGADA *lista) {
   lista->fim = NULL;
 }
 
-void imprimir(LISTA_LIGADA *lista) {
-  NO *paux = lista->inicio;
+void lli_imprimir(ListaLigadaInt *lista) {
+  NoInt *paux = lista->inicio;
 
   while (paux != NULL) {
-    printf("%d - %d\n", paux->item.chave, paux->item.valor);
+    printf("%d\n", paux->type);
     paux = paux->proximo;
   }
 }
 
-int buscar(LISTA_LIGADA *lista, int chave,  ITEM *item) {
-  NO *paux = lista->inicio;
+int lli_buscar(ListaLigadaInt *lista, char* name, int *type) {
+  NoInt *paux = lista->inicio;
 
   while (paux != NULL) {
-    if (paux->item.chave == chave) {
-      *item = paux->item;
+    if (paux->type == *type) {
+      *type = paux->type;
       return 1;
     }
     paux = paux->proximo;
@@ -50,12 +50,12 @@ int buscar(LISTA_LIGADA *lista, int chave,  ITEM *item) {
   return 0;
 }
 
-int inserir(LISTA_LIGADA *lista, ITEM *item) {
+int lli_inserir(ListaLigadaInt *lista, int *type) {
   //cria um novo nó
-  NO *pnovo = (NO *)malloc(sizeof(NO));
+  NoInt *pnovo = (NoInt *)malloc(sizeof(NoInt));
 
   if (pnovo != NULL) { //verifica se a memória foi alocada
-    pnovo->item = *item; //preenche os dados
+    pnovo->type = *type; //preenche os dados
     pnovo->proximo = NULL; //define que o próximo é nulo
 
     if (lista->inicio == NULL) { //se a lista for vazia
@@ -72,10 +72,10 @@ int inserir(LISTA_LIGADA *lista, ITEM *item) {
   }
 }
 
-int remover_fim(LISTA_LIGADA *lista) {
-  if (!vazia(lista)) {
+int lli_remover_fim(ListaLigadaInt *lista) {
+  if (!lli_vazia(lista)) {
     //procura o penúltimo nó
-    NO *paux  = lista->inicio;
+    NoInt *paux  = lista->inicio;
     while (paux->proximo != NULL && paux->proximo != lista->fim) {
       paux = paux->proximo;
     }
@@ -95,21 +95,21 @@ int remover_fim(LISTA_LIGADA *lista) {
   }
 }
 
-int remover_posicao(LISTA_LIGADA *lista, int pos) {
+int lli_remover_posicao(ListaLigadaInt *lista, int pos) {
   int i;
 
-  if (!vazia(lista)) { //verifica se a lista está vazia
+  if (!lli_vazia(lista)) { //verifica se a lista está vazia
     if (pos == 0) { //removendo o primeiro nó
       if (lista->inicio == lista->fim) { //se a lista tem um nó
         lista->fim = NULL;
       }
 
-      NO *paux = lista->inicio;
+      NoInt *paux = lista->inicio;
       lista->inicio = lista->inicio->proximo;
       free(paux);
     } else { //removendo do segundo nó para frente
       //aponta para o nó anterior a ser retirado
-      NO *paux = lista->inicio;
+      NoInt *paux = lista->inicio;
       for (i = 0; i < pos-1; i++) {
         if (paux->proximo != lista->fim) {
           paux = paux->proximo;
@@ -118,7 +118,7 @@ int remover_posicao(LISTA_LIGADA *lista, int pos) {
         }
       }
 
-      NO *pos = paux->proximo;
+      NoInt *pos = paux->proximo;
       paux->proximo = paux->proximo->proximo;
 
       if (pos->proximo == NULL) { //último nó retirado

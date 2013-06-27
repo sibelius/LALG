@@ -1,5 +1,5 @@
 program p4;
-var a, b, a: integer; {Variavel redeclarada}
+var a, b, c, b: integer; {Variavel redeclarada}
 begin
     a := 3;
 end.

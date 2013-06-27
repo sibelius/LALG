@@ -12,17 +12,17 @@ int main() {
 
   //inserir itens na lista
   for (i = 0; i < 10; i++) {
-    ITEM item;
-    item.chave = i;
-    item.valor = rand() % 10;
-    inserir(&lista, &item);
+    Variable variable;
+    variable.name = "a";
+    variable.type = rand() % 10;
+    inserir(&lista, &variable);
   }
 
   imprimir(&lista);
 
-  ITEM item;
-  if (buscar(&lista, 5, &item)){
-    printf("encontrado: %d - %d\n---\n", item.chave, item.valor);
+  Variable variable;
+  if (buscar(&lista, "a", &variable)){
+    printf("encontrado: %s - %d\n---\n", variable.name, variable.type);  
   }
 
   remover_posicao(&lista, 5);

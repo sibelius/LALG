@@ -7,7 +7,9 @@
 %{
 	#include <stdio.h>
 	#include <string.h>
-	#include "lalg.tab.h"
+	#include "ListaLigada/ListaLigadaVar.h"
+	#include "ListaLigada/ListaLigadaInt.h"
+    #include "lalg.tab.h"
 	
 	extern YYSTYPE yylval;
 	

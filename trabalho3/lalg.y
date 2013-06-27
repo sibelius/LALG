@@ -7,6 +7,8 @@
     #include <string.h>
     #include <stdlib.h>
     #include "simbolTable.h"
+    #include "ListaLigada/ListaLigadaVar.h"
+    #include "ListaLigada/ListaLigadaInt.h"
 
     int yylex (void);
     void yyerror (char *);
@@ -38,11 +40,12 @@
 	char* name;
 	int type;
     struct snode {
-		int i_value;
+        int i_value;
 		float f_value;
 		int type;
 	} snode;
 	char math_op;
+    ListaLigadaVar list;
 }
 
 /* Token utilizado para verificar fim de arquivo */
@@ -100,10 +103,15 @@
 
 /* Tipo dos nao terminais */
 %type <snode> numero
-%type <math_op> op_mul
 %type <snode> expressao
 %type <snode> fator_exp
 %type <snode> fator
+%type <snode> tipo_var
+
+%type <math_op> op_mul
+
+%type <list> variaveis
+%type <list> mais_var
 
 %%
 
@@ -168,7 +176,11 @@ dc_v : dc_v0 dc_v {}
     |
     ;
 
-dc_v0 : T_VAR variaveis T_COLON tipo_var dc_v1 {  }
+dc_v0 : T_VAR variaveis T_COLON tipo_var dc_v1 
+        {  
+            /* Adiciona na tabela de simbolos todas as variaveis */
+            addVariables
+        }
     | T_VAR variaveis error T_SEMICOLON { yyerror(":"); }
     ;
     
@@ -177,19 +189,36 @@ dc_v1 : T_SEMICOLON {}
     ;
 
 /* Regra 6 <tipo_var> ::= real | integer */
-tipo_var : T_REAL {}
-    | T_INTEGER {}
+tipo_var : T_REAL { $$.type = REAL; }
+    | T_INTEGER { $$.type = INTEGER; }
     | error { yyerror("tipo"); }
     ;
 
 /* Regra 7 <variaveis> ::= ident <mais_var> */
-variaveis : T_ID mais_var {}
-    | error { yyclearin; yyerror("id"); } mais_var {}
+variaveis : T_ID mais_var 
+        {
+            $$ = $2;
+            Variable variable;
+            variable.name = $1;
+            variable.type = 0;
+            llvar_inserir( & $$, &variable);
+            llvar_imprimir(& $$);
+            printf("\n");
+        }
+    | error { yyclearin; yyerror("id"); } mais_var 
+        {
+            $$ = $3;
+        }
     ;
 
 /* Regra 8 <mais_var> ::= , <variaveis> | lambda */
-mais_var : T_COMMA variaveis {}
-    | /*lambda*/ {}
+mais_var : T_COMMA variaveis { $$ = $2 }
+    | /*lambda*/ 
+        {
+            ListaLigadaVar lista;
+            llvar_criar(&lista);
+            $$ = lista;
+        }
     ;
 
 /* Regra 9 <dc_p> ::= procedure ident <parametros> ; <corpo_p> <dc_p> | lambda */
@@ -391,7 +420,7 @@ extern FILE *yyin;
 int main (int argc, char *argv[])
 {
 #ifdef YYDEBUG
-	yydebug=1;
+	yydebug=0;
 #endif
    /*
    if(argc != 2) {
