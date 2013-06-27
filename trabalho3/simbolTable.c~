@@ -70,7 +70,7 @@ int addVariables( ListaLigadaVar *variables, int type) {
 void printSimbolTable(){
 	Node *pointer = head->next;
 	while( pointer != NULL ){
-		printf("name: %s, i_value %d, f_value %f, type: %d, categoria %d \n", pointer->name, pointer->i_value, pointer->f_value, pointer->type, pointer->categoria );
+		printf("name: %s, i_value %d, f_value %f, type: %d, categoria %d ", pointer->name, pointer->i_value, pointer->f_value, pointer->type, pointer->categoria );
 		
 		pointer = pointer->next;
 	}	

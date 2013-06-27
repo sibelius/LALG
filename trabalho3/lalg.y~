@@ -460,10 +460,7 @@ int main (int argc, char *argv[])
     /* Remove o arquivo, caso a geracao tenha parado */
     if (!code_generate)
         remove( "code.p");
-	
-	/* imprimindo a talela de simbolos */
-	printSimbolTable();
-	
+
     return res;
 }
 

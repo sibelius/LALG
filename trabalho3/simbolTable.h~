@@ -48,5 +48,3 @@ int addIdent( char* name, int type );
 int addVariable( char* name, int type);
 
 int addVariables( ListaLigadaVar *variables, int type);
-
-void printSimbolTable();
