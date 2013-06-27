@@ -1,0 +1,232 @@
+Starting parse
+Entering state 0
+Reading a token: Next token is token "program" ()
+Shifting token "program" ()
+Entering state 2
+Reading a token: Next token is token T_ID ()
+Shifting token T_ID ()
+Entering state 8
+Reducing stack by rule 7 (line 118):
+-> $$ = nterm $@3 ()
+Stack now 0 2 8
+Entering state 20
+Reading a token: Next token is token ";" ()
+Shifting token ";" ()
+Entering state 36
+Reading a token: Next token is token "begin" ()
+Reducing stack by rule 23 (line 146):
+-> $$ = nterm dc_c ()
+Stack now 0 2 8 20 36
+Entering state 15
+Next token is token "begin" ()
+Reducing stack by rule 36 (line 168):
+-> $$ = nterm dc_v ()
+Stack now 0 2 8 20 36 15
+Entering state 30
+Next token is token "begin" ()
+Reducing stack by rule 52 (line 197):
+-> $$ = nterm dc_p ()
+Stack now 0 2 8 20 36 15 30
+Entering state 57
+Reducing stack by rule 21 (line 141):
+   $1 = nterm dc_c ()
+   $2 = nterm dc_v ()
+   $3 = nterm dc_p ()
+-> $$ = nterm dc ()
+Stack now 0 2 8 20 36
+Entering state 14
+Next token is token "begin" ()
+Shifting token "begin" ()
+Entering state 28
+Reading a token: Next token is token T_ID ()
+Shifting token T_ID ()
+Entering state 50
+Reading a token: Next token is token ":=" ()
+Reducing stack by rule 99 (line 274):
+-> $$ = nterm $@23 ()
+Stack now 0 2 8 20 36 14 28 50
+Entering state 76
+Next token is token ":=" ()
+Shifting token ":=" ()
+Entering state 114
+Reading a token: Next token is token T_INUMBER ()
+Reducing stack by rule 130 (line 317):
+-> $$ = nterm op_un ()
+Stack now 0 2 8 20 36 14 28 50 76 114
+Entering state 111
+Next token is token T_INUMBER ()
+Shifting token T_INUMBER ()
+Entering state 92
+Reducing stack by rule 146 (line 383):
+   $1 = token T_INUMBER ()
+-> $$ = nterm numero ()
+Stack now 0 2 8 20 36 14 28 50 76 114 111
+Entering state 148
+Reducing stack by rule 141 (line 363):
+   $1 = nterm numero ()
+-> $$ = nterm fator ()
+Stack now 0 2 8 20 36 14 28 50 76 114 111
+Entering state 147
+Reading a token: Next token is token ";" ()
+Reducing stack by rule 137 (line 338):
+-> $$ = nterm mais_fatores ()
+Stack now 0 2 8 20 36 14 28 50 76 114 111 147
+Entering state 175
+Reducing stack by rule 135 (line 331):
+   $1 = nterm op_un ()
+   $2 = nterm fator ()
+   $3 = nterm mais_fatores ()
+-> $$ = nterm termo ()
+Stack now 0 2 8 20 36 14 28 50 76 114
+Entering state 112
+Next token is token ";" ()
+Reducing stack by rule 132 (line 322):
+-> $$ = nterm outros_termos ()
+Stack now 0 2 8 20 36 14 28 50 76 114 112
+Entering state 151
+Reducing stack by rule 127 (line 311):
+   $1 = nterm termo ()
+   $2 = nterm outros_termos ()
+-> $$ = nterm expressao ()
+Stack now 0 2 8 20 36 14 28 50 76 114
+Entering state 154
+Reducing stack by rule 100 (line 274):
+   $1 = token T_ID ()
+   $2 = nterm $@23 ()
+   $3 = token ":=" ()
+   $4 = nterm expressao ()
+-> $$ = nterm cmd ()
+Stack now 0 2 8 20 36 14 28
+Entering state 52
+Next token is token ";" ()
+Shifting token ";" ()
+Entering state 81
+Reading a token: Next token is token T_ID ()
+Shifting token T_ID ()
+Entering state 50
+Reading a token: Next token is token ":=" ()
+Reducing stack by rule 99 (line 274):
+-> $$ = nterm $@23 ()
+Stack now 0 2 8 20 36 14 28 52 81 50
+Entering state 76
+Next token is token ":=" ()
+Shifting token ":=" ()
+Entering state 114
+Reading a token: Next token is token T_ID ()
+Reducing stack by rule 130 (line 317):
+-> $$ = nterm op_un ()
+Stack now 0 2 8 20 36 14 28 52 81 50 76 114
+Entering state 111
+Next token is token T_ID ()
+Shifting token T_ID ()
+Entering state 146
+Reducing stack by rule 140 (line 347):
+   $1 = token T_ID ()
+Erro Semantico: Linha 4, Coluna 10. Identificador b nao declarado
+-> $$ = nterm fator ()
+Stack now 0 2 8 20 36 14 28 52 81 50 76 114 111
+Entering state 147
+Reading a token: Next token is token ";" ()
+Reducing stack by rule 137 (line 338):
+-> $$ = nterm mais_fatores ()
+Stack now 0 2 8 20 36 14 28 52 81 50 76 114 111 147
+Entering state 175
+Reducing stack by rule 135 (line 331):
+   $1 = nterm op_un ()
+   $2 = nterm fator ()
+   $3 = nterm mais_fatores ()
+-> $$ = nterm termo ()
+Stack now 0 2 8 20 36 14 28 52 81 50 76 114
+Entering state 112
+Next token is token ";" ()
+Reducing stack by rule 132 (line 322):
+-> $$ = nterm outros_termos ()
+Stack now 0 2 8 20 36 14 28 52 81 50 76 114 112
+Entering state 151
+Reducing stack by rule 127 (line 311):
+   $1 = nterm termo ()
+   $2 = nterm outros_termos ()
+-> $$ = nterm expressao ()
+Stack now 0 2 8 20 36 14 28 52 81 50 76 114
+Entering state 154
+Reducing stack by rule 100 (line 274):
+   $1 = token T_ID ()
+   $2 = nterm $@23 ()
+   $3 = token ":=" ()
+   $4 = nterm expressao ()
+-> $$ = nterm cmd ()
+Stack now 0 2 8 20 36 14 28 52 81
+Entering state 52
+Next token is token ";" ()
+Shifting token ";" ()
+Entering state 81
+Reading a token: Next token is token "end" ()
+Reducing stack by rule 92 (line 266):
+-> $$ = nterm comandos ()
+Stack now 0 2 8 20 36 14 28 52 81 52 81
+Entering state 118
+Reducing stack by rule 87 (line 263):
+   $1 = nterm cmd ()
+   $2 = token ";" ()
+   $3 = nterm comandos ()
+-> $$ = nterm comandos ()
+Stack now 0 2 8 20 36 14 28 52 81
+Entering state 118
+Reducing stack by rule 87 (line 263):
+   $1 = nterm cmd ()
+   $2 = token ";" ()
+   $3 = nterm comandos ()
+-> $$ = nterm comandos ()
+Stack now 0 2 8 20 36 14 28
+Entering state 51
+Next token is token "end" ()
+Shifting token "end" ()
+Entering state 78
+Reducing stack by rule 20 (line 137):
+   $1 = token "end" ()
+-> $$ = nterm corpo1 ()
+Stack now 0 2 8 20 36 14 28 51
+Entering state 79
+Reducing stack by rule 18 (line 133):
+   $1 = nterm dc ()
+   $2 = token "begin" ()
+   $3 = nterm comandos ()
+   $4 = nterm corpo1 ()
+-> $$ = nterm corpo ()
+Stack now 0 2 8 20 36
+Entering state 63
+Reading a token: Next token is token "." ()
+Shifting token "." ()
+Entering state 25
+Reducing stack by rule 16 (line 128):
+   $1 = token "." ()
+-> $$ = nterm programa3 ()
+Stack now 0 2 8 20 36 63
+Entering state 91
+Reducing stack by rule 14 (line 124):
+   $1 = token ";" ()
+   $2 = nterm corpo ()
+   $3 = nterm programa3 ()
+-> $$ = nterm programa2 ()
+Stack now 0 2 8 20
+Entering state 37
+Reducing stack by rule 8 (line 118):
+   $1 = token T_ID ()
+   $2 = nterm $@3 ()
+   $3 = nterm programa2 ()
+-> $$ = nterm programa1 ()
+Stack now 0 2
+Entering state 9
+Reducing stack by rule 1 (line 112):
+   $1 = token "program" ()
+   $2 = nterm programa1 ()
+-> $$ = nterm programa ()
+Stack now 0
+Entering state 3
+Reading a token: Now at end of input.
+Shifting token $end ()
+Entering state 10
+Stack now 0 3 10
+Cleanup: popping token $end ()
+Cleanup: popping nterm programa ()
+Analise Sintatica Completada

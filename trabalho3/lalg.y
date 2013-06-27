@@ -100,10 +100,10 @@
 
 /* Tipo dos nao terminais */
 %type <snode> numero
-%type <snode> fator
 %type <math_op> op_mul
 %type <snode> expressao
 %type <snode> fator_exp
+%type <snode> fator
 
 %%
 
@@ -322,7 +322,7 @@ outros_termos : op_ad termo outros_termos {}
     | {}
     ;
 
-/* Regra 26 <op_ad> ::= + | - */
+	/* Regra 26 <op_ad> ::= + | - */
 op_ad : T_PLUS {}
     | T_MINUS {}
     ;
