@@ -1,37 +1,16 @@
+#ifndef _SIMBOLTABLE_
+#define _SIMBOLTABLE_
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "ListaLigada/ListaLigadaInt.h"
+#include "ListaLigada/ListaLigadaVarType.h"
 #include "ListaLigada/ListaLigadaVar.h"
-
-#ifndef TRUE
-#define TRUE 1
-#endif
-
-#ifndef FALSE
-#define FALSE 0
-#endif
-
-
-//Tipos
-#define INDEFINED 0
-#define INTEGER 1
-#define REAL 2
-
-enum cat {
-        PROGRAM = 1,
-        VARIABLE,
-        PARAMETER,
-        PROCEDURE,
-        CONSTANT
-    };
-typedef enum cat Categoria;
+#include "types.h"
 
 struct node {
 	char *name; /* Cadeia */
-	int i_value; /* Valor inteiro */
-	float f_value; /* Valor real */
-	int type; /* Tipo */
+    VarValue value;
 	int relative_position; /* Endereco na memoria */
     Categoria categoria; /* Categoria */
     ListaLigadaInt paramType; /* Lista dos tipos do procedure */
@@ -39,14 +18,24 @@ struct node {
 };
 typedef struct node Node;
 
-void init( );
+void init();
 
 Node* find( char* name );
 
-int addIdent( char* name, int type );
+/* Adiciona nome do programa, variaveis, constantes */
+int addSymbol( char* name, VarValue value, Categoria cat );
 
-int addVariable( char* name, int type);
+int addConstant(char* name, VarValue value);
+int addVariables( ListaLigadaVar *variables, VarValue value);
+int addProcedure(char* name, ListaLigadaVar *paramList);
 
-int addVariables( ListaLigadaVar *variables, int type);
+/* Verifica uma chamada ao read ou write */
+int checkCallReadWrite(char* name, ListaLigadaVar *paramList);
+
+void printVarType(VarType type);
+void printCategoria(Categoria categoria);
+void printParamType(ListaLigadaInt *paramType);
 
 void printSimbolTable();
+
+#endif

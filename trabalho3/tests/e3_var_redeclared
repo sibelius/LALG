@@ -1,4 +1,5 @@
 program p4;
+const pi = 3.14;
 var a, b, c, b: integer; {Variavel redeclarada}
 begin
     a := 3;

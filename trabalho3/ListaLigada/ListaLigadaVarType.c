@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "ListaLigadaInt.h"
+#include "ListaLigadaVarType.h"
 
 void lli_criar(ListaLigadaInt *lista) {
   lista->inicio = NULL;
@@ -14,10 +14,10 @@ int lli_vazia(ListaLigadaInt *lista) {
 
 void lli_apagar_lista(ListaLigadaInt *lista) {
   if (!lli_vazia(lista)) {
-    NoInt *paux = lista->inicio;
+    NoVarType *paux = lista->inicio;
 
     while (paux != NULL) {
-      NoInt *prem = paux;
+      NoVarType *prem = paux;
       paux = paux->proximo;
       free(prem);
     }
@@ -28,7 +28,7 @@ void lli_apagar_lista(ListaLigadaInt *lista) {
 }
 
 void lli_imprimir(ListaLigadaInt *lista) {
-  NoInt *paux = lista->inicio;
+  NoVarType *paux = lista->inicio;
 
   while (paux != NULL) {
     printf("%d\n", paux->type);
@@ -36,8 +36,8 @@ void lli_imprimir(ListaLigadaInt *lista) {
   }
 }
 
-int lli_buscar(ListaLigadaInt *lista, char* name, int *type) {
-  NoInt *paux = lista->inicio;
+int lli_buscar(ListaLigadaInt *lista, char* name, VarType *type) {
+  NoVarType *paux = lista->inicio;
 
   while (paux != NULL) {
     if (paux->type == *type) {
@@ -50,9 +50,9 @@ int lli_buscar(ListaLigadaInt *lista, char* name, int *type) {
   return 0;
 }
 
-int lli_inserir(ListaLigadaInt *lista, int *type) {
+int lli_inserir(ListaLigadaInt *lista, VarType *type) {
   //cria um novo nó
-  NoInt *pnovo = (NoInt *)malloc(sizeof(NoInt));
+  NoVarType *pnovo = (NoVarType *)malloc(sizeof(NoVarType));
 
   if (pnovo != NULL) { //verifica se a memória foi alocada
     pnovo->type = *type; //preenche os dados
@@ -75,7 +75,7 @@ int lli_inserir(ListaLigadaInt *lista, int *type) {
 int lli_remover_fim(ListaLigadaInt *lista) {
   if (!lli_vazia(lista)) {
     //procura o penúltimo nó
-    NoInt *paux  = lista->inicio;
+    NoVarType *paux  = lista->inicio;
     while (paux->proximo != NULL && paux->proximo != lista->fim) {
       paux = paux->proximo;
     }
@@ -104,12 +104,12 @@ int lli_remover_posicao(ListaLigadaInt *lista, int pos) {
         lista->fim = NULL;
       }
 
-      NoInt *paux = lista->inicio;
+      NoVarType *paux = lista->inicio;
       lista->inicio = lista->inicio->proximo;
       free(paux);
     } else { //removendo do segundo nó para frente
       //aponta para o nó anterior a ser retirado
-      NoInt *paux = lista->inicio;
+      NoVarType *paux = lista->inicio;
       for (i = 0; i < pos-1; i++) {
         if (paux->proximo != lista->fim) {
           paux = paux->proximo;
@@ -118,7 +118,7 @@ int lli_remover_posicao(ListaLigadaInt *lista, int pos) {
         }
       }
 
-      NoInt *pos = paux->proximo;
+      NoVarType *pos = paux->proximo;
       paux->proximo = paux->proximo->proximo;
 
       if (pos->proximo == NULL) { //último nó retirado

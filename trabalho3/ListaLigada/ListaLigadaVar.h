@@ -1,9 +1,11 @@
 #ifndef LISTALIGADAVAR_H_INCLUDED
 #define LISTALIGADAVAR_H_INCLUDED
 
+#include "../types.h"
+
 typedef struct {
   char* name;
-  int type;
+  VarValue value;
 } Variable;
 
 typedef struct NoVar {

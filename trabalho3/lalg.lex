@@ -8,7 +8,8 @@
 	#include <stdio.h>
 	#include <string.h>
 	#include "ListaLigada/ListaLigadaVar.h"
-	#include "ListaLigada/ListaLigadaInt.h"
+	#include "ListaLigada/ListaLigadaVarType.h"
+    #include "simbolTable.h"
     #include "lalg.tab.h"
 	
 	extern YYSTYPE yylval;

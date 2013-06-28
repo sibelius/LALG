@@ -28,12 +28,15 @@ void llvar_apagar_lista(ListaLigadaVar *lista) {
 }
 
 void llvar_imprimir(ListaLigadaVar *lista) {
-  NoVar *paux = lista->inicio;
+    NoVar *paux = lista->inicio;
 
-  while (paux != NULL) {
-    printf("%s - %d\n", paux->variable.name, paux->variable.type);
-    paux = paux->proximo;
-  }
+    printf("name\ttype\ti_value\tf_value\n");
+    while (paux != NULL) {
+        printf("%s\t", paux->variable.name);
+        /*printVarType(paux->variable.value.type);*/
+        printf("\t%8d\t%f\n", paux->variable.value.i_value, paux->variable.value.f_value);
+        paux = paux->proximo;
+    }
 }
 
 int llvar_buscar(ListaLigadaVar *lista, char* name, Variable *variable) {

@@ -6,9 +6,9 @@
     #include <stdio.h>
     #include <string.h>
     #include <stdlib.h>
-    #include "simbolTable.h"
     #include "ListaLigada/ListaLigadaVar.h"
-    #include "ListaLigada/ListaLigadaInt.h"
+    #include "ListaLigada/ListaLigadaVarType.h"
+    #include "simbolTable.h"
 
     int yylex (void);
     void yyerror (char *);
@@ -28,7 +28,7 @@
     extern int num_lines;
     extern char *yytext;
 	extern int column;
-
+    
     /* Manipulacao da Tabela de simbolos */
     void addInTable( char *name, int type, int i_value, float f_value );
 
@@ -38,12 +38,7 @@
 	int i_number;
 	float r_number;
 	char* name;
-	int type;
-    struct snode {
-        int i_value;
-		float f_value;
-		int type;
-	} snode;
+    VarValue value;
 	char math_op;
     ListaLigadaVar list;
 }
@@ -102,16 +97,28 @@
 %token<r_number> T_RNUMBER /*"numero real"*/
 
 /* Tipo dos nao terminais */
-%type <snode> numero
-%type <snode> expressao
-%type <snode> fator_exp
-%type <snode> fator
-%type <snode> tipo_var
+%type <value> numero
+%type <value> expressao
+%type <value> fator_exp
+%type <value> fator
+%type <value> tipo_var
 
 %type <math_op> op_mul
 
+%type <value> dc_c1; 
+%type <value> dc_c2; 
+
 %type <list> variaveis
 %type <list> mais_var
+
+%type <list> lista_arg
+%type <list> argumentos
+%type <list> mais_ident
+%type <list> lista_par
+%type <list> parametros
+%type <list> mais_par
+
+%type <list> cmd_param
 
 %%
 
@@ -123,7 +130,7 @@ programa : T_PROGRAM programa1 {}
     | error T_DOT { yyerror("program");}
     ;
 
-programa1 : T_ID {} programa2 {}
+programa1 : T_ID { addProgram($1); } programa2 {}
     | error T_SEMICOLON { yyerror("id");} corpo programa3
     | error { yyerror("id"); } corpo programa3
     | error T_DOT { yyerror("id");}
@@ -146,24 +153,24 @@ corpo1 : T_END {}
     ;
     
 /* Regra 3 <dc> ::= <dc_c> <dc_v> <dc_p> */
-dc : dc_c dc_v dc_p {}
+dc : dc_c dc_v dc_p
     ;
 
 /* Regra 4 <dc_c> ::= const ident = <numero> ; <dc_c> | lambda */
-dc_c : dc_c0 dc_c {}
+dc_c : dc_c0 dc_c 
     |
     ;
 
-dc_c0 : T_CONST {} T_ID dc_c1 {}
+dc_c0 : T_CONST T_ID dc_c1 { addConstant($2, $3); }
     | T_CONST error T_EQUAL { yyerror("id"); } numero T_SEMICOLON
     | T_CONST error T_SEMICOLON { yyerror("id"); }
     ;
 
-dc_c1 : T_EQUAL dc_c2 {}
+dc_c1 : T_EQUAL dc_c2 { $$ = $2; }
     | error T_SEMICOLON { yyerror("="); }
     ;
     
-dc_c2 : numero dc_c3 {}
+dc_c2 : numero dc_c3 { $$ = $1; }
     | error T_SEMICOLON { yyerror("numero"); }
     ;
     
@@ -179,7 +186,7 @@ dc_v : dc_v0 dc_v {}
 dc_v0 : T_VAR variaveis T_COLON tipo_var dc_v1 
         {  
             /* Adiciona na tabela de simbolos todas as variaveis */
-            addVariables( &$2, $4.type );
+            addVariables( &$2, $4 );
         }
     | T_VAR variaveis error T_SEMICOLON { yyerror(":"); }
     ;
@@ -200,10 +207,10 @@ variaveis : T_ID mais_var
             $$ = $2;
             Variable variable;
             variable.name = $1;
-            variable.type = 0;
+            variable.value.type = INDEFINED;
             llvar_inserir( & $$, &variable);
-            llvar_imprimir(& $$);
-            printf("\n");
+            /*llvar_imprimir(& $$);*/
+            /*printf("\n");*/
         }
     | error { yyclearin; yyerror("id"); } mais_var 
         {
@@ -226,7 +233,7 @@ dc_p : dc_p0 {} dc_p
     |
     ;
 
-dc_p0 : T_PROCEDURE {} T_ID parametros {} dc_p1
+dc_p0 : T_PROCEDURE {} T_ID parametros { addProcedure($3, &$4 ); } dc_p1
     | T_PROCEDURE error T_SEMICOLON { yyclearin; yyerror("id"); } corpo_p
     ;
    
@@ -235,27 +242,54 @@ dc_p1 : T_SEMICOLON corpo_p {}
     ; 
 
 /* Regra 10 <parametros> ::= ( <lista_par> ) | lambda */
-parametros : T_L_PAREN lista_par T_R_PAREN {}
-    | T_L_PAREN lista_par error { yyclearin; yyerror(")"); }
-    | {}
+parametros : T_L_PAREN lista_par T_R_PAREN { $$ = $2 }
+    | T_L_PAREN lista_par error { yyclearin; yyerror(")"); $$ = $2 }
+    | /* lambda */ 
+        {
+            ListaLigadaVar lista;
+            llvar_criar(&lista);
+            $$ =  lista; 
+        }
     ;
     
 /* Regra 11 <lista_par> ::= <variaveis> : <tipo_var> <mais_par> */
-lista_par : variaveis T_COLON tipo_var mais_par {}
+lista_par : variaveis T_COLON tipo_var mais_par 
+        { 
+            $$ = $4;
+            /* Adiciona as variaveis na lista do mais_par */            
+
+            NoVar *paux = $1.inicio;
+            while (paux != NULL) {
+                paux->variable.value = $3;
+
+                llvar_inserir( & $$, &paux->variable); 
+
+                paux = paux->proximo;
+            }
+
+        }
     ;
 
 /* Regra 12 <mais_par> ::= ; <lista_par> | lambda */
-mais_par : T_SEMICOLON lista_par {}
-    | {}
+mais_par : T_SEMICOLON lista_par 
+        {
+            $$ = $2;
+        }
+    | /* lambda */
+        {
+            ListaLigadaVar lista;
+            llvar_criar(&lista);
+            $$ =  lista; 
+        }
     ;
 
 /* Regra 13 <corpo_p> ::= <dc_loc> begin <comandos> end ; */
-corpo_p : dc_loc T_BEGIN comandos corpo_p1 {}
+corpo_p : dc_loc T_BEGIN comandos corpo_p1 
     | dc_loc error T_END { yyerror("begin"); } corpo_p2
     | dc_loc error T_SEMICOLON { yyerror("begin"); }
     ;
     
-corpo_p1 : T_END corpo_p2 {}
+corpo_p1 : T_END corpo_p2 
     | error T_SEMICOLON { yyerror("end"); }
     ;
     
@@ -268,19 +302,47 @@ dc_loc : dc_v
     ;
 
 /* Regra 15 <lista_arg> ::= ( <argumentos> ) | lambda */
-lista_arg : T_L_PAREN argumentos T_R_PAREN  {}
-    | T_L_PAREN argumentos error { yyerror(")"); }
-    | {}
+lista_arg : T_L_PAREN argumentos T_R_PAREN  
+        { 
+            $$ = $2; 
+        }
+    | T_L_PAREN argumentos error 
+        { 
+            yyerror(")"); 
+            $$ = $2; 
+        }
+    | /* lambda */ 
+        { 
+            ListaLigadaVar lista;
+            llvar_criar(&lista);
+            $$ =  lista;
+        }
     ;
 
 /* Regra 16 <argumentos> ::= ident <mais_ident> */
-argumentos : T_ID mais_ident {}
-    | error { yyclearin; yyerror("id"); } mais_ident {}
+argumentos : T_ID mais_ident 
+        {
+           $$ = $2;
+           Variable variable;
+           variable.name = $1;
+           variable.value.type = 0;
+           llvar_inserir(& $$, &variable);
+        
+        }
+    | error { yyclearin; yyerror("id"); } mais_ident { $$ = $3; }
     ;
     
 /* Regra 17 <mais_ident> ::= ; <argumentos> | lambda */
-mais_ident : T_SEMICOLON argumentos {}
-    | {}
+mais_ident : T_SEMICOLON argumentos 
+        {
+            $$ = $2;
+        }
+    | /* lambda */
+        {
+            ListaLigadaVar lista;
+            llvar_criar(&lista);
+            $$ =  lista; 
+        }
     ;
     
 /* Regra 18 <pfalsa> ::= else <cmd> | lambda */
@@ -297,14 +359,22 @@ comandos : cmd T_SEMICOLON comandos
 
 /* Regra 20 <cmd> ::= read(<variaveis>) | write (<variaveis>) | while(<condicao>) do <cmd> |
 | if <condicao> then <cmd> <pfalsa> | ident := <expressao> | ident <lista_arg> | begin <comandos> end | for <ATR> TO <expressao> do <cmd> */
-cmd : T_READ {} cmd_param {}
-    | T_WRITE {} cmd_param {}
-    | T_IF {} cmd_if
-    | T_ID {} T_ASSIGN expressao {}
-    | T_ID {} lista_arg {}
+cmd : T_READ cmd_param 
+        { 
+            /* Verifica se todos os argumentos sao do mesmo tipo */
+            checkCallReadWrite("READ", &$2); 
+        }
+    | T_WRITE cmd_param 
+        {
+            /* Verifica se todos os argumentos sao do mesmo tipo */
+            checkCallReadWrite("WRITE", &$2); 
+        }
+    | T_IF cmd_if
+    | T_ID T_ASSIGN expressao {}
+    | T_ID lista_arg {}
     | T_BEGIN cmd_begin {}
-    | T_WHILE {} cmd_while {}
-    | T_FOR {} T_ID {} T_ASSIGN expressao T_TO expressao T_DO cmd {}
+    | T_WHILE cmd_while {}
+    | T_FOR T_ID T_ASSIGN expressao T_TO expressao T_DO cmd {}
 //	| error { yyclearin; yyerror("cmd"); }
     ;
 
@@ -385,7 +455,7 @@ fator : T_ID
 
                 $$.type = INDEFINED;
             } else {
-                $$.type = ident->type;
+                $$.type = ident->value.type;
                 /* buildReadMemory */
             }
         } 

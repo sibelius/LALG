@@ -29,14 +29,15 @@ Node* find( char* name ){
 	return NULL; 
 }
 
-int addIdent( char* name, int type ){
+int addSymbol( char* name, VarValue value, Categoria cat ){
 	
 	//Verifica se o ident já existe
 	if( find( name ) == NULL ){
 
 		Node *new_node = malloc( sizeof( Node ) );
-		new_node->type = type;
+		new_node->value = value;
 		new_node->name = strdup( name );	
+        new_node->categoria = cat;
 		new_node->next = head->next;
 		head->next = new_node;
 		size++;
@@ -44,22 +45,30 @@ int addIdent( char* name, int type ){
 		return TRUE;
 	}
 	
-	return FALSE;
-	
+	return FALSE;	
 }
 
-int addVariables( ListaLigadaVar *variables, int type) {
+int addProgram(char* name) {
+    VarValue value;
+    return addSymbol(name, value, PROGRAM); 
+}
+
+int addConstant(char* name, VarValue value) {
+    return addSymbol(name, value, CONSTANT);
+}
+
+int addVariables( ListaLigadaVar *variables, VarValue value) {
     int errorAddIdent = FALSE;	/* se alguma variavel nao puder ser adicionada a flag e setada como true */
     
     /* Percorre a lista de variaveis e adiciona na tabela de simbolos */
     NoVar *paux = variables->inicio;                                                    
     while (paux != NULL) {
-        if ( addIdent( paux->variable.name, type ) == FALSE ) {
+        if ( addSymbol( paux->variable.name, value, VARIABLE ) == FALSE ) {
         	printf("Erro semantico: identificador %s ja declarado\n", paux->variable.name );
 			errorAddIdent = TRUE;
         }
 
-        printf("%s - %d\n", paux->variable.name, paux->variable.type);
+        /*rintf("%s - %d\n", paux->variable.name, paux->variable.value.type);*/
         paux = paux->proximo;
     }
     
@@ -67,10 +76,109 @@ int addVariables( ListaLigadaVar *variables, int type) {
  	return !errorAddIdent;   
 }
 
+int addProcedure(char* name, ListaLigadaVar *paramList)
+{
+    //Verifica se o ident já existe
+    if( find( name ) == NULL ){
+
+        /* TODO - Temos que ter uma tabela de simbolo para cada procedimento */
+    	Node *new_node = malloc( sizeof( Node ) );
+    	new_node->name = strdup( name );	
+        new_node->categoria = PROCEDURE;
+
+        /* Cria uma lista para armazenar os tipos dos Parametros */
+        ListaLigadaInt paramType;
+        lli_criar(&paramType);
+
+        /* Percorre a lista de variaveis e adiciona na tabela de simbolos */
+        NoVar *paux = paramList->inicio;                                                    
+        while (paux != NULL) {
+            lli_inserir(&paramType, &paux->variable.value.type);
+
+            paux = paux->proximo;
+        }
+
+        new_node->paramType = paramType;
+        new_node->next = head->next;
+    	head->next = new_node;
+    	size++;
+                                                   
+    	return TRUE;
+    }
+    
+    return FALSE;	 
+}
+
+/* Verifica uma chamada ao read ou write */
+int checkCallReadWrite(char* name, ListaLigadaVar *paramList)
+{
+    /* Verifica:
+     * 1. Verifica se a variavel foi declarada
+     * 2. Se for read, se nenhum dos parametros eh uma constante
+     * 3. se todos os parametros sao do mesmo tipo
+     * 4. Gera o codigo do READ ou do WRITE
+     * */
+}
+
+/* Print Routines for Debug Purposes */
+void printVarType(VarType type) {
+    switch(type) {
+        case INDEFINED:
+            printf("indefined");
+            break;
+        case INTEGER:
+            printf("integer");
+            break;
+        case REAL:
+            printf("real");
+            break;
+    }
+}
+
+void printCategoria(Categoria categoria) {
+    switch(categoria) {
+        case PROGRAM:
+            printf("program");
+            break;
+        case VARIABLE:
+            printf("variable");
+            break;
+        case PROCEDURE:
+            printf("procedure");
+            break;
+        case CONSTANT:
+            printf("constant");
+            break;
+    }
+}
+
+void printParamType(ListaLigadaInt *paramType) {
+    NoVarType *paux = paramType->inicio;
+                                  
+    while (paux != NULL) {
+        printVarType(paux->type);
+        printf("\t");
+        paux = paux->proximo;
+    }
+}
+
 void printSimbolTable(){
 	Node *pointer = head->next;
-	while( pointer != NULL ){
-		printf("name: %s, i_value %d, f_value %f, type: %d, categoria %d \n", pointer->name, pointer->i_value, pointer->f_value, pointer->type, pointer->categoria );
+    printf("name\ti_value\t\tf_value\t\ttype\trelative_position\tcategoria\tparamType\n");
+	while( pointer != NULL ){	
+        printf("%s\t%8d\t%.2f\t\t",pointer->name, pointer->value.i_value, pointer->value.f_value);
+
+        printVarType(pointer->value.type);
+
+        printf("\t%d\t\t\t", pointer->relative_position );
+        
+        printCategoria(pointer->categoria);
+
+        printf("\t");
+       
+        printParamType(&pointer->paramType);
+
+        printf("\n");
 		
 		pointer = pointer->next;
 	}	
