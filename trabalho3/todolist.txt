@@ -1,0 +1,5 @@
+- tratar os erros dos parenteses em read e write 
+
+obs: retiramos o cmd_param
+
+- tratar caso passar um procedimento como parametro de read e write

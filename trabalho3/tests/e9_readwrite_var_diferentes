@@ -1,11 +1,16 @@
 program p9;
+const valor = 2; 
 var a : integer;
 var b : real;
 
 begin
     read(a,a);
     write(b,b);
-    read(a,b);	{ read com variaveis de tipo diferentes }
-    write(a,b); { read com variaveis de tipo diferentes }
+    read(a,b);		{ read com variaveis de tipo diferentes }
+    write(a,b); 	{ write com variaveis de tipo diferentes }
+	read(c);		{ read com variavel nao declarada }
+	write(d, c);	{ write com variavel nao declarada }
+	read(valor);	{ read com constante }
+	write(valor);	{ write com constante }
 end.
 

@@ -118,7 +118,7 @@
 %type <list> parametros
 %type <list> mais_par
 
-//%type <list> cmd_param
+%type <list> cmd_param
 
 %%
 
@@ -359,15 +359,15 @@ comandos : cmd T_SEMICOLON comandos
 
 /* Regra 20 <cmd> ::= read(<variaveis>) | write (<variaveis>) | while(<condicao>) do <cmd> |
 | if <condicao> then <cmd> <pfalsa> | ident := <expressao> | ident <lista_arg> | begin <comandos> end | for <ATR> TO <expressao> do <cmd> */
-cmd : T_READ T_L_PAREN variaveis T_R_PAREN 
+cmd : T_READ cmd_param 
         { 
             /* Verifica se todos os argumentos sao do mesmo tipo */
-            checkCallReadWrite("READ", &$3); 
+            checkCallReadWrite("READ", &$2); 
         }
-    | T_WRITE T_L_PAREN variaveis T_R_PAREN 
+    | T_WRITE cmd_param 
         {
             /* Verifica se todos os argumentos sao do mesmo tipo */
-            checkCallReadWrite("WRITE", &$3); 
+            checkCallReadWrite("WRITE", &$2); 
         }
     | T_IF cmd_if
     | T_ID T_ASSIGN expressao {}
@@ -378,10 +378,8 @@ cmd : T_READ T_L_PAREN variaveis T_R_PAREN
 //	| error { yyclearin; yyerror("cmd"); }
     ;
 
-/*
-	cmd_param : T_L_PAREN variaveis T_R_PAREN {}
+cmd_param : T_L_PAREN variaveis T_R_PAREN {}
     ;
-*/
 
 cmd_if : condicao T_THEN {} cmd pfalsa {}
     | condicao error {yyerror("then");} cmd pfalsa {}

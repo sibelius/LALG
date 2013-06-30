@@ -1,0 +1,3 @@
+- tratar os erros dos parenteses em read e write 
+
+obs: retiramos o cmd_param

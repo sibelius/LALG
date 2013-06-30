@@ -37,7 +37,7 @@ int addSymbol( char* name, VarValue value, Categoria cat ){
 		Node *new_node = malloc( sizeof( Node ) );
 		new_node->value = value;
 		new_node->name = strdup( name );	
-        new_node->categoria = cat;
+        	new_node->categoria = cat;
 		new_node->next = head->next;
 		head->next = new_node;
 		size++;
@@ -110,14 +110,51 @@ int addProcedure(char* name, ListaLigadaVar *paramList)
 }
 
 /* Verifica uma chamada ao read ou write */
-int checkCallReadWrite(char* name, ListaLigadaVar *paramList)
+int checkCallReadWrite(char* comando, ListaLigadaVar *paramList)
 {
-    /* Verifica:
-     * 1. Verifica se a variavel foi declarada
-     * 2. Se for read, se nenhum dos parametros eh uma constante
-     * 3. se todos os parametros sao do mesmo tipo
+	NoVar *paux = NULL;
+	Node *pointer = NULL;
+	int type;
+
+	/* Verifica:
      * 4. Gera o codigo do READ ou do WRITE
-     * */
+     * */	
+
+	paux = paramList->inicio;                                                   
+	pointer = find( paux->variable.name );
+	if(pointer == NULL){
+		printf("Erro semantico: identificador %s nao declarado\n", paux->variable.name);
+		//return;	
+	}else{
+		/* salva o tipo da primeira variavel na lista */
+		type = pointer->value.type;
+	}
+	
+	//printf("o nome e %s e o valor de tipo e %d\n", paux->variable.name, type);
+
+	while (paux != NULL) {
+		pointer = find( paux->variable.name );	
+		/* 1. Verifica se as variaveis foram declaradas */
+		if( pointer == NULL ){
+        	printf("Erro semantico: identificador %s nao declarado\n", paux->variable.name );	
+		} else {
+		
+			 /* 2. Se for read, verifica se a variavel nao eh uma constante */
+			if( strcmp(comando,"READ") == 0){
+		
+				if( pointer->categoria == CONSTANT ){
+					printf("Erro semantico: identificador %s e uma constante\n", pointer->name);
+				}		
+			}
+			
+     		/* 3. se todos os parametros sao do mesmo tipo*/
+			if( type != pointer->value.type ){
+				printf("Erro semantico: parametros com tipos diferentes\n");
+			}
+		
+		}
+		paux = paux->proximo;
+	}
 }
 
 /* Print Routines for Debug Purposes */
