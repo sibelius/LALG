@@ -63,8 +63,6 @@ void buildProcedure(Node* node) {
 }
 
 void destroyProcedure() {
-    realocar_codigo();
-
     addCommand("DESM", qtd_aloc_procedure);
     addCommand("RTPR", -1);
     

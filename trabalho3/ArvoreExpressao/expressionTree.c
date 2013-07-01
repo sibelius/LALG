@@ -1,21 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
-
-#define bool int
-#define true 1
-#define false 0
-
-typedef struct Node{
-   // store operator or operand
-   char* data;
-   // only valid for operator
-   int precedence;
-   struct Node* parent;
-   struct Node* left;
-   struct Node* right;
-}CNode, *PNode;
+#include "expressionTree.h"
 
 PNode CreateNode(char* x)
 {

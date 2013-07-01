@@ -4,6 +4,7 @@ var a : integer;
 var b : real;
 
 begin
-    a := 2 + 3;
+    if 3 > (2 + 1) then
+        a := 2 + 3;
 end.
 

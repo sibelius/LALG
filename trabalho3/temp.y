@@ -10,7 +10,7 @@
     #include "ListaLigada/ListaLigadaVarType.h"
     #include "simbolTable.h"
     #include "codeGenerate.h"
-	#include "ArvoreExpressao/expressionTree.h"
+	#include "ArvoreExpressao/expressionTree.c"
 
     int yylex (void);
     void yyerror (char *);
@@ -41,7 +41,6 @@
 	char math_op;
 	VarValue* values;
     ListaLigadaVar list;
-	Condicao condicao;
 }
 
 /* Token utilizado para verificar fim de arquivo */
@@ -104,7 +103,7 @@
 %type <value> fator
 %type <value> tipo_var
 
-//%type <math_op> op_mul
+%type <math_op> op_mul
 
 %type <value> dc_c1; 
 %type <value> dc_c2; 
@@ -119,14 +118,7 @@
 %type <list> parametros
 %type <list> mais_par
 
-%type <condicao> condicao
-%type <condicao> relacao
-%type <condicao> termo
-%type <condicao> outros_termos
-%type <condicao> op_un
-%type <condicao> mais_fatores
-%type <condicao> op_ad
-%type <condicao> op_mul
+//%type <list> cmd_param
 
 %%
 
@@ -195,6 +187,9 @@ dc_v0 : T_VAR variaveis T_COLON tipo_var dc_v1
         {  
             /* Adiciona na tabela de simbolos todas as variaveis */
             addVariables( &$2, $4 );
+
+           /* Aloca memoria para as variaveis */ 
+
         }
     | T_VAR variaveis error T_SEMICOLON { yyerror(":"); }
     ;
@@ -212,7 +207,7 @@ tipo_var : T_REAL { $$.type = REAL; }
 /* Regra 7 <variaveis> ::= ident <mais_var> */
 variaveis : T_ID mais_var 
         {
-        /*
+       /* 
             $$ = $2;
             Variable variable;
             variable.name = $1;
@@ -220,7 +215,7 @@ variaveis : T_ID mais_var
             llvar_inserir( & $$, &variable);
             llvar_imprimir(& $$);
             printf("\n");*/
-            ListaLigadaVar lista;                                   
+            ListaLigadaVar lista;                                  
             llvar_criar(&lista);
                                                         
             Variable variable;
@@ -302,9 +297,9 @@ lista_par : variaveis T_COLON tipo_var mais_par
             }
             llvar_imprimir(&lista);
             $$ = lista;
-        { 
+
             $$ = $4;
-             Adiciona as variaveis na lista do mais_par 
+             Adiciona as variaveis na lista do mais_par
 
             NoVar *paux = $1.inicio;
             while (paux != NULL) {
@@ -457,9 +452,8 @@ cmd : T_READ T_L_PAREN variaveis T_R_PAREN
 */
 
 cmd_if : condicao T_THEN cmd pfalsa {  
-            printf("esta dentro do cmd_if\n");
-            
-        }
+			/*printf("o valor da condicao e %s\n", $1);*/
+		}
     | condicao error {yyerror("then");} cmd pfalsa {}
     ;
 
@@ -471,105 +465,60 @@ cmd_while : T_L_PAREN condicao T_R_PAREN T_DO {} cmd {}
     ;
 
 /* Regra 21 <condicao> ::= <expressao> <relacao> <expressao> */
-condicao : expressao relacao expressao {   
-            strcat($$.c_value, $2.c_value);
-            strcat($$.c_value, $3.c_value);
-
-            printf("passara para a arvore a expressao %s\n", $$.c_value);
-            /* criara a expressionTree */
-            PNode root = CreateInfixTree($$.c_value);
-            PostOrderPrintTree(root);
-         }
+condicao : expressao relacao expressao {}
     ;
 
 /* Regra 22 <relacao> ::= = | <> | >= | <= | > | < */
-relacao : T_EQUAL {
-		    strcpy($$.c_value, "=");
-        }
-    | T_DIFF {
-            strcpy($$.c_value, " <> ");
-        }
-    | T_GREATER_EQ {
-            strcpy($$.c_value, " >= ");
-        }
-    | T_LESSER_EQ {
-            strcpy($$.c_value, " <= ");
-        }
-    | T_GREATER {
-            strcpy($$.c_value, " > ");
-        }
-    | T_LESSER {
-            strcpy($$.c_value, " < ");
-    }
+relacao : T_EQUAL { 
+   			/*PNode root = CreateInfixTree(exp);*/
+		}
+    | T_DIFF {}
+    | T_GREATER_EQ {}
+    | T_LESSER_EQ {}
+    | T_GREATER {}
+    | T_LESSER {}
     | error { yyerror("sinal de relacao"); }
     ;
     
 /* Regra 23 <expressao> ::= <termo> <outros_termos> */
-expressao : termo outros_termos {
-           strcat($$.c_value, $2.c_value);
-          }
+expressao : termo outros_termos {}
     ;
 
 /* Regra 24 <op_un> ::= + | - | lambda */
-op_un : T_PLUS {
-        strcpy($$.c_value, "+");
-      }
-    | T_MINUS {
-        strcpy($$.c_value, "-"); 
-    }
-    | {
-        strcpy($$.c_value, " ");
-    }
+op_un : T_PLUS {}
+    | T_MINUS {}
+    | {}
     ;
 
 /* Regra 25 <outros_termos> ::= <op_ad> <termo> <outros_termos> | lambda */
-outros_termos : op_ad termo outros_termos {
-                strcat($$.c_value, $2.c_value);
-                strcat($$.c_value, $3.c_value);
-              }
-    | { 
-            strcpy($$.c_value, " ");
-        }
+outros_termos : op_ad termo outros_termos {}
+    | {}
     ;
 
 	/* Regra 26 <op_ad> ::= + | - */
-op_ad : T_PLUS { 
-        strcpy($$.c_value, " +");
-      }
-    | T_MINUS {
-        strcpy($$.c_value, " -");
-    }
+op_ad : T_PLUS {}
+    | T_MINUS {}
     ;
 
 /* Regra 27 <termo> ::= <op_un> <fator> <mais_fatores> */
-termo : op_un fator mais_fatores {
-        strcat($$.c_value, $2.c_value);
-        strcat($$.c_value, $3.c_value);
-      }
+termo : op_un fator mais_fatores {}
     ;
     
 /* Regra 28 <mais_fatores> ::= <op_mul> <fator> <mais_fatores> | lambda */
-mais_fatores : op_mul fator mais_fatores {  
-                strcat($$.c_value, $2.c_value);
-                strcat($$.c_value, $3.c_value);
-             }
-    | { 
-        strcpy($$.c_value, " ");
-    }
+mais_fatores : op_mul fator mais_fatores { /*$$ = $1;
+        if($3 == NULL) { $$->right = $2; }
+        else { $3->left = $2; $$->right = $3; }*/ }
+    | { /*$$ = NULL;*/ }
     ;    
 
 /* Regra 29 <op_mul> ::= * | / */
-op_mul : T_TIMES { 
-            strcpy( $$.c_value, " * " );
-       }
-    | T_DIVISION { 
-            strcpy( $$.c_value, " / " );
-        }
+op_mul : T_TIMES { /*$$ = new ExpressionTree;*/ /*$$->type = OPERATOR; $$->math_op = TIMES;*/ }
+    | T_DIVISION { /*$$ = new ExpressionTree;*/ /*$$->type = OPERATOR; $$->math_op = DIVISION;*/ }
     ;
 
 /* Regra 30 <fator> ::= ident | <numero> | ( <expressao> ) */
 fator : T_ID 
-        {
+        { 
             /* Verificando se o identificador foi declarado */
             Node* ident = findSymbol( $1 );
             if ( ident == NULL ) {
@@ -583,11 +532,9 @@ fator : T_ID
                 $$.type = ident->value.type;
                 /* buildReadMemory */
             }
-
-            strcpy($$.c_value, $1);
         } 
     | numero 
-        {
+        { 
             if($1.type == INTEGER) {
                 $$.type = INTEGER;
                 $$.i_value = $1.i_value;
@@ -596,33 +543,18 @@ fator : T_ID
                 $$.i_value = $1.f_value;
             }
         }  
-    | T_L_PAREN fator_exp { 
-            char buffer[40];
-            $$ = $2;
-            strcpy(buffer, " ( ");
-            strcat(buffer, $$.c_value);
-            strcpy($$.c_value, buffer);
-        }
+    | T_L_PAREN fator_exp { $$ = $2; }
     | error { yyclearin; yyerror("sinal de relacao"); /*$$ = new ExpressionTree;*/ /*$$->type = ERROR;*/ }
     ;
 
 fator_exp
-    : expressao T_R_PAREN { 
-            $$ = $1;
-            strcat($$.c_value, " ) ");
-        }
+    : expressao T_R_PAREN { $$ = $1; }
     | expressao error { yyerror(")"); $$ = $1; }
     ;
     
 /* Regra 31 <numero> ::= numero_int | numero_real */
-numero : T_INUMBER { 
-        $$.type = INTEGER; $$.i_value = $1;
-        sprintf($$.c_value, "%d", $$.i_value); 
-       }
-    | T_RNUMBER { 
-        $$.type = REAL; $$.f_value = $1; 
-        sprintf($$.c_value, "%f", $$.f_value);
-        }
+numero : T_INUMBER { $$.type = INTEGER; $$.i_value = $1; }
+    | T_RNUMBER { $$.type = REAL; $$.f_value = $1; }
     ;
 
 %%
@@ -658,8 +590,10 @@ int main (int argc, char *argv[])
 
     /* Abrindo o arquivo de codigo */
     code_file = fopen("code.p", "w");
+    fprintf( code_file, "INPP\n");
 
     int res = yyparse();
+    fprintf( code_file, "PARA\n");
 
     fclose( code_file );
 

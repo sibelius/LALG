@@ -25,6 +25,9 @@ void destroyProcedure();
 
 void buildReadWrite(char* command, ListaLigadaVar *paramList);
 
+
+void buildCallProcedure(char* name, ListaLigadaVar *paramList);
+
 void printCodigo();
 
 #endif
