@@ -1,6 +1,6 @@
 program p1;
 var a : integer;
-procedure meuproc(x : integer; z : real);
+procedure meuproc(x,z : real; a : integer; z : real);
 var a, b : integer;
 var c, d : real;
 begin
@@ -16,5 +16,5 @@ end;
 
 begin
     x := 10;
-    meuproc(x);
+    procc(a,a,a);
 end.

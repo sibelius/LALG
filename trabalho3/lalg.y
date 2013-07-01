@@ -437,6 +437,7 @@ cmd : T_READ T_L_PAREN variaveis T_R_PAREN
 		}
     | T_ID lista_arg 
         {
+            /* Verifica se o procedimento existe, e se os argumentos sao validos */
             checkCallProcedure($1, & $2);
         }
     | T_BEGIN cmd_begin {}

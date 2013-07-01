@@ -45,6 +45,8 @@ void buildAloc(Node* node)
 void buildProcedure(Node* node) {
     begin_procedure = next_position;
     qtd_aloc_procedure = 0;
+    
+    node->relative_position = codline+1;
 
     addCommand("DSVI", -2);
 
@@ -87,6 +89,22 @@ void buildReadWrite(char* command, ListaLigadaVar *paramList) {
 
         paux = paux->proximo;
     }
+}
+
+void buildCallProcedure(char* name, ListaLigadaVar *paramList) {
+    NoVar *paux;
+    Node *pointer;
+    paux = paramList->inicio;          
+    int linha_pusher = codline;
+    addCommand("PUSHER", -2);
+
+    while (paux != NULL) {
+        pointer = findSymbol(paux->variable.name);
+        addCommand("PARAM", pointer->relative_position);
+       
+        paux = paux->proximo;
+    }
+    codigo[linha_pusher].param = codline;
 }
 
 void printCodigo() 

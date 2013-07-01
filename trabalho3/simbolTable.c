@@ -161,7 +161,7 @@ int addProcedure(char* name, ListaLigadaVar *paramList)
     	Node *new_node = malloc( sizeof( Node ) );
     	new_node->name = strdup( name );	
         new_node->categoria = PROCEDURE;
-
+        new_node->value.type = INDEFINED;
         /* Cria uma lista para armazenar os tipos dos Parametros */
         ListaLigadaVarType paramType;
         lli_criar(&paramType);
@@ -234,7 +234,10 @@ int checkCallReadWrite(char* comando, ListaLigadaVar *paramList)
         	printf("Erro Semantico: identificador %s nao declarado\n", paux->variable.name );	
             error = 1;
 		} else {
-		
+		    if(pointer->categoria != VARIABLE && pointer->categoria != CONSTANT){
+                printf("Erro Semantico: identificador %s possui uma categoria que nao eh aceita como argumento\n", pointer->name);
+                error = 1;
+            }
 			 /* 2. Se for read, verifica se a variavel nao eh uma constante */
 			if( strcmp(comando,"READ") == 0){
 		
@@ -253,27 +256,93 @@ int checkCallReadWrite(char* comando, ListaLigadaVar *paramList)
 		}
 		paux = paux->proximo;
 	}
-    if(error == 0)
+    if(error == 0){
         buildReadWrite(comando, paramList);
+        return TRUE;
+    }
+    return FALSE;
     
 }
 
-int checkCallProcedure(char* name, ListaLigadaVar *paramList)
+int checkCallProcedure(char* name, ListaLigadaVar* paramList)
 {
+    NoVar *paux = NULL;
+	Node *pointer = NULL;
+    Node *proc = NULL;
+    NoVarType *paramType = NULL; //tipo do parametro atual
+	int type;
+    int error=0;
+    paux = paramList->inicio;
+    pointer = findSymbol( paux->variable.name );
+    proc = findSymbol(name);
+    paramType = proc->paramType.inicio;
+	if(proc == NULL){
+        printf("Erro Semantico: procedimento %s nao declarado\n", name);
+        error = 1;
+    }
+    if(pointer == NULL){
+		printf("Erro Semantico: variavel %s nao declarada\n", paux->variable.name);
+        error = 1;
+	} else {
+        type = pointer->value.type;
+    }
+	//printf("o nome e %s e o valor de tipo e %d\n", paux->variable.name, type);
+
+	while (paux != NULL) {
+        /* Verifica se o numero de argumentos passado é maior que o esperado */
+		if (paramType == NULL){
+            printf("Erro Semantico: numero de argumentos excede o numero de parametros esperados\n");
+            error = 1;
+            return FALSE;
+        }
+        pointer = findSymbol( paux->variable.name );
+		/* Verifica se as variaveis foram declaradas */
+		if( pointer == NULL ){
+        	printf("Erro Semantico: variavel %s nao declarada\n", paux->variable.name );
+            error = 1;
+		} else {
+            /* Verifica se a categoria eh aceita como argumento de procedimentos */
+		    if( pointer->categoria != CONSTANT && pointer->categoria != VARIABLE){
+		        printf("Erro Semantico: identificador %s possui uma categoria nao aceita como argumento\n", pointer->name);
+                error = 1;
+	         }			
+     		/* Verifica se todos os parametros sao do mesmo tipo*/
+			if( paramType->type != pointer->value.type ){
+				printf("Erro Semantico: parametros com tipos diferentes\n");
+                error = 1;
+			}
+		
+		}
+		paux = paux->proximo;
+        paramType = paramType->proximo;
+	}
+    /* Verifica se o numero de argumentos passado é menor que o esperado */
+    if(paramType != NULL ){
+        printf("Erro Semantico: numero de argumentos nao atinge o numero de parametros esperados\n");
+        error = 1;
+    }
+    if(error == 0){
+        buildCallProcedure(name, paramList);
+        return TRUE;
+    }
+ return FALSE;
+
 }
 
 /* Print Routines for Debug Purposes */
 void printVarType(VarType type) {
     switch(type) {
         case INDEFINED:
-            printf("indefined");
+            printf("undefined");
             break;
         case INTEGER:
-            printf("integer");
+            printf("integer\t");
             break;
         case REAL:
-            printf("real");
+            printf("real\t");
             break;
+        default:
+            printf("undefined");
     }
 }
 
@@ -314,13 +383,13 @@ void printSimbolTable(int Global){
         printf("Procedure Symbol Table\n");
     }
 
-    printf("name\ti_value\t\tf_value\t\ttype\tendereco relativo\tcategoria\tparamType\n");
+    printf("name\ti_value\t\tf_value\t\ttype\t\tendereco relativo\t\tcategoria\tparamType\n");
 	while( pointer != NULL ){	
         printf("%s\t%8d\t%.2f\t\t",pointer->name, pointer->value.i_value, pointer->value.f_value);
 
         printVarType(pointer->value.type);
 
-        printf("\t%d\t\t\t", pointer->relative_position );
+        printf("\t\t%d\t\t\t", pointer->relative_position );
         
         printCategoria(pointer->categoria);
 

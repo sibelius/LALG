@@ -561,11 +561,11 @@ static const yytype_uint16 yyrline[] =
      265,   267,   275,   317,   322,   330,   331,   331,   332,   335,
      336,   339,   340,   344,   348,   352,   358,   366,   391,   391,
      395,   400,   408,   408,   409,   413,   414,   414,   415,   415,
-     416,   421,   426,   431,   432,   438,   442,   443,   444,   453,
-     453,   456,   456,   459,   462,   462,   463,   463,   467,   471,
-     474,   475,   476,   477,   478,   479,   483,   487,   488,   489,
-     493,   494,   498,   499,   503,   507,   510,   514,   515,   519,
-     535,   545,   546,   550,   551,   555,   556
+     416,   421,   426,   431,   432,   438,   443,   444,   445,   454,
+     454,   457,   457,   460,   463,   463,   464,   464,   468,   472,
+     475,   476,   477,   478,   479,   480,   484,   488,   489,   490,
+     494,   495,   499,   500,   504,   508,   511,   515,   516,   520,
+     536,   546,   547,   551,   552,   556,   557
 };
 #endif
 
@@ -2227,6 +2227,7 @@ yyreduce:
 /* Line 1455 of yacc.c  */
 #line 439 "lalg.y"
     {
+            /* Verifica se o procedimento existe, e se os argumentos sao validos */
             checkCallProcedure((yyvsp[(1) - (2)].name), & (yyvsp[(2) - (2)].list));
         ;}
     break;
@@ -2234,35 +2235,35 @@ yyreduce:
   case 96:
 
 /* Line 1455 of yacc.c  */
-#line 442 "lalg.y"
+#line 443 "lalg.y"
     {;}
     break;
 
   case 97:
 
 /* Line 1455 of yacc.c  */
-#line 443 "lalg.y"
+#line 444 "lalg.y"
     {;}
     break;
 
   case 98:
 
 /* Line 1455 of yacc.c  */
-#line 444 "lalg.y"
+#line 445 "lalg.y"
     {;}
     break;
 
   case 99:
 
 /* Line 1455 of yacc.c  */
-#line 453 "lalg.y"
+#line 454 "lalg.y"
     {;}
     break;
 
   case 100:
 
 /* Line 1455 of yacc.c  */
-#line 453 "lalg.y"
+#line 454 "lalg.y"
     {  
 			/*printf("o valor da condicao e %s\n", $1);*/
 		;}
@@ -2271,49 +2272,49 @@ yyreduce:
   case 101:
 
 /* Line 1455 of yacc.c  */
-#line 456 "lalg.y"
+#line 457 "lalg.y"
     {yyerror("then");;}
     break;
 
   case 102:
 
 /* Line 1455 of yacc.c  */
-#line 456 "lalg.y"
+#line 457 "lalg.y"
     {;}
     break;
 
   case 104:
 
 /* Line 1455 of yacc.c  */
-#line 462 "lalg.y"
+#line 463 "lalg.y"
     {;}
     break;
 
   case 105:
 
 /* Line 1455 of yacc.c  */
-#line 462 "lalg.y"
+#line 463 "lalg.y"
     {;}
     break;
 
   case 106:
 
 /* Line 1455 of yacc.c  */
-#line 463 "lalg.y"
+#line 464 "lalg.y"
     { yyerror("do") ;}
     break;
 
   case 108:
 
 /* Line 1455 of yacc.c  */
-#line 467 "lalg.y"
+#line 468 "lalg.y"
     {;}
     break;
 
   case 109:
 
 /* Line 1455 of yacc.c  */
-#line 471 "lalg.y"
+#line 472 "lalg.y"
     { 
    			/*PNode root = CreateInfixTree(exp);*/
 		;}
@@ -2322,112 +2323,112 @@ yyreduce:
   case 110:
 
 /* Line 1455 of yacc.c  */
-#line 474 "lalg.y"
+#line 475 "lalg.y"
     {;}
     break;
 
   case 111:
 
 /* Line 1455 of yacc.c  */
-#line 475 "lalg.y"
+#line 476 "lalg.y"
     {;}
     break;
 
   case 112:
 
 /* Line 1455 of yacc.c  */
-#line 476 "lalg.y"
+#line 477 "lalg.y"
     {;}
     break;
 
   case 113:
 
 /* Line 1455 of yacc.c  */
-#line 477 "lalg.y"
+#line 478 "lalg.y"
     {;}
     break;
 
   case 114:
 
 /* Line 1455 of yacc.c  */
-#line 478 "lalg.y"
+#line 479 "lalg.y"
     {;}
     break;
 
   case 115:
 
 /* Line 1455 of yacc.c  */
-#line 479 "lalg.y"
+#line 480 "lalg.y"
     { yyerror("sinal de relacao"); ;}
     break;
 
   case 116:
 
 /* Line 1455 of yacc.c  */
-#line 483 "lalg.y"
+#line 484 "lalg.y"
     {;}
     break;
 
   case 117:
 
 /* Line 1455 of yacc.c  */
-#line 487 "lalg.y"
+#line 488 "lalg.y"
     {;}
     break;
 
   case 118:
 
 /* Line 1455 of yacc.c  */
-#line 488 "lalg.y"
+#line 489 "lalg.y"
     {;}
     break;
 
   case 119:
 
 /* Line 1455 of yacc.c  */
-#line 489 "lalg.y"
+#line 490 "lalg.y"
     {;}
     break;
 
   case 120:
 
 /* Line 1455 of yacc.c  */
-#line 493 "lalg.y"
+#line 494 "lalg.y"
     {;}
     break;
 
   case 121:
 
 /* Line 1455 of yacc.c  */
-#line 494 "lalg.y"
+#line 495 "lalg.y"
     {;}
     break;
 
   case 122:
 
 /* Line 1455 of yacc.c  */
-#line 498 "lalg.y"
+#line 499 "lalg.y"
     {;}
     break;
 
   case 123:
 
 /* Line 1455 of yacc.c  */
-#line 499 "lalg.y"
+#line 500 "lalg.y"
     {;}
     break;
 
   case 124:
 
 /* Line 1455 of yacc.c  */
-#line 503 "lalg.y"
+#line 504 "lalg.y"
     {;}
     break;
 
   case 125:
 
 /* Line 1455 of yacc.c  */
-#line 507 "lalg.y"
+#line 508 "lalg.y"
     { /*$$ = $1;
         if($3 == NULL) { $$->right = $2; }
         else { $3->left = $2; $$->right = $3; }*/ ;}
@@ -2436,28 +2437,28 @@ yyreduce:
   case 126:
 
 /* Line 1455 of yacc.c  */
-#line 510 "lalg.y"
+#line 511 "lalg.y"
     { /*$$ = NULL;*/ ;}
     break;
 
   case 127:
 
 /* Line 1455 of yacc.c  */
-#line 514 "lalg.y"
+#line 515 "lalg.y"
     { /*$$ = new ExpressionTree;*/ /*$$->type = OPERATOR; $$->math_op = TIMES;*/ ;}
     break;
 
   case 128:
 
 /* Line 1455 of yacc.c  */
-#line 515 "lalg.y"
+#line 516 "lalg.y"
     { /*$$ = new ExpressionTree;*/ /*$$->type = OPERATOR; $$->math_op = DIVISION;*/ ;}
     break;
 
   case 129:
 
 /* Line 1455 of yacc.c  */
-#line 520 "lalg.y"
+#line 521 "lalg.y"
     { 
             /* Verificando se o identificador foi declarado */
             Node* ident = findSymbol( (yyvsp[(1) - (1)].name) );
@@ -2478,7 +2479,7 @@ yyreduce:
   case 130:
 
 /* Line 1455 of yacc.c  */
-#line 536 "lalg.y"
+#line 537 "lalg.y"
     { 
             if((yyvsp[(1) - (1)].value).type == INTEGER) {
                 (yyval.value).type = INTEGER;
@@ -2493,49 +2494,49 @@ yyreduce:
   case 131:
 
 /* Line 1455 of yacc.c  */
-#line 545 "lalg.y"
+#line 546 "lalg.y"
     { (yyval.value) = (yyvsp[(2) - (2)].value); ;}
     break;
 
   case 132:
 
 /* Line 1455 of yacc.c  */
-#line 546 "lalg.y"
+#line 547 "lalg.y"
     { yyclearin; yyerror("sinal de relacao"); /*$$ = new ExpressionTree;*/ /*$$->type = ERROR;*/ ;}
     break;
 
   case 133:
 
 /* Line 1455 of yacc.c  */
-#line 550 "lalg.y"
+#line 551 "lalg.y"
     { (yyval.value) = (yyvsp[(1) - (2)].value); ;}
     break;
 
   case 134:
 
 /* Line 1455 of yacc.c  */
-#line 551 "lalg.y"
+#line 552 "lalg.y"
     { yyerror(")"); (yyval.value) = (yyvsp[(1) - (2)].value); ;}
     break;
 
   case 135:
 
 /* Line 1455 of yacc.c  */
-#line 555 "lalg.y"
+#line 556 "lalg.y"
     { (yyval.value).type = INTEGER; (yyval.value).i_value = (yyvsp[(1) - (1)].i_number); ;}
     break;
 
   case 136:
 
 /* Line 1455 of yacc.c  */
-#line 556 "lalg.y"
+#line 557 "lalg.y"
     { (yyval.value).type = REAL; (yyval.value).f_value = (yyvsp[(1) - (1)].r_number); ;}
     break;
 
 
 
 /* Line 1455 of yacc.c  */
-#line 2539 "lalg.tab.c"
+#line 2540 "lalg.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2747,7 +2748,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 559 "lalg.y"
+#line 560 "lalg.y"
 
 
 extern FILE *yyin;
