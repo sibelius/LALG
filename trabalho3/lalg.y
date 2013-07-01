@@ -435,6 +435,7 @@ cmd_while : T_L_PAREN condicao T_R_PAREN T_DO {} cmd {}
 
 /* Regra 21 <condicao> ::= <expressao> <relacao> <expressao> */
 condicao : expressao relacao expressao {   
+            strcpy($$.c_value, $1.c_value);
             strcat($$.c_value, $2.c_value);
             strcat($$.c_value, $3.c_value);
 
@@ -469,7 +470,13 @@ relacao : T_EQUAL {
     
 /* Regra 23 <expressao> ::= <termo> <outros_termos> */
 expressao : termo outros_termos {
-           strcat($$.c_value, $2.c_value);
+          printf("dentro de expressao\n");
+          strcpy($$.c_value, $1.c_value);
+          printf("o valor de $$.c_value e %s\n", $$.c_value);
+          printf("o valor de $1.c_value e %s\n", $1.c_value);
+                        
+            strcat($$.c_value, $2.c_value);
+           printf("o valor final de expressao e %s\n", $$.c_value);
           }
     ;
 
@@ -508,6 +515,7 @@ op_ad : T_PLUS {
 termo : op_un fator mais_fatores {
         strcat($$.c_value, $2.c_value);
         strcat($$.c_value, $3.c_value);
+        printf("o valor final de termo e %s\n", $$.c_value);
       }
     ;
     
