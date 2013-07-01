@@ -13,8 +13,8 @@ struct node {
     VarValue value;
 	int relative_position; /* Endereco na memoria */
     Categoria categoria; /* Categoria */
-    ListaLigadaInt paramType; /* Lista dos tipos do procedure */
-	struct node *next;
+    ListaLigadaVarType paramType; /* Lista dos tipos do procedure */
+	struct node *next;                                          
 };
 typedef struct node Node;
 
@@ -23,19 +23,20 @@ void init();
 Node* findSymbol( char* name );
 
 /* Adiciona nome do programa, variaveis, constantes */
-int addSymbol( char* name, VarValue value, Categoria cat );
+Node* addSymbol( char* name, VarValue value, Categoria cat );
 
-int addConstant(char* name, VarValue value);
+Node* addConstant(char* name, VarValue value);
 int addVariables( ListaLigadaVar *variables, VarValue value);
 int addProcedure(char* name, ListaLigadaVar *paramList);
 int endProcedure();
 
 /* Verifica uma chamada ao read ou write */
 int checkCallReadWrite(char* name, ListaLigadaVar *paramList);
+int checkCallProcedure(char* name, ListaLigadaVar *paramList);
 
 void printVarType(VarType type);
 void printCategoria(Categoria categoria);
-void printParamType(ListaLigadaInt *paramType);
+void printParamType(ListaLigadaVarType *paramType);
 
 /* Global indica se eh para imprimir a tabela de simbolos global */
 void printSimbolTable(int Global);

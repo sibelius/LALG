@@ -3,16 +3,16 @@
 
 #include "ListaLigadaVarType.h"
 
-void lli_criar(ListaLigadaInt *lista) {
+void lli_criar(ListaLigadaVarType *lista) {
   lista->inicio = NULL;
   lista->fim = NULL;
 }
 
-int lli_vazia(ListaLigadaInt *lista) {
+int lli_vazia(ListaLigadaVarType *lista) {
   return (lista->inicio == NULL);
 }
 
-void lli_apagar_lista(ListaLigadaInt *lista) {
+void lli_apagar_lista(ListaLigadaVarType *lista) {
   if (!lli_vazia(lista)) {
     NoVarType *paux = lista->inicio;
 
@@ -27,7 +27,7 @@ void lli_apagar_lista(ListaLigadaInt *lista) {
   lista->fim = NULL;
 }
 
-void lli_imprimir(ListaLigadaInt *lista) {
+void lli_imprimir(ListaLigadaVarType *lista) {
   NoVarType *paux = lista->inicio;
 
   while (paux != NULL) {
@@ -36,7 +36,7 @@ void lli_imprimir(ListaLigadaInt *lista) {
   }
 }
 
-int lli_buscar(ListaLigadaInt *lista, char* name, VarType *type) {
+int lli_buscar(ListaLigadaVarType *lista, char* name, VarType *type) {
   NoVarType *paux = lista->inicio;
 
   while (paux != NULL) {
@@ -50,7 +50,7 @@ int lli_buscar(ListaLigadaInt *lista, char* name, VarType *type) {
   return 0;
 }
 
-int lli_inserir(ListaLigadaInt *lista, VarType *type) {
+int lli_inserir(ListaLigadaVarType *lista, VarType *type) {
   //cria um novo nó
   NoVarType *pnovo = (NoVarType *)malloc(sizeof(NoVarType));
 
@@ -72,7 +72,7 @@ int lli_inserir(ListaLigadaInt *lista, VarType *type) {
   }
 }
 
-int lli_remover_fim(ListaLigadaInt *lista) {
+int lli_remover_fim(ListaLigadaVarType *lista) {
   if (!lli_vazia(lista)) {
     //procura o penúltimo nó
     NoVarType *paux  = lista->inicio;
@@ -95,7 +95,7 @@ int lli_remover_fim(ListaLigadaInt *lista) {
   }
 }
 
-int lli_remover_posicao(ListaLigadaInt *lista, int pos) {
+int lli_remover_posicao(ListaLigadaVarType *lista, int pos) {
   int i;
 
   if (!lli_vazia(lista)) { //verifica se a lista está vazia

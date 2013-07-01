@@ -10,6 +10,7 @@
 	#include "ListaLigada/ListaLigadaVar.h"
 	#include "ListaLigada/ListaLigadaVarType.h"
     #include "simbolTable.h"
+    #include "codeGenerate.h"
     #include "lalg.tab.h"
 	
 	extern YYSTYPE yylval;

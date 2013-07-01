@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "simbolTable.h"
+#include "codeGenerate.h"
 
 int size;
 /* Tabela Global de Simbolos */
@@ -84,7 +85,7 @@ Node* findSymbol(char* name){
 	return NULL; 
 }
 
-int addSymbol( char* name, VarValue value, Categoria cat ){
+Node* addSymbol( char* name, VarValue value, Categoria cat ){
 	
 	//Verifica se o ident já existe
     if( ( (insideProcedure == 1) &&
@@ -108,13 +109,13 @@ int addSymbol( char* name, VarValue value, Categoria cat ){
 		    size++;
         }
 
-		return TRUE;
+		return new_node;
 	}
 	
-	return FALSE;	
+	return NULL;	
 }
 
-int addProgram(char* name) {
+Node* addProgram(char* name) {
     VarValue value;
     value.i_value = 0;
     value.f_value = 0;
@@ -122,8 +123,10 @@ int addProgram(char* name) {
     return addSymbol(name, value, PROGRAM); 
 }
 
-int addConstant(char* name, VarValue value) {
-    return addSymbol(name, value, CONSTANT);
+Node* addConstant(char* name, VarValue value) {
+    Node* new_node = addSymbol(name, value, CONSTANT);
+    buildAloc(new_node);
+    return new_node;
 }
 
 int addVariables( ListaLigadaVar *variables, VarValue value) {
@@ -132,9 +135,13 @@ int addVariables( ListaLigadaVar *variables, VarValue value) {
     /* Percorre a lista de variaveis e adiciona na tabela de simbolos */
     NoVar *paux = variables->inicio;                                                    
     while (paux != NULL) {
-        if ( addSymbol( paux->variable.name, value, VARIABLE ) == FALSE ) {
-        	printf("Erro semantico: identificador %s ja declarado\n", paux->variable.name );
+        Node* new_node = addSymbol( paux->variable.name, value, VARIABLE ); 
+        
+        if (new_node == NULL) {
+        	printf("Erro Semantico: identificador %s ja declarado\n", paux->variable.name );
 			errorAddIdent = TRUE;
+        } else {
+            buildAloc(new_node);
         }
 
         /*rintf("%s - %d\n", paux->variable.name, paux->variable.value.type);*/
@@ -148,14 +155,15 @@ int addVariables( ListaLigadaVar *variables, VarValue value) {
 int addProcedure(char* name, ListaLigadaVar *paramList)
 {
     //Verifica se o ident já existe
-    if( findSymbol( name ) == NULL ){
+    Node* paux = findSymbol(name);
+    if( paux == NULL ){
 
     	Node *new_node = malloc( sizeof( Node ) );
     	new_node->name = strdup( name );	
         new_node->categoria = PROCEDURE;
 
         /* Cria uma lista para armazenar os tipos dos Parametros */
-        ListaLigadaInt paramType;
+        ListaLigadaVarType paramType;
         lli_criar(&paramType);
 
         /* Percorre a lista de variaveis e adiciona na tabela de simbolos */
@@ -174,7 +182,12 @@ int addProcedure(char* name, ListaLigadaVar *paramList)
         /* Cria a tabela de procedimento e os proximos simbolos sao adicionados nela */
         initProcedureSymbolTable();
 
+        /* Para gerar o codigo proprio para o procedimento */
+        buildProcedure(new_node);
+
     	return TRUE;
+    } else {
+        printf("Erro Semantico: procedimento %s ja declarado\n", paux->name );
     }
     
     return FALSE;	 
@@ -182,9 +195,12 @@ int addProcedure(char* name, ListaLigadaVar *paramList)
 
 /* Sai do procedimento e deleta a tabela de simbolos */
 int endProcedure() {
-    printSimbolTable(0);
+    if(insideProcedure == 1) {
+        printSimbolTable(0);
+        destroyProcedure();
 
-    deleteProcedureSymbolTable();
+        deleteProcedureSymbolTable();
+    }
 }
 
 /* Verifica uma chamada ao read ou write */
@@ -193,6 +209,7 @@ int checkCallReadWrite(char* comando, ListaLigadaVar *paramList)
 	NoVar *paux = NULL;
 	Node *pointer = NULL;
 	int type;
+    int error=0;
 
 	/* Verifica:
      * 4. Gera o codigo do READ ou do WRITE
@@ -201,8 +218,8 @@ int checkCallReadWrite(char* comando, ListaLigadaVar *paramList)
 	paux = paramList->inicio;                                                   
 	pointer = findSymbol( paux->variable.name );
 	if(pointer == NULL){
-		printf("Erro semantico: identificador %s nao declarado\n", paux->variable.name);
-		//return;	
+		printf("Erro Semantico: identificador %s nao declarado\n", paux->variable.name);
+        error = 1;
 	}else{
 		/* salva o tipo da primeira variavel na lista */
 		type = pointer->value.type;
@@ -211,28 +228,38 @@ int checkCallReadWrite(char* comando, ListaLigadaVar *paramList)
 	//printf("o nome e %s e o valor de tipo e %d\n", paux->variable.name, type);
 
 	while (paux != NULL) {
-		pointer = findSymbol( paux->variable.name );	
+		pointer = findSymbol( paux->variable.name );
 		/* 1. Verifica se as variaveis foram declaradas */
 		if( pointer == NULL ){
-        	printf("Erro semantico: identificador %s nao declarado\n", paux->variable.name );	
+        	printf("Erro Semantico: identificador %s nao declarado\n", paux->variable.name );	
+            error = 1;
 		} else {
 		
 			 /* 2. Se for read, verifica se a variavel nao eh uma constante */
 			if( strcmp(comando,"READ") == 0){
 		
 				if( pointer->categoria == CONSTANT ){
-					printf("Erro semantico: identificador %s e uma constante\n", pointer->name);
+					printf("Erro Semantico: identificador %s eh uma constante\n", pointer->name);
+                    error = 1;
 				}		
 			}
 			
      		/* 3. se todos os parametros sao do mesmo tipo*/
 			if( type != pointer->value.type ){
-				printf("Erro semantico: parametros com tipos diferentes\n");
+				printf("Erro Semantico: parametros com tipos diferentes\n");
+                error = 1;
 			}
 		
 		}
 		paux = paux->proximo;
 	}
+    if(error == 0)
+        buildReadWrite(comando, paramList);
+    
+}
+
+int checkCallProcedure(char* name, ListaLigadaVar *paramList)
+{
 }
 
 /* Print Routines for Debug Purposes */
@@ -267,7 +294,7 @@ void printCategoria(Categoria categoria) {
     }
 }
 
-void printParamType(ListaLigadaInt *paramType) {
+void printParamType(ListaLigadaVarType *paramType) {
     NoVarType *paux = paramType->inicio;
                                   
     while (paux != NULL) {
@@ -287,7 +314,7 @@ void printSimbolTable(int Global){
         printf("Procedure Symbol Table\n");
     }
 
-    printf("name\ti_value\t\tf_value\t\ttype\trelative_position\tcategoria\tparamType\n");
+    printf("name\ti_value\t\tf_value\t\ttype\tendereco relativo\tcategoria\tparamType\n");
 	while( pointer != NULL ){	
         printf("%s\t%8d\t%.2f\t\t",pointer->name, pointer->value.i_value, pointer->value.f_value);
 
@@ -306,3 +333,4 @@ void printSimbolTable(int Global){
 		pointer = pointer->next;
 	}	
 }	
+

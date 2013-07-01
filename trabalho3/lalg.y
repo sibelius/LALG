@@ -9,6 +9,7 @@
     #include "ListaLigada/ListaLigadaVar.h"
     #include "ListaLigada/ListaLigadaVarType.h"
     #include "simbolTable.h"
+    #include "codeGenerate.h"
 	#include "ArvoreExpressao/expressionTree.c"
 
     int yylex (void);
@@ -19,9 +20,6 @@
 
     /* Flag para continuar ou parar a execucao de codigo */
     int code_generate;
-
-    /* Proxima posicao na memoria */
-    int next_position;
 
     /* Arquivo onde sera armazenado o codigo */
     FILE *code_file;
@@ -189,6 +187,9 @@ dc_v0 : T_VAR variaveis T_COLON tipo_var dc_v1
         {  
             /* Adiciona na tabela de simbolos todas as variaveis */
             addVariables( &$2, $4 );
+
+           /* Aloca memoria para as variaveis */ 
+
         }
     | T_VAR variaveis error T_SEMICOLON { yyerror(":"); }
     ;
@@ -206,13 +207,29 @@ tipo_var : T_REAL { $$.type = REAL; }
 /* Regra 7 <variaveis> ::= ident <mais_var> */
 variaveis : T_ID mais_var 
         {
+       /* 
             $$ = $2;
             Variable variable;
             variable.name = $1;
             variable.value.type = INDEFINED;
             llvar_inserir( & $$, &variable);
-            /*llvar_imprimir(& $$);*/
-            /*printf("\n");*/
+            llvar_imprimir(& $$);
+            printf("\n");*/
+            ListaLigadaVar lista;                                  
+            llvar_criar(&lista);
+                                                        
+            Variable variable;
+            variable.name = $1;
+            variable.value.type = INDEFINED;
+            llvar_inserir(&lista, &variable);
+                                                        
+            NoVar *paux = $2.inicio;
+            while(paux != NULL) {
+                llvar_inserir(&lista, &paux->variable);
+                paux = paux->proximo;
+            }
+            llvar_imprimir(&lista);
+            $$ = lista;
         }
     | error { yyclearin; yyerror("id"); } mais_var 
         {
@@ -256,9 +273,33 @@ parametros : T_L_PAREN lista_par T_R_PAREN { $$ = $2 }
     
 /* Regra 11 <lista_par> ::= <variaveis> : <tipo_var> <mais_par> */
 lista_par : variaveis T_COLON tipo_var mais_par 
-        { 
+        {
+        
+            ListaLigadaVar lista;                                  
+            llvar_criar(&lista);
+                                                        
+            NoVar *paux = $1.inicio;
+            while (paux != NULL) {
+                paux->variable.value = $3;
+                                                        
+                llvar_inserir( & lista, &paux->variable); 
+                                                        
+                paux = paux->proximo;
+            }
+
+            $$ = lista;
+
+/*
+            NoVar *paux = $2.inicio;
+            while(paux != NULL) {
+                llvar_inserir(&lista, &paux->variable);
+                paux = paux->proximo;
+            }
+            llvar_imprimir(&lista);
+            $$ = lista;
+
             $$ = $4;
-            /* Adiciona as variaveis na lista do mais_par */            
+             Adiciona as variaveis na lista do mais_par
 
             NoVar *paux = $1.inicio;
             while (paux != NULL) {
@@ -268,7 +309,7 @@ lista_par : variaveis T_COLON tipo_var mais_par
 
                 paux = paux->proximo;
             }
-
+*/
         }
     ;
 
@@ -324,12 +365,28 @@ lista_arg : T_L_PAREN argumentos T_R_PAREN
 /* Regra 16 <argumentos> ::= ident <mais_ident> */
 argumentos : T_ID mais_ident 
         {
+        /*
            $$ = $2;
            Variable variable;
            variable.name = $1;
            variable.value.type = 0;
            llvar_inserir(& $$, &variable);
-        
+*/
+            ListaLigadaVar lista;                                  
+            llvar_criar(&lista);
+                                                        
+            Variable variable;
+            variable.name = $1;
+            variable.value.type = INDEFINED;
+            llvar_inserir(&lista, &variable);
+                                                        
+            NoVar *paux = $2.inicio;
+            while(paux != NULL) {
+                llvar_inserir(&lista, &paux->variable);
+                paux = paux->proximo;
+            }
+            llvar_imprimir(&lista);
+            $$ = lista;
         }
     | error { yyclearin; yyerror("id"); } mais_ident { $$ = $3; }
     ;
@@ -378,7 +435,10 @@ cmd : T_READ T_L_PAREN variaveis T_R_PAREN
 			/* checkAssign( $1, &$3  ) */
 			/*printf("imprimindo o t_ID %s a expressao em assign %s\n", $3);*/
 		}
-    | T_ID lista_arg {}
+    | T_ID lista_arg 
+        {
+            checkCallProcedure($1, & $2);
+        }
     | T_BEGIN cmd_begin {}
     | T_WHILE cmd_while {}
     | T_FOR T_ID T_ASSIGN expressao T_TO expressao T_DO cmd {}
@@ -521,19 +581,24 @@ int main (int argc, char *argv[])
 
     /* Inicia a tabela de simbolos */
     init();
+    init_codigo();
 
     /* Inicializando variaveis auxiliarer */
     numerrors = 0;
     code_generate = 1;
-    next_position = 0;
 
     /* Abrindo o arquivo de codigo */
     code_file = fopen("code.p", "w");
     fprintf( code_file, "INPP\n");
 
     int res = yyparse();
+    fprintf( code_file, "PARA\n");
 
     fclose( code_file );
+
+    end_codigo();
+    printCodigo();
+
 
     if(numerrors==0)
         printf ( "Analise Sintatica Completada\n" );

@@ -3,23 +3,25 @@
 
 #include "../types.h"
 
+struct VarType;
+
 typedef struct NoVarType {
-  VarType type;
-  struct NoVarType *proximo;
+    VarType type;
+    struct NoVarType *proximo;
 } NoVarType;
 
 typedef struct {
-  NoVarType *inicio;
-  NoVarType *fim;
-} ListaLigadaInt;
+    NoVarType *inicio;
+    NoVarType *fim;
+} ListaLigadaVarType;
 
-void lli_criar(ListaLigadaInt *lista);
-int lli_vazia(ListaLigadaInt *lista);
-void lli_apagar_lista(ListaLigadaInt *lista);
-void lli_imprimir(ListaLigadaInt *lista);
-int lli_buscar(ListaLigadaInt *lista, char* name, VarType *type);
-int lli_inserir(ListaLigadaInt *lista, VarType *type);
-int lli_remover_fim(ListaLigadaInt *lista);
-int lli_remover_posicao(ListaLigadaInt *lista, int pos);
+void lli_criar(ListaLigadaVarType *lista);
+int lli_vazia(ListaLigadaVarType *lista);
+void lli_apagar_lista(ListaLigadaVarType *lista);
+void lli_imprimir(ListaLigadaVarType *lista);
+int lli_buscar(ListaLigadaVarType *lista, char* name, VarType *type);
+int lli_inserir(ListaLigadaVarType *lista, VarType *type);
+int lli_remover_fim(ListaLigadaVarType *lista);
+int lli_remover_posicao(ListaLigadaVarType *lista, int pos);
 
 #endif // LISTALIGADA_H_INCLUDED

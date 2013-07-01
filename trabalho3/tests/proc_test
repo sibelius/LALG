@@ -1,18 +1,17 @@
 program p1;
 var a : integer;
-procedure meuproc(x : integer);
+procedure meuproc(x : integer; z : real);
 var a, b : integer;
-var c, b : real;
+var c, d : real;
 begin
     a := 2;
     c := 3;
-    x := a + c;
 end;
 
 procedure procc(y, z, h: integer);
 var a, c : real;
 begin
-    y := z + h + a + c;
+    y := 1;
 end;
 
 begin
