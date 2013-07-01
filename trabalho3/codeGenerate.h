@@ -25,8 +25,10 @@ void destroyProcedure();
 
 void buildReadWrite(char* command, ListaLigadaVar *paramList);
 
+void buildCallProcedure(Node* proc, ListaLigadaVar *paramList);
 
-void buildCallProcedure(char* name, ListaLigadaVar *paramList);
+/* Indica a linha inicial do program principal */
+void markMainProgram();
 
 void printCodigo();
 

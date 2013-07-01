@@ -1,0 +1,24 @@
+program p1;
+var a : integer;
+var x : real;
+procedure meuproc(x : real; a : integer);
+var a, b : integer;
+var c, d : real;
+begin
+    a := 2;
+    c := 3;
+end;
+
+procedure theta;
+var gama : real;
+var beta : integer;
+begin
+end;
+
+begin
+    a := 10;
+    x := 5.2;
+    meuproc(a;x);
+    meuproc(x;a);
+    theta;
+end.

@@ -16,5 +16,5 @@ end;
 
 begin
     x := 10;
-    procc(a,a,a);
+{    procc(a,a,a);}
 end.

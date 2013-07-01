@@ -212,14 +212,6 @@ tipo_var : T_REAL { $$.type = REAL; }
 /* Regra 7 <variaveis> ::= ident <mais_var> */
 variaveis : T_ID mais_var 
         {
-        /*
-            $$ = $2;
-            Variable variable;
-            variable.name = $1;
-            variable.value.type = INDEFINED;
-            llvar_inserir( & $$, &variable);
-            llvar_imprimir(& $$);
-            printf("\n");*/
             ListaLigadaVar lista;                                   
             llvar_criar(&lista);
                                                         
@@ -233,7 +225,6 @@ variaveis : T_ID mais_var
                 llvar_inserir(&lista, &paux->variable);
                 paux = paux->proximo;
             }
-            llvar_imprimir(&lista);
             $$ = lista;
         }
     | error { yyclearin; yyerror("id"); } mais_var 
@@ -266,7 +257,11 @@ dc_p1 : T_SEMICOLON corpo_p {}
     ; 
 
 /* Regra 10 <parametros> ::= ( <lista_par> ) | lambda */
-parametros : T_L_PAREN lista_par T_R_PAREN { $$ = $2 }
+parametros : T_L_PAREN lista_par T_R_PAREN 
+        { 
+            $$ = $2;
+            /*llvar_imprimir(&$$);*/
+        }
     | T_L_PAREN lista_par error { yyclearin; yyerror(")"); $$ = $2 }
     | /* lambda */ 
         {
@@ -283,38 +278,22 @@ lista_par : variaveis T_COLON tipo_var mais_par
             ListaLigadaVar lista;                                  
             llvar_criar(&lista);
                                                         
-            NoVar *paux = $1.inicio;
-            while (paux != NULL) {
-                paux->variable.value = $3;
-                                                        
-                llvar_inserir( & lista, &paux->variable); 
-                                                        
-                paux = paux->proximo;
-            }
-
-            $$ = lista;
-
-/*
-            NoVar *paux = $2.inicio;
+            NoVar *paux;
+            
+            paux = $4.inicio;
             while(paux != NULL) {
                 llvar_inserir(&lista, &paux->variable);
                 paux = paux->proximo;
             }
-            llvar_imprimir(&lista);
-            $$ = lista;
-        { 
-            $$ = $4;
-             Adiciona as variaveis na lista do mais_par 
-
-            NoVar *paux = $1.inicio;
+            
+            paux = $1.inicio;
             while (paux != NULL) {
-                paux->variable.value = $3;
-
-                llvar_inserir( & $$, &paux->variable); 
-
+                paux->variable.value = $3;                                             
+                llvar_inserir(&lista, &paux->variable);               
                 paux = paux->proximo;
             }
-*/
+
+            $$ = lista;
         }
     ;
 
@@ -370,28 +349,12 @@ lista_arg : T_L_PAREN argumentos T_R_PAREN
 /* Regra 16 <argumentos> ::= ident <mais_ident> */
 argumentos : T_ID mais_ident 
         {
-        /*
+        
            $$ = $2;
            Variable variable;
            variable.name = $1;
            variable.value.type = 0;
            llvar_inserir(& $$, &variable);
-*/
-            ListaLigadaVar lista;                                  
-            llvar_criar(&lista);
-                                                        
-            Variable variable;
-            variable.name = $1;
-            variable.value.type = INDEFINED;
-            llvar_inserir(&lista, &variable);
-                                                        
-            NoVar *paux = $2.inicio;
-            while(paux != NULL) {
-                llvar_inserir(&lista, &paux->variable);
-                paux = paux->proximo;
-            }
-            llvar_imprimir(&lista);
-            $$ = lista;
         }
     | error { yyclearin; yyerror("id"); } mais_ident { $$ = $3; }
     ;
@@ -423,18 +386,18 @@ comandos : cmd T_SEMICOLON comandos
 
 /* Regra 20 <cmd> ::= read(<variaveis>) | write (<variaveis>) | while(<condicao>) do <cmd> |
 | if <condicao> then <cmd> <pfalsa> | ident := <expressao> | ident <lista_arg> | begin <comandos> end | for <ATR> TO <expressao> do <cmd> */
-cmd : T_READ T_L_PAREN variaveis T_R_PAREN 
+cmd : T_READ {  } T_L_PAREN variaveis T_R_PAREN 
         { 
             /* Verifica se todos os argumentos sao do mesmo tipo */
-            checkCallReadWrite("READ", &$3); 
+            checkCallReadWrite("READ", &$4); 
         }
-    | T_WRITE T_L_PAREN variaveis T_R_PAREN 
+    | T_WRITE { } T_L_PAREN variaveis T_R_PAREN 
         {
             /* Verifica se todos os argumentos sao do mesmo tipo */
-            checkCallReadWrite("WRITE", &$3); 
+            checkCallReadWrite("WRITE", &$4); 
         }
-    | T_IF cmd_if
-    | T_ID T_ASSIGN expressao 
+    | T_IF { } cmd_if
+    | T_ID { } T_ASSIGN expressao 
 		{  
 			/* Verifica uma atribuicao  */
 			/* checkAssign( $1, &$3  ) */
@@ -443,10 +406,10 @@ cmd : T_READ T_L_PAREN variaveis T_R_PAREN
     | T_ID lista_arg 
         {
             /* Verifica se o procedimento existe, e se os argumentos sao validos */
-            checkCallProcedure($1, & $2);
+           checkCallProcedure($1, & $2);
         }
-    | T_BEGIN cmd_begin {}
-    | T_WHILE cmd_while {}
+    | T_BEGIN cmd_begin
+    | T_WHILE  cmd_while {}
     | T_FOR T_ID T_ASSIGN expressao T_TO expressao T_DO cmd {}
 //	| error { yyclearin; yyerror("cmd"); }
     ;
