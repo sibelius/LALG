@@ -4,43 +4,109 @@
 #include "simbolTable.h"
 
 int size;
-Node *head;
+/* Tabela Global de Simbolos */
+Node *GlobalSymbolTable;
 
+/* Tabela de Simbolos do Procedimento */
+Node *ProcedureSymbolTable;
+
+/* Indica se esta dentro do procedimento */
+int insideProcedure=0; 
+
+/* Inicia a tabela de simbolos globais */
 void init( ){
 	size = 0;
-	head = malloc( sizeof( Node ) );
-	head->next = NULL;
+	GlobalSymbolTable = malloc( sizeof( Node ) );
+	GlobalSymbolTable->next = NULL;
 }
 
+/* Cria a tabela de simbolos de um procedimento */
+void initProcedureSymbolTable() {
+    ProcedureSymbolTable = malloc( sizeof( Node ) );
+    ProcedureSymbolTable->next = NULL;
 
-Node* find( char* name ){
-	
-	Node *pointer = head->next;
-	int index = 0;
-	while( pointer != NULL ){
+    insideProcedure = 1;
+}
 
-		if( strcmp( pointer->name , name ) ==0 )
-			return pointer;
+/* Desaloca a memoria da tabela de simbolos do procedimento */
+void deleteProcedureSymbolTable() {
+    Node *paux = ProcedureSymbolTable;
 
-		index++;		
-		pointer = pointer->next;
-	}
-	
+    while (paux != NULL) {
+        Node *prem = paux;
+        paux = paux->next;
+        free(prem);
+    }
+
+    insideProcedure = 0;
+}
+
+Node* findProcedureSymbol(char* name) {
+    Node* pointer = ProcedureSymbolTable->next;         
+    while( pointer != NULL ){
+                                                 
+    	if( strcmp( pointer->name , name ) == 0 )
+    		return pointer;
+                                                 
+    	pointer = pointer->next;
+    }
+    return NULL;
+}
+
+Node* findGlobalSymbol(char* name) {
+    Node* pointer = GlobalSymbolTable->next;
+    while( pointer != NULL ){
+                                                 
+        if( strcmp( pointer->name , name ) ==0 )
+            return pointer;
+                                                 
+        pointer = pointer->next;
+    }
+}
+
+/* 
+ * Procura um simbolo, primeiro no procedimento (se estiver dentro do procedimento) 
+ * e/ou na tabela de simbolos globais 
+ * Local indica que eh para procurar somente na tabela de simbolos do procedimento (local)
+ * */
+Node* findSymbol(char* name){
+    Node* pointer = NULL;
+    if(insideProcedure == 1)
+        pointer = findProcedureSymbol(name);
+
+    if(pointer == NULL) {
+        return findGlobalSymbol(name);
+    } else {
+        return pointer;
+    }
+
+    /* Retorna NULL se nao achou nenhum simbolo local ou global */
 	return NULL; 
 }
 
 int addSymbol( char* name, VarValue value, Categoria cat ){
 	
 	//Verifica se o ident já existe
-	if( find( name ) == NULL ){
+    if( ( (insideProcedure == 1) &&
+        ( findProcedureSymbol(name) == NULL ))
+        ||( (insideProcedure == 0) &&
+           (findGlobalSymbol(name) == NULL)))       
+        {
 
 		Node *new_node = malloc( sizeof( Node ) );
 		new_node->value = value;
 		new_node->name = strdup( name );	
-        	new_node->categoria = cat;
-		new_node->next = head->next;
-		head->next = new_node;
-		size++;
+        new_node->categoria = cat;
+
+        /* Verifica se esta dentro de um procedimento */
+        if(insideProcedure == 1) {
+            new_node->next = ProcedureSymbolTable->next;
+            ProcedureSymbolTable->next = new_node;
+        } else {
+		    new_node->next = GlobalSymbolTable->next;
+		    GlobalSymbolTable->next = new_node;
+		    size++;
+        }
 
 		return TRUE;
 	}
@@ -50,6 +116,9 @@ int addSymbol( char* name, VarValue value, Categoria cat ){
 
 int addProgram(char* name) {
     VarValue value;
+    value.i_value = 0;
+    value.f_value = 0;
+    value.type = INDEFINED;
     return addSymbol(name, value, PROGRAM); 
 }
 
@@ -79,9 +148,8 @@ int addVariables( ListaLigadaVar *variables, VarValue value) {
 int addProcedure(char* name, ListaLigadaVar *paramList)
 {
     //Verifica se o ident já existe
-    if( find( name ) == NULL ){
+    if( findSymbol( name ) == NULL ){
 
-        /* TODO - Temos que ter uma tabela de simbolo para cada procedimento */
     	Node *new_node = malloc( sizeof( Node ) );
     	new_node->name = strdup( name );	
         new_node->categoria = PROCEDURE;
@@ -99,14 +167,24 @@ int addProcedure(char* name, ListaLigadaVar *paramList)
         }
 
         new_node->paramType = paramType;
-        new_node->next = head->next;
-    	head->next = new_node;
+        new_node->next = GlobalSymbolTable->next;
+    	GlobalSymbolTable->next = new_node;
     	size++;
-                                                   
+       
+        /* Cria a tabela de procedimento e os proximos simbolos sao adicionados nela */
+        initProcedureSymbolTable();
+
     	return TRUE;
     }
     
     return FALSE;	 
+}
+
+/* Sai do procedimento e deleta a tabela de simbolos */
+int endProcedure() {
+    printSimbolTable(0);
+
+    deleteProcedureSymbolTable();
 }
 
 /* Verifica uma chamada ao read ou write */
@@ -121,7 +199,7 @@ int checkCallReadWrite(char* comando, ListaLigadaVar *paramList)
      * */	
 
 	paux = paramList->inicio;                                                   
-	pointer = find( paux->variable.name );
+	pointer = findSymbol( paux->variable.name );
 	if(pointer == NULL){
 		printf("Erro semantico: identificador %s nao declarado\n", paux->variable.name);
 		//return;	
@@ -133,7 +211,7 @@ int checkCallReadWrite(char* comando, ListaLigadaVar *paramList)
 	//printf("o nome e %s e o valor de tipo e %d\n", paux->variable.name, type);
 
 	while (paux != NULL) {
-		pointer = find( paux->variable.name );	
+		pointer = findSymbol( paux->variable.name );	
 		/* 1. Verifica se as variaveis foram declaradas */
 		if( pointer == NULL ){
         	printf("Erro semantico: identificador %s nao declarado\n", paux->variable.name );	
@@ -199,8 +277,16 @@ void printParamType(ListaLigadaInt *paramType) {
     }
 }
 
-void printSimbolTable(){
-	Node *pointer = head->next;
+void printSimbolTable(int Global){
+	Node *pointer;
+    if( Global == 1) {
+        pointer = GlobalSymbolTable->next;
+        printf("Global Symbol Table\n");
+    } else {
+        pointer = ProcedureSymbolTable->next;
+        printf("Procedure Symbol Table\n");
+    }
+
     printf("name\ti_value\t\tf_value\t\ttype\trelative_position\tcategoria\tparamType\n");
 	while( pointer != NULL ){	
         printf("%s\t%8d\t%.2f\t\t",pointer->name, pointer->value.i_value, pointer->value.f_value);

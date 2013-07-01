@@ -231,7 +231,7 @@ mais_var : T_COMMA variaveis { $$ = $2 }
     ;
 
 /* Regra 9 <dc_p> ::= procedure ident <parametros> ; <corpo_p> <dc_p> | lambda */
-dc_p : dc_p0 {} dc_p
+dc_p : dc_p0 { endProcedure(); } dc_p
     |
     ;
 
@@ -391,7 +391,7 @@ cmd : T_READ T_L_PAREN variaveis T_R_PAREN
 */
 
 cmd_if : condicao T_THEN {} cmd pfalsa {  
-			printf("o valor da condicao e %s\n", $1);
+			/*printf("o valor da condicao e %s\n", $1);*/
 		}
     | condicao error {yyerror("then");} cmd pfalsa {}
     ;
@@ -459,7 +459,7 @@ op_mul : T_TIMES { /*$$ = new ExpressionTree;*/ /*$$->type = OPERATOR; $$->math_
 fator : T_ID 
         { 
             /* Verificando se o identificador foi declarado */
-            Node* ident = find( $1 );
+            Node* ident = findSymbol( $1 );
             if ( ident == NULL ) {
                 code_generate = FALSE;
                 fprintf (stderr, 
@@ -545,7 +545,7 @@ int main (int argc, char *argv[])
         remove( "code.p");
 	
 	/* imprimindo a talela de simbolos */
-	printSimbolTable();
+	printSimbolTable(1);
 	
     return res;
 }

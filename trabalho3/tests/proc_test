@@ -1,0 +1,21 @@
+program p1;
+var a : integer;
+procedure meuproc(x : integer);
+var a, b : integer;
+var c, b : real;
+begin
+    a := 2;
+    c := 3;
+    x := a + c;
+end;
+
+procedure procc(y, z, h: integer);
+var a, c : real;
+begin
+    y := z + h + a + c;
+end;
+
+begin
+    x := 10;
+    meuproc(x);
+end.

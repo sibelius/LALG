@@ -20,7 +20,7 @@ typedef struct node Node;
 
 void init();
 
-Node* find( char* name );
+Node* findSymbol( char* name );
 
 /* Adiciona nome do programa, variaveis, constantes */
 int addSymbol( char* name, VarValue value, Categoria cat );
@@ -28,6 +28,7 @@ int addSymbol( char* name, VarValue value, Categoria cat );
 int addConstant(char* name, VarValue value);
 int addVariables( ListaLigadaVar *variables, VarValue value);
 int addProcedure(char* name, ListaLigadaVar *paramList);
+int endProcedure();
 
 /* Verifica uma chamada ao read ou write */
 int checkCallReadWrite(char* name, ListaLigadaVar *paramList);
@@ -36,6 +37,7 @@ void printVarType(VarType type);
 void printCategoria(Categoria categoria);
 void printParamType(ListaLigadaInt *paramType);
 
-void printSimbolTable();
+/* Global indica se eh para imprimir a tabela de simbolos global */
+void printSimbolTable(int Global);
 
 #endif
