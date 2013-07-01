@@ -9,6 +9,7 @@
     #include "ListaLigada/ListaLigadaVar.h"
     #include "ListaLigada/ListaLigadaVarType.h"
     #include "simbolTable.h"
+	#include "ArvoreExpressao/expressionTree.c"
 
     int yylex (void);
     void yyerror (char *);
@@ -40,6 +41,7 @@
 	char* name;
     VarValue value;
 	char math_op;
+	VarValue* values;
     ListaLigadaVar list;
 }
 
@@ -233,7 +235,7 @@ dc_p : dc_p0 {} dc_p
     |
     ;
 
-dc_p0 : T_PROCEDURE {} T_ID parametros { addProcedure($3, &$4 ); } dc_p1
+dc_p0 : T_PROCEDURE T_ID parametros { addProcedure($2, &$3 ); } dc_p1
     | T_PROCEDURE error T_SEMICOLON { yyclearin; yyerror("id"); } corpo_p
     ;
    
@@ -370,7 +372,12 @@ cmd : T_READ T_L_PAREN variaveis T_R_PAREN
             checkCallReadWrite("WRITE", &$3); 
         }
     | T_IF cmd_if
-    | T_ID T_ASSIGN expressao {}
+    | T_ID T_ASSIGN expressao 
+		{  
+			/* Verifica uma atribuicao  */
+			/* checkAssign( $1, &$3  ) */
+			/*printf("imprimindo o t_ID %s a expressao em assign %s\n", $3);*/
+		}
     | T_ID lista_arg {}
     | T_BEGIN cmd_begin {}
     | T_WHILE cmd_while {}
@@ -383,7 +390,9 @@ cmd : T_READ T_L_PAREN variaveis T_R_PAREN
     ;
 */
 
-cmd_if : condicao T_THEN {} cmd pfalsa {}
+cmd_if : condicao T_THEN {} cmd pfalsa {  
+			printf("o valor da condicao e %s\n", $1);
+		}
     | condicao error {yyerror("then");} cmd pfalsa {}
     ;
 
@@ -399,7 +408,9 @@ condicao : expressao relacao expressao {}
     ;
 
 /* Regra 22 <relacao> ::= = | <> | >= | <= | > | < */
-relacao : T_EQUAL {}
+relacao : T_EQUAL { 
+   			/*PNode root = CreateInfixTree(exp);*/
+		}
     | T_DIFF {}
     | T_GREATER_EQ {}
     | T_LESSER_EQ {}

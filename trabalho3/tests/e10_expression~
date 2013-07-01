@@ -1,0 +1,10 @@
+program p10;
+const valor = 2; 
+var a : integer;
+var b : real;
+
+begin
+    a := 2 + 3;
+    b := a >= b;	{ warning pois b nao foi declarado anteriormente }  
+end.
+
