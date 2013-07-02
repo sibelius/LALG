@@ -5,9 +5,9 @@ all:
 	gcc -c codeGenerate.c
 	gcc -c ListaLigada/ListaLigadaVar.c
 	gcc -c ListaLigada/ListaLigadaVarType.c
-	gcc -c ArvoreExpressao/expressionTree.c
+	gcc -c InfixToPostFix/expressionConvert.c
 	flex lalg.lex
 	gcc -DYYDEBUG -c lex.yy.c 
-	gcc -DYYDEBUG -o Compiler lex.yy.o lalg.tab.o simbolTable.o ListaLigadaVar.o ListaLigadaVarType.o codeGenerate.o expressionTree.o
+	gcc -DYYDEBUG -o Compiler lex.yy.o lalg.tab.o simbolTable.o ListaLigadaVar.o ListaLigadaVarType.o codeGenerate.o expressionConvert.o
 clean:
-	rm Compiler lalg.output lalg.tab.c lalg.tab.h lalg.tab.o lex.yy.c lex.yy.o simbolTable.o ListaLigadaVar.o ListaLigadaVarType.o codeGenerate.o expressionTree.o
+	rm Compiler lalg.output lalg.tab.c lalg.tab.h lalg.tab.o lex.yy.c lex.yy.o simbolTable.o ListaLigadaVar.o ListaLigadaVarType.o codeGenerate.o expressionConvert.o

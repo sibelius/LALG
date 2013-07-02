@@ -2,6 +2,7 @@
 
 #define NOPARAM -1
 #define LBL_MAIN -2
+#define LBL_IF -3
 
 /* Procedimentos para gerar codigo */
 int next_position = 0; /* Proxima posicao de memoria livre */
@@ -123,6 +124,32 @@ void buildCallProcedure(Node* proc, ListaLigadaVar *paramList) {
 
     addCommand("CHPR", proc->relative_position);
     codigo[linha_pusher].param = codline;
+}
+
+void buildCondition(Condicao cond)
+{
+
+}
+
+void buildStartIf(Condicao cond)
+{
+    /* Gera o codigo da condicao */
+    printf("COND: %s", cond.c_value);
+
+
+
+    addCommand("DSVF", LBL_IF);
+}
+
+void buildEndIf()
+{
+    int i;
+    /* Procuro o ultimo DSVF que representa o IF */
+    for(i=codline-1; i>=0; i--) {
+        if(strcmp(codigo[i].command, "DSVF")==0) {
+            codigo[i].param = codline;
+        }
+    }
 }
 
 void printCodigo() 

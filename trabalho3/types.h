@@ -29,13 +29,13 @@ typedef enum cat Categoria;
 struct varValue {
     int i_value;
     float f_value;
-    char c_value[40];
+    char c_value[100];
     VarType type;
 };
 typedef struct varValue VarValue;
 
 typedef struct Condicao {
-    char c_value[40];
+    char c_value[100];
 } Condicao;
 
 #endif

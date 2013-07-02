@@ -286,71 +286,71 @@ int checkCallProcedure(char* name, ListaLigadaVar* paramList)
         return FALSE;
     }
 
-
     /* Procedimento sem argumento */
     if( (paux == NULL) && (paramType == NULL) ) {
         buildCallProcedure(proc, paramList);
-    }
+        return TRUE;
+    } else {
 
-    pointer = findSymbol( paux->variable.name );
-    proc = findSymbol(name);
-	if(proc == NULL){
-        printf("Erro Semantico: procedimento %s nao declarado\n", name);
-        return FALSE;
-    }
-    paramType = proc->paramType.inicio;
-    if(pointer == NULL){
-		printf("Erro Semantico: variavel %s nao declarada\n", paux->variable.name);
-        error = 1;
-	} else {
-        type = pointer->value.type;
-    }
-	//printf("o nome e %s e o valor de tipo e %d\n", paux->variable.name, type);
-    if( (paux != NULL) &&  (paramType == NULL) ){                                                                       
-        printf("Erro Semantico: wrong number numero de argumentos excede o numero de parametros esperados\n");
-        error = 1;
-        return FALSE;
-    }                                                                                            //
-
-	while (paux != NULL) {
-        /* Verifica se o numero de argumentos passado é maior que o esperado */
-		if (paramType == NULL){
-            printf("Erro Semantico: numero de argumentos excede o numero de parametros esperados\n");
-            error = 1;
+        pointer = findSymbol( paux->variable.name );
+        proc = findSymbol(name);
+        if(proc == NULL){
+            printf("Erro Semantico: procedimento %s nao declarado\n", name);
             return FALSE;
         }
-        pointer = findSymbol( paux->variable.name );
-		/* Verifica se as variaveis foram declaradas */
-		if( pointer == NULL ){
-        	printf("Erro Semantico: variavel %s nao declarada\n", paux->variable.name );
+        paramType = proc->paramType.inicio;
+        if(pointer == NULL){
+            printf("Erro Semantico: variavel %s nao declarada\n", paux->variable.name);
             error = 1;
-		} else {
-            /* Verifica se a categoria eh aceita como argumento de procedimentos */
-		    if( pointer->categoria != CONSTANT && pointer->categoria != VARIABLE){
-		        printf("Erro Semantico: identificador %s possui uma categoria nao aceita como argumento\n", pointer->name);
-                error = 1;
-	         }			
-            /* Verifica se todos os parametros sao do mesmo tipo*/
-			if( paramType->type != pointer->value.type ){
-				printf("Erro Semantico: parametros com tipos diferentes\n");
-                error = 1;
-			}
-		
-		}
-		paux = paux->proximo;
-        paramType = paramType->proximo;
-	}
-    /* Verifica se o numero de argumentos passado é menor que o esperado */
-    if(paramType != NULL ){
-        printf("Erro Semantico: numero de argumentos nao atinge o numero de parametros esperados\n");
-        error = 1;
-    }
-    if(error == 0){
-        buildCallProcedure(proc, paramList);
-        return TRUE;
-    }
- return FALSE;
+        } else {
+            type = pointer->value.type;
+        }
+        //printf("o nome e %s e o valor de tipo e %d\n", paux->variable.name, type);
+        if( (paux != NULL) &&  (paramType == NULL) ){                                                                       
+            printf("Erro Semantico: wrong number numero de argumentos excede o numero de parametros esperados\n");
+            error = 1;
+            return FALSE;
+        }                                                                                            //
 
+        while (paux != NULL) {
+            /* Verifica se o numero de argumentos passado é maior que o esperado */
+            if (paramType == NULL){
+                printf("Erro Semantico: numero de argumentos excede o numero de parametros esperados\n");
+                error = 1;
+                return FALSE;
+            }
+            pointer = findSymbol( paux->variable.name );
+            /* Verifica se as variaveis foram declaradas */
+            if( pointer == NULL ){
+                printf("Erro Semantico: variavel %s nao declarada\n", paux->variable.name );
+                error = 1;
+            } else {
+                /* Verifica se a categoria eh aceita como argumento de procedimentos */
+                if( pointer->categoria != CONSTANT && pointer->categoria != VARIABLE){
+                    printf("Erro Semantico: identificador %s possui uma categoria nao aceita como argumento\n", pointer->name);
+                    error = 1;
+                 }			
+                /* Verifica se todos os parametros sao do mesmo tipo*/
+                if( paramType->type != pointer->value.type ){
+                    printf("Erro Semantico: parametros com tipos diferentes\n");
+                    error = 1;
+                }
+            
+            }
+            paux = paux->proximo;
+            paramType = paramType->proximo;
+        }
+        /* Verifica se o numero de argumentos passado é menor que o esperado */
+        if(paramType != NULL ){
+            printf("Erro Semantico: numero de argumentos nao atinge o numero de parametros esperados\n");
+            error = 1;
+        }
+        if(error == 0){
+            buildCallProcedure(proc, paramList);
+            return TRUE;
+        }
+    }
+    return FALSE;
 }
 
 /* Print Routines for Debug Purposes */

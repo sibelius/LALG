@@ -91,12 +91,12 @@
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union 
 /* Line 1676 of yacc.c  */
-#line 36 "lalg.y"
+#line 37 "lalg.y"
 YYSTYPE
 {
 
 /* Line 1676 of yacc.c  */
-#line 36 "lalg.y"
+#line 37 "lalg.y"
 
 	int i_number;
 	float r_number;

@@ -1,0 +1,6 @@
+program p1;
+var a : integer;
+begin
+    if (5 + d) * 3  < (2 + 1) / a then
+        a := 2;
+end.

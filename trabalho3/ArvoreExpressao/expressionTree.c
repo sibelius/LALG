@@ -32,21 +32,21 @@ bool IsOperator(char* x)
 			);
 	}
 
-    printf("nao eh operador\n");
+    /*printf("nao eh operador\n");*/
 	return false;
 }
 
 bool IsLeftParenthesis(char* x)
 {
-    if(strcmp(x, "(") == 0)
-        printf("eh parenthesis left\n");
+  /*  if(strcmp(x, "(") == 0)
+        printf("eh parenthesis left\n");*/
    return strcmp(x, "(");
 }
 
 bool IsRightParenthesis(char* x)
 {
-    if(strcmp(x, ")")==0)
-        printf("eh right parenthesis\n");
+/*    if(strcmp(x, ")")==0)
+        printf("eh right parenthesis\n");*/
    return strcmp(x,")");
 }
 
@@ -54,7 +54,7 @@ bool IsOperand(char* x)
 {
 	//printf("verificando se o operando e um inteiro ou float\n");
 	if (x == NULL || *x == '\0' || isspace(*x) || strcmp(x, ")") == 0 || strcmp(x,"(") == 0){
-		printf("nao eh operando\n");		
+/*		printf("nao eh operando\n");		*/
 		return false;
 	}
     //char * p;
@@ -62,7 +62,7 @@ bool IsOperand(char* x)
     
     //printf("retornara o valor %d\n", *p == '\0');
     //return *p == '\0';	
-    printf("eh um operando\n");
+/*    printf("eh um operando\n");*/
     return true;
 }
 
@@ -71,7 +71,7 @@ int GetPrecedence(char* x)
 	//assert(IsOperator(x));
 	//printf("era chamado um assert\n");
 	if(!IsOperator(x)){
-		printf("deu erro\n");
+/*		printf("deu erro\n");*/
 		exit(1);
 	}
    
@@ -93,45 +93,45 @@ PNode CreateInfixTree(char* exp)
    // the impact of preceding parenthesis, if any
    int correction = 0;
 	int i = 0;
-
+/*
     char exp2[40];
 
     strcpy(exp2, "- ( -2 + 5 ) * 4 + -3 / 4 * 3.1" );
     printf("o valor de exp2 e %s\n", exp2);
-
-	char* token = strtok( exp2, " " );
+*/
+	char* token = strtok( exp, " " );
 	
 	while(token)
 	{
-        printf("o token e %s\n", token);
+/*        printf("o token e %s\n", token);*/
 
      
       if (IsOperator(token))
       {
-	  	printf("eh operador\n");
+/*	  	printf("eh operador\n");*/
          PNode p = CreateNode(token);
          p->precedence = GetPrecedence(token) + correction;
-         printf("chegou aqui 1\n");
+/*         printf("chegou aqui 1\n");*/
          if (p->precedence > preOperator->precedence)
          {
-             printf("chegou aqui 2\n");
+  /*           printf("chegou aqui 2\n");*/
             p->left = preOperand;
             preOperator->right = p;
             p->parent = preOperator;
          }
          else
          {
-             printf("chegou aqui 3\n");
+/*             printf("chegou aqui 3\n");*/
             preOperator->right = preOperand;
             PNode q = preOperator->parent;
             while (p->precedence <= q->precedence){ 
-                printf("chegou aqui 4\n");
+/*                printf("chegou aqui 4\n");*/
                 q = q->parent;
-                printf("chegou aqui 5\n");
-                printf("imprimindo o valor de p->precedente %d\n", p->precedence);
+  /*              printf("chegou aqui 5\n");
+                printf("imprimindo o valor de p->precedente %d\n", p->precedence);*/
             }
             
-            printf("chegou aqui 6\n");
+/*            printf("chegou aqui 6\n");*/
 
             p->left = q->right;
             q->right = p;
@@ -139,7 +139,7 @@ PNode CreateInfixTree(char* exp)
          }
          preOperand = NULL;
          preOperator = p;
-        printf("terminou o if do eh operador\n");
+  /*      printf("terminou o if do eh operador\n");*/
       }else if (IsOperand(token)){
          //printf("entrou em eh operando\n"); 
          preOperand = CreateNode(token);
@@ -156,7 +156,7 @@ PNode CreateInfixTree(char* exp)
       }
       else
       {
-         printf("illegal token found: %s\n", token);
+/*         printf("illegal token found: %s\n", token);*/
          break;
       }
 

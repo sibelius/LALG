@@ -10,8 +10,7 @@
     #include "ListaLigada/ListaLigadaVarType.h"
     #include "simbolTable.h"
     #include "codeGenerate.h"
-    #include "InfixToPostFix/expressionConvert.h"
-
+	#include "ArvoreExpressao/expressionTree.h"
 
     int yylex (void);
     void yyerror (char *);
@@ -422,7 +421,7 @@ cmd : T_READ {  } T_L_PAREN variaveis T_R_PAREN
 
 cmd_if : condicao T_THEN { buildStartIf($1) } cmd pfalsa {  
             buildEndIf($1);
-            /*printf("esta dentro do cmd_if\n");*/
+            printf("esta dentro do cmd_if\n");
         }
     | condicao error {yyerror("then");} cmd pfalsa {}
     ;
@@ -435,28 +434,20 @@ cmd_while : T_L_PAREN condicao T_R_PAREN T_DO {} cmd {}
     ;
 
 /* Regra 21 <condicao> ::= <expressao> <relacao> <expressao> */
-condicao : expressao relacao expressao {  
-            char posExp1[100], posExp2[100];
-            infix2postfix($1.c_value, posExp1, 1);
-            infix2postfix($3.c_value, posExp2, 1);
-            strcpy($$.c_value, posExp1);
+condicao : expressao relacao expressao {   
             strcat($$.c_value, $2.c_value);
-            strcat($$.c_value, posExp2);
-
-            printf("postfix: %s", $$.c_value);
-           /* strcat($$.c_value, $2.c_value);
             strcat($$.c_value, $3.c_value);
-*/
-            /*printf("passara para a arvore a expressao %s\n", $$.c_value);*/
+
+            printf("passara para a arvore a expressao %s\n", $$.c_value);
             /* criara a expressionTree */
-            /*PNode root = CreateInfixTree($$.c_value);*/
-            /*PostOrderPrintTree(root);*/
+            PNode root = CreateInfixTree($$.c_value);
+            PostOrderPrintTree(root);
          }
     ;
 
 /* Regra 22 <relacao> ::= = | <> | >= | <= | > | < */
 relacao : T_EQUAL {
-		    strcpy($$.c_value, " = ");
+		    strcpy($$.c_value, "=");
         }
     | T_DIFF {
             strcpy($$.c_value, " <> ");
@@ -478,13 +469,7 @@ relacao : T_EQUAL {
     
 /* Regra 23 <expressao> ::= <termo> <outros_termos> */
 expressao : termo outros_termos {
-          /*printf("dentro de expressao\n");*/
-          strcpy($$.c_value, $1.c_value);
-/*          printf("o valor de $$.c_value e %s\n", $$.c_value);
-          printf("o valor de $1.c_value e %s\n", $1.c_value);
-                        */
-            strcat($$.c_value, $2.c_value);
-/*           printf("o valor final de expressao e %s\n", $$.c_value);*/
+           strcat($$.c_value, $2.c_value);
           }
     ;
 
@@ -523,7 +508,6 @@ op_ad : T_PLUS {
 termo : op_un fator mais_fatores {
         strcat($$.c_value, $2.c_value);
         strcat($$.c_value, $3.c_value);
-/*        printf("o valor final de termo e %s\n", $$.c_value);*/
       }
     ;
     

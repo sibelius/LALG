@@ -1,38 +1,27 @@
-#include <stdio.h>
-#include <string.h>
-#include <ctype.h>
-
-#define MAX 10
-#define EMPTY -1
-
-struct stack
-{
-    char data[MAX];
-    int top;
-};
+#include "expressionConvert.h"
 
 int isempty(struct stack *s)
 {
-    printf("isempty\n");
+    /*printf("isempty\n");*/
     return (s->top == EMPTY) ? 1 : 0;
 }
 
 void emptystack(struct stack* s)
 {
-    printf("emptystack\n");
+/*    printf("emptystack\n");*/
     s->top=EMPTY;
 }
 
 void push(struct stack* s,int item)
 {
-    printf("push\n");
+/*    printf("push\n");*/
     if(s->top == (MAX-1))
     {
         printf("\nSTACK FULL");
     }
     else
     {
-        printf("add to stack\n");
+/*        printf("add to stack\n");*/
         ++s->top;
         s->data[s->top]=item;
     }
@@ -40,7 +29,7 @@ void push(struct stack* s,int item)
 
 char pop(struct stack* s)
 {
-    printf("pop\n");
+/*    printf("pop\n");*/
     char ret=(char)EMPTY;
     if(!isempty(s))
     {
@@ -52,19 +41,19 @@ char pop(struct stack* s)
 
 void display(struct stack s)
 {
-    printf("display\n");
+/*    printf("display\n");*/
     while(s.top != EMPTY)
     {
-        printf("not empty\n");
-        printf("\n%d",s.data[s.top]);
+/*        printf("not empty\n");*/
+/*        printf("\n%d",s.data[s.top]);*/
         s.top--;
     }
 }
 
 int isoperator(char e)
 {
-    getchar();
-    printf("isoperator\n");
+    /*getchar();*/
+/*    printf("isoperator\n");*/
     if(e == '+' || e == '-' || e == '*' || e == '/' || e == '%')
         return 1;
     else
@@ -74,7 +63,7 @@ int isoperator(char e)
 
 int priority(char e)
 {
-    printf("priority\n");
+/*    printf("priority\n");*/
     int pri = 0;
 
     if(e == '*' || e == '/' || e =='%')
@@ -89,7 +78,7 @@ int priority(char e)
 
 void infix2postfix(char* infix, char * postfix, int insertspace)
 {
-    printf("in infix2postfix\n");
+/*    printf("in infix2postfix\n");*/
     char *i,*p;
     struct stack X;
     char n1;
@@ -106,7 +95,7 @@ void infix2postfix(char* infix, char * postfix, int insertspace)
 
         if( isdigit(*i) || isalpha(*i) )
         {
-            printf("is digit.\n");
+            /*printf("is digit.\n");*/
             while( isdigit(*i) || isalpha(*i))
             {
                 *p = *i;

@@ -27,8 +27,12 @@ void buildReadWrite(char* command, ListaLigadaVar *paramList);
 
 void buildCallProcedure(Node* proc, ListaLigadaVar *paramList);
 
-/* Indica a linha inicial do program principal */
-void markMainProgram();
+void buildCondition(Condicao cond);
+
+void buildStartIf(Condicao cond);
+
+/* Preenche os valores os enderecos de desvio */
+void buildEndIf();
 
 void printCodigo();
 
