@@ -9,6 +9,16 @@
 #define FALSE 0
 #endif
 
+enum rel {
+    EQUAL = 1,
+    DIFF,
+    GREATER_EQ,
+    LESSER_EQ,
+    GREATER,
+    LESSER
+};
+typedef enum rel Rel;
+
 enum type {
     INDEFINED = 1,
     INTEGER,

@@ -372,7 +372,11 @@ mais_ident : T_SEMICOLON argumentos
     ;
     
 /* Regra 18 <pfalsa> ::= else <cmd> | lambda */
-pfalsa : T_ELSE {} cmd
+pfalsa : T_ELSE 
+       {
+            buildElse();
+       } 
+       cmd
     | /* empty */ 
     ;
 
@@ -409,8 +413,12 @@ cmd : T_READ {  } T_L_PAREN variaveis T_R_PAREN
                 $$.type = INDEFINED;
             } else {
                 $$.type = ident->value.type;
-                /* buildReadMemory */
             }
+            
+            if(ident->value.type != $3.type) {
+                printf("Erro Semantico: Linha %d, Coluna %d. Atribu");
+            }
+
 		}
     | T_ID lista_arg 
         {
@@ -438,7 +446,7 @@ cmd_if : condicao T_THEN { buildStartIf($1) } cmd pfalsa {
 cmd_begin : comandos T_END
     ;
 
-cmd_while : T_L_PAREN condicao T_R_PAREN T_DO {} cmd {}
+cmd_while : T_L_PAREN condicao T_R_PAREN T_DO { buildStartWhile($2); } cmd { buildEndWhile(); }
     | T_L_PAREN condicao T_R_PAREN error { yyerror("do") } cmd 
     ;
 
@@ -451,7 +459,7 @@ condicao : expressao relacao expressao {
             strcat($$.c_value, $2.c_value);
             strcat($$.c_value, posExp2);
 
-            printf("postfix: %s", $$.c_value);
+/*            printf("postfix: %s", $$.c_value);*/
            /* strcat($$.c_value, $2.c_value);
             strcat($$.c_value, $3.c_value);
 */
@@ -651,7 +659,7 @@ int main (int argc, char *argv[])
     fclose( code_file );
 
     end_codigo();
-    //printCodigo();
+    printCodigo();
 
 
     if(numerrors==0)
@@ -664,7 +672,7 @@ int main (int argc, char *argv[])
         remove( "code.p");
 	
 	/* imprimindo a talela de simbolos */
-	//printSimbolTable(1);
+	printSimbolTable(1);
 	
     return res;
 }

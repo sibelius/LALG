@@ -1,0 +1,10 @@
+program p1;
+var a,b : integer;
+begin
+    a := 5;
+    
+    while (a > 0) do
+        while (b < 5) do
+            while(a > 1) do
+                read(a);
+end.

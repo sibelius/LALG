@@ -563,12 +563,12 @@ static const yytype_uint16 yyrline[] =
      246,   247,   250,   250,   251,   251,   254,   255,   255,   259,
      264,   266,   274,   300,   305,   313,   314,   314,   315,   318,
      319,   322,   323,   327,   331,   335,   341,   349,   358,   358,
-     362,   367,   375,   375,   376,   380,   381,   381,   382,   382,
-     383,   388,   388,   393,   393,   398,   398,   399,   415,   420,
-     421,   422,   431,   431,   435,   435,   438,   441,   441,   442,
-     442,   446,   466,   469,   472,   475,   478,   481,   484,   488,
-     500,   503,   506,   512,   516,   522,   525,   531,   539,   543,
-     549,   552,   558,   576,   586,   593,   597,   601,   605,   609
+     362,   367,   376,   375,   380,   384,   385,   385,   386,   386,
+     387,   392,   392,   397,   397,   402,   402,   403,   423,   428,
+     429,   430,   439,   439,   443,   443,   446,   449,   449,   450,
+     450,   454,   474,   477,   480,   483,   486,   489,   492,   496,
+     508,   511,   514,   520,   524,   530,   533,   539,   547,   551,
+     557,   560,   566,   584,   594,   601,   605,   609,   613,   617
 };
 #endif
 
@@ -2135,35 +2135,37 @@ yyreduce:
   case 82:
 
 /* Line 1455 of yacc.c  */
-#line 375 "lalg.y"
-    {;}
+#line 376 "lalg.y"
+    {
+            buildElse();
+       ;}
     break;
 
   case 86:
 
 /* Line 1455 of yacc.c  */
-#line 381 "lalg.y"
+#line 385 "lalg.y"
     { yyclearin; yyerror(";"); ;}
     break;
 
   case 88:
 
 /* Line 1455 of yacc.c  */
-#line 382 "lalg.y"
+#line 386 "lalg.y"
     { yyerror("cmd"); ;}
     break;
 
   case 91:
 
 /* Line 1455 of yacc.c  */
-#line 388 "lalg.y"
+#line 392 "lalg.y"
     {  ;}
     break;
 
   case 92:
 
 /* Line 1455 of yacc.c  */
-#line 389 "lalg.y"
+#line 393 "lalg.y"
     { 
             /* Verifica se todos os argumentos sao do mesmo tipo */
             checkCallReadWrite("READ", &(yyvsp[(4) - (5)].list)); 
@@ -2173,14 +2175,14 @@ yyreduce:
   case 93:
 
 /* Line 1455 of yacc.c  */
-#line 393 "lalg.y"
+#line 397 "lalg.y"
     { ;}
     break;
 
   case 94:
 
 /* Line 1455 of yacc.c  */
-#line 394 "lalg.y"
+#line 398 "lalg.y"
     {
             /* Verifica se todos os argumentos sao do mesmo tipo */
             checkCallReadWrite("WRITE", &(yyvsp[(4) - (5)].list)); 
@@ -2190,21 +2192,21 @@ yyreduce:
   case 95:
 
 /* Line 1455 of yacc.c  */
-#line 398 "lalg.y"
+#line 402 "lalg.y"
     { ;}
     break;
 
   case 96:
 
 /* Line 1455 of yacc.c  */
-#line 398 "lalg.y"
+#line 402 "lalg.y"
     { ;}
     break;
 
   case 97:
 
 /* Line 1455 of yacc.c  */
-#line 400 "lalg.y"
+#line 404 "lalg.y"
     {  
             /* Verificando se o identificador foi declarado */
             Node* ident = findSymbol( (yyvsp[(1) - (3)].name) );
@@ -2217,15 +2219,19 @@ yyreduce:
                 (yyval.value).type = INDEFINED;
             } else {
                 (yyval.value).type = ident->value.type;
-                /* buildReadMemory */
             }
+            
+            if(ident->value.type != (yyvsp[(3) - (3)].value).type) {
+                printf("Erro Semantico: Linha %d, Coluna %d. Atribu");
+            }
+
 		;}
     break;
 
   case 98:
 
 /* Line 1455 of yacc.c  */
-#line 416 "lalg.y"
+#line 424 "lalg.y"
     {
             /* Verifica se o procedimento existe, e se os argumentos sao validos */
            checkCallProcedure((yyvsp[(1) - (2)].name), & (yyvsp[(2) - (2)].list));
@@ -2235,35 +2241,35 @@ yyreduce:
   case 99:
 
 /* Line 1455 of yacc.c  */
-#line 420 "lalg.y"
+#line 428 "lalg.y"
     {;}
     break;
 
   case 100:
 
 /* Line 1455 of yacc.c  */
-#line 421 "lalg.y"
+#line 429 "lalg.y"
     {;}
     break;
 
   case 101:
 
 /* Line 1455 of yacc.c  */
-#line 422 "lalg.y"
+#line 430 "lalg.y"
     {;}
     break;
 
   case 102:
 
 /* Line 1455 of yacc.c  */
-#line 431 "lalg.y"
+#line 439 "lalg.y"
     { buildStartIf((yyvsp[(1) - (2)].condicao)) ;}
     break;
 
   case 103:
 
 /* Line 1455 of yacc.c  */
-#line 431 "lalg.y"
+#line 439 "lalg.y"
     {  
             buildEndIf((yyvsp[(1) - (5)].condicao));
             /*printf("esta dentro do cmd_if\n");*/
@@ -2273,42 +2279,42 @@ yyreduce:
   case 104:
 
 /* Line 1455 of yacc.c  */
-#line 435 "lalg.y"
+#line 443 "lalg.y"
     {yyerror("then");;}
     break;
 
   case 105:
 
 /* Line 1455 of yacc.c  */
-#line 435 "lalg.y"
+#line 443 "lalg.y"
     {;}
     break;
 
   case 107:
 
 /* Line 1455 of yacc.c  */
-#line 441 "lalg.y"
-    {;}
+#line 449 "lalg.y"
+    { buildStartWhile((yyvsp[(2) - (4)].condicao)); ;}
     break;
 
   case 108:
 
 /* Line 1455 of yacc.c  */
-#line 441 "lalg.y"
-    {;}
+#line 449 "lalg.y"
+    { buildEndWhile(); ;}
     break;
 
   case 109:
 
 /* Line 1455 of yacc.c  */
-#line 442 "lalg.y"
+#line 450 "lalg.y"
     { yyerror("do") ;}
     break;
 
   case 111:
 
 /* Line 1455 of yacc.c  */
-#line 446 "lalg.y"
+#line 454 "lalg.y"
     {  
             char posExp1[100], posExp2[100];
             infix2postfix((yyvsp[(1) - (3)].value).c_value, posExp1, 1);
@@ -2317,7 +2323,7 @@ yyreduce:
             strcat((yyval.condicao).c_value, (yyvsp[(2) - (3)].condicao).c_value);
             strcat((yyval.condicao).c_value, posExp2);
 
-            printf("postfix: %s", (yyval.condicao).c_value);
+/*            printf("postfix: %s", $$.c_value);*/
            /* strcat($$.c_value, $2.c_value);
             strcat($$.c_value, $3.c_value);
 */
@@ -2331,7 +2337,7 @@ yyreduce:
   case 112:
 
 /* Line 1455 of yacc.c  */
-#line 466 "lalg.y"
+#line 474 "lalg.y"
     {
 		    strcpy((yyval.condicao).c_value, " = ");
         ;}
@@ -2340,7 +2346,7 @@ yyreduce:
   case 113:
 
 /* Line 1455 of yacc.c  */
-#line 469 "lalg.y"
+#line 477 "lalg.y"
     {
             strcpy((yyval.condicao).c_value, " <> ");
         ;}
@@ -2349,7 +2355,7 @@ yyreduce:
   case 114:
 
 /* Line 1455 of yacc.c  */
-#line 472 "lalg.y"
+#line 480 "lalg.y"
     {
             strcpy((yyval.condicao).c_value, " >= ");
         ;}
@@ -2358,7 +2364,7 @@ yyreduce:
   case 115:
 
 /* Line 1455 of yacc.c  */
-#line 475 "lalg.y"
+#line 483 "lalg.y"
     {
             strcpy((yyval.condicao).c_value, " <= ");
         ;}
@@ -2367,7 +2373,7 @@ yyreduce:
   case 116:
 
 /* Line 1455 of yacc.c  */
-#line 478 "lalg.y"
+#line 486 "lalg.y"
     {
             strcpy((yyval.condicao).c_value, " > ");
         ;}
@@ -2376,7 +2382,7 @@ yyreduce:
   case 117:
 
 /* Line 1455 of yacc.c  */
-#line 481 "lalg.y"
+#line 489 "lalg.y"
     {
             strcpy((yyval.condicao).c_value, " < ");
     ;}
@@ -2385,14 +2391,14 @@ yyreduce:
   case 118:
 
 /* Line 1455 of yacc.c  */
-#line 484 "lalg.y"
+#line 492 "lalg.y"
     { yyerror("sinal de relacao"); ;}
     break;
 
   case 119:
 
 /* Line 1455 of yacc.c  */
-#line 488 "lalg.y"
+#line 496 "lalg.y"
     {
           /*printf("dentro de expressao\n");*/
           strcpy((yyval.value).c_value, (yyvsp[(1) - (2)].condicao).c_value);
@@ -2407,7 +2413,7 @@ yyreduce:
   case 120:
 
 /* Line 1455 of yacc.c  */
-#line 500 "lalg.y"
+#line 508 "lalg.y"
     {
         strcpy((yyval.condicao).c_value, "+");
       ;}
@@ -2416,7 +2422,7 @@ yyreduce:
   case 121:
 
 /* Line 1455 of yacc.c  */
-#line 503 "lalg.y"
+#line 511 "lalg.y"
     {
         strcpy((yyval.condicao).c_value, "-"); 
     ;}
@@ -2425,7 +2431,7 @@ yyreduce:
   case 122:
 
 /* Line 1455 of yacc.c  */
-#line 506 "lalg.y"
+#line 514 "lalg.y"
     {
         strcpy((yyval.condicao).c_value, " ");
     ;}
@@ -2434,7 +2440,7 @@ yyreduce:
   case 123:
 
 /* Line 1455 of yacc.c  */
-#line 512 "lalg.y"
+#line 520 "lalg.y"
     {
                 strcat((yyval.condicao).c_value, (yyvsp[(2) - (3)].condicao).c_value);
                 strcat((yyval.condicao).c_value, (yyvsp[(3) - (3)].condicao).c_value);
@@ -2444,7 +2450,7 @@ yyreduce:
   case 124:
 
 /* Line 1455 of yacc.c  */
-#line 516 "lalg.y"
+#line 524 "lalg.y"
     { 
             strcpy((yyval.condicao).c_value, " ");
         ;}
@@ -2453,7 +2459,7 @@ yyreduce:
   case 125:
 
 /* Line 1455 of yacc.c  */
-#line 522 "lalg.y"
+#line 530 "lalg.y"
     { 
         strcpy((yyval.condicao).c_value, " +");
       ;}
@@ -2462,7 +2468,7 @@ yyreduce:
   case 126:
 
 /* Line 1455 of yacc.c  */
-#line 525 "lalg.y"
+#line 533 "lalg.y"
     {
         strcpy((yyval.condicao).c_value, " -");
     ;}
@@ -2471,7 +2477,7 @@ yyreduce:
   case 127:
 
 /* Line 1455 of yacc.c  */
-#line 531 "lalg.y"
+#line 539 "lalg.y"
     {
         strcat((yyval.condicao).c_value, (yyvsp[(2) - (3)].value).c_value);
         strcat((yyval.condicao).c_value, (yyvsp[(3) - (3)].condicao).c_value);
@@ -2482,7 +2488,7 @@ yyreduce:
   case 128:
 
 /* Line 1455 of yacc.c  */
-#line 539 "lalg.y"
+#line 547 "lalg.y"
     {  
                 strcat((yyval.condicao).c_value, (yyvsp[(2) - (3)].value).c_value);
                 strcat((yyval.condicao).c_value, (yyvsp[(3) - (3)].condicao).c_value);
@@ -2492,7 +2498,7 @@ yyreduce:
   case 129:
 
 /* Line 1455 of yacc.c  */
-#line 543 "lalg.y"
+#line 551 "lalg.y"
     { 
         strcpy((yyval.condicao).c_value, " ");
     ;}
@@ -2501,7 +2507,7 @@ yyreduce:
   case 130:
 
 /* Line 1455 of yacc.c  */
-#line 549 "lalg.y"
+#line 557 "lalg.y"
     { 
             strcpy( (yyval.condicao).c_value, " * " );
        ;}
@@ -2510,7 +2516,7 @@ yyreduce:
   case 131:
 
 /* Line 1455 of yacc.c  */
-#line 552 "lalg.y"
+#line 560 "lalg.y"
     { 
             strcpy( (yyval.condicao).c_value, " / " );
         ;}
@@ -2519,7 +2525,7 @@ yyreduce:
   case 132:
 
 /* Line 1455 of yacc.c  */
-#line 559 "lalg.y"
+#line 567 "lalg.y"
     {
             /* Verificando se o identificador foi declarado */
             Node* ident = findSymbol( (yyvsp[(1) - (1)].name) );
@@ -2542,7 +2548,7 @@ yyreduce:
   case 133:
 
 /* Line 1455 of yacc.c  */
-#line 577 "lalg.y"
+#line 585 "lalg.y"
     {
             if((yyvsp[(1) - (1)].value).type == INTEGER) {
                 (yyval.value).type = INTEGER;
@@ -2557,7 +2563,7 @@ yyreduce:
   case 134:
 
 /* Line 1455 of yacc.c  */
-#line 586 "lalg.y"
+#line 594 "lalg.y"
     { 
             char buffer[40];
             (yyval.value) = (yyvsp[(2) - (2)].value);
@@ -2570,14 +2576,14 @@ yyreduce:
   case 135:
 
 /* Line 1455 of yacc.c  */
-#line 593 "lalg.y"
+#line 601 "lalg.y"
     { yyclearin; yyerror("sinal de relacao"); /*$$ = new ExpressionTree;*/ /*$$->type = ERROR;*/ ;}
     break;
 
   case 136:
 
 /* Line 1455 of yacc.c  */
-#line 597 "lalg.y"
+#line 605 "lalg.y"
     { 
             (yyval.value) = (yyvsp[(1) - (2)].value);
             strcat((yyval.value).c_value, " ) ");
@@ -2587,14 +2593,14 @@ yyreduce:
   case 137:
 
 /* Line 1455 of yacc.c  */
-#line 601 "lalg.y"
+#line 609 "lalg.y"
     { yyerror(")"); (yyval.value) = (yyvsp[(1) - (2)].value); ;}
     break;
 
   case 138:
 
 /* Line 1455 of yacc.c  */
-#line 605 "lalg.y"
+#line 613 "lalg.y"
     { 
         (yyval.value).type = INTEGER; (yyval.value).i_value = (yyvsp[(1) - (1)].i_number);
         sprintf((yyval.value).c_value, "%d", (yyval.value).i_value); 
@@ -2604,7 +2610,7 @@ yyreduce:
   case 139:
 
 /* Line 1455 of yacc.c  */
-#line 609 "lalg.y"
+#line 617 "lalg.y"
     { 
         (yyval.value).type = REAL; (yyval.value).f_value = (yyvsp[(1) - (1)].r_number); 
         sprintf((yyval.value).c_value, "%f", (yyval.value).f_value);
@@ -2614,7 +2620,7 @@ yyreduce:
 
 
 /* Line 1455 of yacc.c  */
-#line 2618 "lalg.tab.c"
+#line 2624 "lalg.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2826,7 +2832,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 615 "lalg.y"
+#line 623 "lalg.y"
 
 
 extern FILE *yyin;
@@ -2866,7 +2872,7 @@ int main (int argc, char *argv[])
     fclose( code_file );
 
     end_codigo();
-    //printCodigo();
+    printCodigo();
 
 
     if(numerrors==0)
@@ -2879,7 +2885,7 @@ int main (int argc, char *argv[])
         remove( "code.p");
 	
 	/* imprimindo a talela de simbolos */
-	//printSimbolTable(1);
+	printSimbolTable(1);
 	
     return res;
 }
