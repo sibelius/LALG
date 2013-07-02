@@ -8,6 +8,6 @@ end;
 begin
     a := 10;
     b := 2.7;
-    meu_proc(a,b);
-    meu_proc(b,a); {Mais parametros que o esperado}
+    meu_proc(a;b);
+    meu_proc(b;a); {parametros com ordem errada}
 end.

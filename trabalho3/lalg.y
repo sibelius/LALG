@@ -104,11 +104,9 @@
 %type <value> fator_exp
 %type <value> fator
 %type <value> tipo_var
-
-//%type <math_op> op_mul
-
 %type <value> dc_c1; 
 %type <value> dc_c2; 
+%type <value> cmd;
 
 %type <list> variaveis
 %type <list> mais_var
@@ -397,19 +395,29 @@ cmd : T_READ {  } T_L_PAREN variaveis T_R_PAREN
             /* Verifica se todos os argumentos sao do mesmo tipo */
             checkCallReadWrite("WRITE", &$4); 
         }
-    | T_IF { } cmd_if
-    | T_ID { } T_ASSIGN expressao 
+    | T_IF { } cmd_if { }
+    | T_ID T_ASSIGN expressao 
 		{  
-			/* Verifica uma atribuicao  */
-			/* checkAssign( $1, &$3  ) */
-			/*printf("imprimindo o t_ID %s a expressao em assign %s\n", $3);*/
+            /* Verificando se o identificador foi declarado */
+            Node* ident = findSymbol( $1 );
+            if ( ident == NULL ) {
+                code_generate = FALSE;
+                fprintf (stderr, 
+                "Erro Semantico: Linha %d, Coluna %d. Identificador %s nao declarado\n", 
+                num_lines, column, $1);
+
+                $$.type = INDEFINED;
+            } else {
+                $$.type = ident->value.type;
+                /* buildReadMemory */
+            }
 		}
     | T_ID lista_arg 
         {
             /* Verifica se o procedimento existe, e se os argumentos sao validos */
            checkCallProcedure($1, & $2);
         }
-    | T_BEGIN cmd_begin
+    | T_BEGIN cmd_begin {}
     | T_WHILE  cmd_while {}
     | T_FOR T_ID T_ASSIGN expressao T_TO expressao T_DO cmd {}
 //	| error { yyclearin; yyerror("cmd"); }
@@ -643,7 +651,7 @@ int main (int argc, char *argv[])
     fclose( code_file );
 
     end_codigo();
-    printCodigo();
+    //printCodigo();
 
 
     if(numerrors==0)
@@ -656,7 +664,7 @@ int main (int argc, char *argv[])
         remove( "code.p");
 	
 	/* imprimindo a talela de simbolos */
-	printSimbolTable(1);
+	//printSimbolTable(1);
 	
     return res;
 }

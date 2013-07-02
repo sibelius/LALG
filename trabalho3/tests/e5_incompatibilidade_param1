@@ -1,4 +1,4 @@
-program p1;
+program p5;
 var a,b,c : integer;
 procedure meu_proc(x: integer);
 begin
@@ -9,5 +9,5 @@ begin
     b := 20;
     c := 30;
     meu_proc(a);
-    meu_proc(a,b); {Mais parametros que o esperado}
+    meu_proc(a;b); {Mais parametros que o esperado}
 end.

@@ -4,6 +4,4 @@ obs: retiramos o cmd_param
 
 - tratar caso passar um procedimento como parametro de read e write
 
-- no e1 tratar a coluna da variavel a e b
-
-- no e5 tipo3 tratar para apresentar o nome do parametro que esta com o tipo diferente 
+- no e1 tratar a coluna da variavel a e b 

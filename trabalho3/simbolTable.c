@@ -183,6 +183,20 @@ int addProcedure(char* name, ListaLigadaVar *paramList)
        
         /* Cria a tabela de procedimento e os proximos simbolos sao adicionados nela */
         initProcedureSymbolTable();
+        
+        /* percorre a lista de variaveis e adiciona na tablea de simbolos do procedimento  */
+        NoVar *pauxParam = paramList->inicio;                                                    
+        while (pauxParam != NULL) {
+            Node* new_node = addSymbol( pauxParam->variable.name, pauxParam->variable.value, VARIABLE ); 
+            
+            if (new_node == NULL) {
+        	    printf("Erro Semantico: identificador %s ja declarado\n", pauxParam->variable.name );
+            } else {
+                buildAloc(new_node);
+            }
+
+            pauxParam = pauxParam->proximo;
+        }
 
         /* Para gerar o codigo proprio para o procedimento */
         buildProcedure(new_node);
@@ -198,7 +212,7 @@ int addProcedure(char* name, ListaLigadaVar *paramList)
 /* Sai do procedimento e deleta a tabela de simbolos */
 int endProcedure() {
     if(insideProcedure == 1) {
-        printSimbolTable(0);
+        //printSimbolTable(0);
         destroyProcedure();
 
         deleteProcedureSymbolTable();
@@ -383,6 +397,9 @@ void printCategoria(Categoria categoria) {
             break;
         case CONSTANT:
             printf("constant");
+            break;
+        case PARAM:
+            printf("param");
             break;
     }
 }

@@ -19,7 +19,7 @@ typedef enum type VarType;
 enum cat {
     PROGRAM = 1,
     VARIABLE,
-    PARAMETER,
+    PARAM,
     PROCEDURE,
     CONSTANT
 };

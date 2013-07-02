@@ -6,9 +6,10 @@ begin
     x := 2.5;
 end;
 
-procedure meu_proc1(x: integer);
+procedure meu_proc1(x: integer; y: real);
 begin
     x := 2;
+    y := 3.5;
 end;
 
 {Procedimento redeclarado}
@@ -21,7 +22,7 @@ end;
 begin
     a := 10;
     b := 5.7;
-    meu_proc1(a);
+    meu_proc1(a; b);
     meu_proc(b);
 end.
 

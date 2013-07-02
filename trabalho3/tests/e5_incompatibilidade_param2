@@ -1,9 +1,9 @@
-program p1;
+program p5;
 var a : real;
 procedure meu_proc(x: integer);
 begin
     x := 10;
-end
+end;
 begin
     a := 4.5;
     meu_proc(a); {Tipo de parametro errado}
