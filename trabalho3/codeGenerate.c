@@ -58,16 +58,17 @@ void realocar_codigo() {
     }
 }
 
-void buildAloc(Node* node) 
+int buildAloc(Node* node) 
 {
     node->relative_position = next_position++;
 
     addCommand("ALME", 1);
 
     qtd_aloc_procedure++;
+    return TRUE;
 }
 
-void buildProcedure(Node* node) {
+int buildProcedure(Node* node) {
     begin_procedure = next_position;
     qtd_aloc_procedure = 0;
     
@@ -85,22 +86,26 @@ void buildProcedure(Node* node) {
         
         paux = paux->proximo;
     }
+    return TRUE;
 }
 
-void destroyProcedure() {
+int destroyProcedure() {
     addCommand("DESM", qtd_aloc_procedure);
     addCommand("RTPR", NOPARAM);
     
     next_position = begin_procedure;
+    return TRUE;
 }
 
-void buildReadWrite(char* command, ListaLigadaVar *paramList) {
+int buildReadWrite(char* command, ListaLigadaVar *paramList) {
     NoVar *paux;
     Node *pointer;
     paux = paramList->inicio;          
 
     while (paux != NULL) {
         pointer = findSymbol(paux->variable.name);
+        if(pointer == NULL)
+            return FALSE;
    
         if(strcmp(command, "READ") == 0) {
             addCommand("LEIT", NOPARAM);
@@ -112,9 +117,10 @@ void buildReadWrite(char* command, ListaLigadaVar *paramList) {
 
         paux = paux->proximo;
     }
+    return TRUE;
 }
 
-void buildCallProcedure(Node* proc, ListaLigadaVar *paramList) {
+int buildCallProcedure(Node* proc, ListaLigadaVar *paramList) {
     NoVar *paux;
     Node* pointer;
     paux = paramList->inicio;          
@@ -123,6 +129,8 @@ void buildCallProcedure(Node* proc, ListaLigadaVar *paramList) {
 
     while (paux != NULL) {
         pointer = findSymbol(paux->variable.name);
+        if(pointer == NULL)
+            return FALSE;
         addCommand("PARAM", pointer->relative_position);
        
         paux = paux->proximo;
@@ -130,6 +138,7 @@ void buildCallProcedure(Node* proc, ListaLigadaVar *paramList) {
 
     addCommand("CHPR", proc->relative_position);
     codigo[linha_pusher].param = codline;
+    return TRUE;
 }
 
 Rel isrelacao(char* op)
@@ -148,7 +157,7 @@ Rel isrelacao(char* op)
         return LESSER;
 }
 
-void buildCondition(Condicao cond)
+int buildCondition(Condicao cond)
 {
     char* p;
     Rel relacao;
@@ -160,6 +169,8 @@ void buildCondition(Condicao cond)
             addCommand("CRCT", atof(p));
         } else if(isalpha(*p)) {
             pointer = findSymbol(p);
+            if(pointer == NULL)
+                return;
             addCommand("CRVL", pointer->relative_position);
         } else if(isoperator(*p)) {
             switch(*p) {
@@ -204,7 +215,7 @@ void buildCondition(Condicao cond)
     }
 }
 
-void buildStartIf(Condicao cond)
+int buildStartIf(Condicao cond)
 {
     printf("cond: %s\n", cond.c_value);
     /* Gera o codigo da condicao */
@@ -212,7 +223,7 @@ void buildStartIf(Condicao cond)
     addCommand("DSVF", LBL_IF);
 }
 
-void buildEndIf()
+int buildEndIf()
 {
     int i;
     int initElse=-1;
@@ -237,18 +248,21 @@ void buildEndIf()
     }
 }
 
-void buildElse() {
+int buildElse() {
     addCommand("DSVI", LBL_ELSE);
+    return TRUE;
 }
 
-void buildStartWhile(Condicao cond) {
+int buildStartWhile(Condicao cond) {
+    int ret;
     push(&pilhaWhile, codline);
     
-    buildCondition(cond);
+    ret = buildCondition(cond);
     addCommand("DSVF", LBL_WHILE);
+    return ret;
 }
 
-void buildEndWhile() {
+int buildEndWhile() {
     int i;
     int initCondition = pop(&pilhaWhile);
     addCommand("DSVI", initCondition);
@@ -259,9 +273,10 @@ void buildEndWhile() {
             break;
         }
     }
+    return TRUE;
 }
 
-void buildAssign(char* name, char* exp)
+int buildAssign(char* name, char* exp)
 {
     char* p;
     Node* pointer;
@@ -271,6 +286,8 @@ void buildAssign(char* name, char* exp)
             addCommand("CRCT", atof(p));
         } else if(isalpha(*p)) {
             pointer = findSymbol(p);
+            if(pointer == NULL)
+                return FALSE;
             addCommand("CRVL", pointer->relative_position);
         } else if(isoperator(*p)) {
             switch(*p) {
@@ -291,8 +308,10 @@ void buildAssign(char* name, char* exp)
         p = strtok(NULL, " ");
     }
     pointer = findSymbol(name);
+    if(pointer == NULL)
+        return FALSE;
     addCommand("ARMZ", pointer->relative_position);
-
+    return TRUE;
 }
 
 void printCodigo(FILE* code_file) 

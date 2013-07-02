@@ -658,7 +658,7 @@ int main (int argc, char *argv[])
         remove( "code.p");
 	
 	/* imprimindo a talela de simbolos */
-	printSimbolTable(1);
+	/*printSimbolTable(1);*/
 	
     return res;
 }

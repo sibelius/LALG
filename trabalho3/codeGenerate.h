@@ -17,30 +17,30 @@ void init_codigo();
 void addCommand(char* command, float param); 
 
 /* Procedimentos para gerar codigo */
-void buildAloc(Node* node);
+int buildAloc(Node* node);
 
-void buildProcedure(Node* node);
+int buildProcedure(Node* node);
 
-void destroyProcedure();
+int destroyProcedure();
 
-void buildReadWrite(char* command, ListaLigadaVar *paramList);
+int buildReadWrite(char* command, ListaLigadaVar *paramList);
 
-void buildCallProcedure(Node* proc, ListaLigadaVar *paramList);
+int buildCallProcedure(Node* proc, ListaLigadaVar *paramList);
 
-void buildCondition(Condicao cond);
+int buildCondition(Condicao cond);
 
-void buildStartIf(Condicao cond);
+int buildStartIf(Condicao cond);
 
 /* Preenche os valores os enderecos de desvio */
-void buildEndIf();
+int buildEndIf();
 
-void buildElse();
+int buildElse();
 
-void buildStartWhile(Condicao cond);
+int buildStartWhile(Condicao cond);
 
-void buildEndWhile();
+int buildEndWhile();
 
-void buildAssign(char* name ,char* exp);
+int buildAssign(char* name ,char* exp);
 
 void printCodigo(FILE* arquivo);
 
