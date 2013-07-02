@@ -566,9 +566,9 @@ static const yytype_uint16 yyrline[] =
      362,   367,   376,   375,   380,   384,   385,   385,   386,   386,
      387,   392,   392,   397,   397,   402,   402,   403,   423,   428,
      429,   430,   439,   439,   443,   443,   446,   449,   449,   450,
-     450,   454,   474,   477,   480,   483,   486,   489,   492,   496,
-     508,   511,   514,   520,   524,   530,   533,   539,   547,   551,
-     557,   560,   566,   584,   594,   601,   605,   609,   613,   617
+     450,   454,   466,   469,   472,   475,   478,   481,   484,   488,
+     495,   498,   501,   507,   511,   517,   520,   526,   534,   538,
+     544,   547,   553,   571,   581,   588,   592,   596,   600,   604
 };
 #endif
 
@@ -2220,10 +2220,10 @@ yyreduce:
             } else {
                 (yyval.value).type = ident->value.type;
             }
-            
-            if(ident->value.type != (yyvsp[(3) - (3)].value).type) {
-                printf("Erro Semantico: Linha %d, Coluna %d. Atribu");
-            }
+            char posExp[100];
+            infix2postfix((yyvsp[(3) - (3)].value).c_value, posExp, 1);            
+
+            buildAssign((yyvsp[(1) - (3)].name), posExp);
 
 		;}
     break;
@@ -2323,21 +2323,13 @@ yyreduce:
             strcat((yyval.condicao).c_value, (yyvsp[(2) - (3)].condicao).c_value);
             strcat((yyval.condicao).c_value, posExp2);
 
-/*            printf("postfix: %s", $$.c_value);*/
-           /* strcat($$.c_value, $2.c_value);
-            strcat($$.c_value, $3.c_value);
-*/
-            /*printf("passara para a arvore a expressao %s\n", $$.c_value);*/
-            /* criara a expressionTree */
-            /*PNode root = CreateInfixTree($$.c_value);*/
-            /*PostOrderPrintTree(root);*/
          ;}
     break;
 
   case 112:
 
 /* Line 1455 of yacc.c  */
-#line 474 "lalg.y"
+#line 466 "lalg.y"
     {
 		    strcpy((yyval.condicao).c_value, " = ");
         ;}
@@ -2346,7 +2338,7 @@ yyreduce:
   case 113:
 
 /* Line 1455 of yacc.c  */
-#line 477 "lalg.y"
+#line 469 "lalg.y"
     {
             strcpy((yyval.condicao).c_value, " <> ");
         ;}
@@ -2355,7 +2347,7 @@ yyreduce:
   case 114:
 
 /* Line 1455 of yacc.c  */
-#line 480 "lalg.y"
+#line 472 "lalg.y"
     {
             strcpy((yyval.condicao).c_value, " >= ");
         ;}
@@ -2364,7 +2356,7 @@ yyreduce:
   case 115:
 
 /* Line 1455 of yacc.c  */
-#line 483 "lalg.y"
+#line 475 "lalg.y"
     {
             strcpy((yyval.condicao).c_value, " <= ");
         ;}
@@ -2373,7 +2365,7 @@ yyreduce:
   case 116:
 
 /* Line 1455 of yacc.c  */
-#line 486 "lalg.y"
+#line 478 "lalg.y"
     {
             strcpy((yyval.condicao).c_value, " > ");
         ;}
@@ -2382,7 +2374,7 @@ yyreduce:
   case 117:
 
 /* Line 1455 of yacc.c  */
-#line 489 "lalg.y"
+#line 481 "lalg.y"
     {
             strcpy((yyval.condicao).c_value, " < ");
     ;}
@@ -2391,29 +2383,24 @@ yyreduce:
   case 118:
 
 /* Line 1455 of yacc.c  */
-#line 492 "lalg.y"
+#line 484 "lalg.y"
     { yyerror("sinal de relacao"); ;}
     break;
 
   case 119:
 
 /* Line 1455 of yacc.c  */
-#line 496 "lalg.y"
+#line 488 "lalg.y"
     {
-          /*printf("dentro de expressao\n");*/
           strcpy((yyval.value).c_value, (yyvsp[(1) - (2)].condicao).c_value);
-/*          printf("o valor de $$.c_value e %s\n", $$.c_value);
-          printf("o valor de $1.c_value e %s\n", $1.c_value);
-                        */
             strcat((yyval.value).c_value, (yyvsp[(2) - (2)].condicao).c_value);
-/*           printf("o valor final de expressao e %s\n", $$.c_value);*/
           ;}
     break;
 
   case 120:
 
 /* Line 1455 of yacc.c  */
-#line 508 "lalg.y"
+#line 495 "lalg.y"
     {
         strcpy((yyval.condicao).c_value, "+");
       ;}
@@ -2422,7 +2409,7 @@ yyreduce:
   case 121:
 
 /* Line 1455 of yacc.c  */
-#line 511 "lalg.y"
+#line 498 "lalg.y"
     {
         strcpy((yyval.condicao).c_value, "-"); 
     ;}
@@ -2431,7 +2418,7 @@ yyreduce:
   case 122:
 
 /* Line 1455 of yacc.c  */
-#line 514 "lalg.y"
+#line 501 "lalg.y"
     {
         strcpy((yyval.condicao).c_value, " ");
     ;}
@@ -2440,7 +2427,7 @@ yyreduce:
   case 123:
 
 /* Line 1455 of yacc.c  */
-#line 520 "lalg.y"
+#line 507 "lalg.y"
     {
                 strcat((yyval.condicao).c_value, (yyvsp[(2) - (3)].condicao).c_value);
                 strcat((yyval.condicao).c_value, (yyvsp[(3) - (3)].condicao).c_value);
@@ -2450,7 +2437,7 @@ yyreduce:
   case 124:
 
 /* Line 1455 of yacc.c  */
-#line 524 "lalg.y"
+#line 511 "lalg.y"
     { 
             strcpy((yyval.condicao).c_value, " ");
         ;}
@@ -2459,7 +2446,7 @@ yyreduce:
   case 125:
 
 /* Line 1455 of yacc.c  */
-#line 530 "lalg.y"
+#line 517 "lalg.y"
     { 
         strcpy((yyval.condicao).c_value, " +");
       ;}
@@ -2468,7 +2455,7 @@ yyreduce:
   case 126:
 
 /* Line 1455 of yacc.c  */
-#line 533 "lalg.y"
+#line 520 "lalg.y"
     {
         strcpy((yyval.condicao).c_value, " -");
     ;}
@@ -2477,7 +2464,7 @@ yyreduce:
   case 127:
 
 /* Line 1455 of yacc.c  */
-#line 539 "lalg.y"
+#line 526 "lalg.y"
     {
         strcat((yyval.condicao).c_value, (yyvsp[(2) - (3)].value).c_value);
         strcat((yyval.condicao).c_value, (yyvsp[(3) - (3)].condicao).c_value);
@@ -2488,7 +2475,7 @@ yyreduce:
   case 128:
 
 /* Line 1455 of yacc.c  */
-#line 547 "lalg.y"
+#line 534 "lalg.y"
     {  
                 strcat((yyval.condicao).c_value, (yyvsp[(2) - (3)].value).c_value);
                 strcat((yyval.condicao).c_value, (yyvsp[(3) - (3)].condicao).c_value);
@@ -2498,7 +2485,7 @@ yyreduce:
   case 129:
 
 /* Line 1455 of yacc.c  */
-#line 551 "lalg.y"
+#line 538 "lalg.y"
     { 
         strcpy((yyval.condicao).c_value, " ");
     ;}
@@ -2507,7 +2494,7 @@ yyreduce:
   case 130:
 
 /* Line 1455 of yacc.c  */
-#line 557 "lalg.y"
+#line 544 "lalg.y"
     { 
             strcpy( (yyval.condicao).c_value, " * " );
        ;}
@@ -2516,7 +2503,7 @@ yyreduce:
   case 131:
 
 /* Line 1455 of yacc.c  */
-#line 560 "lalg.y"
+#line 547 "lalg.y"
     { 
             strcpy( (yyval.condicao).c_value, " / " );
         ;}
@@ -2525,7 +2512,7 @@ yyreduce:
   case 132:
 
 /* Line 1455 of yacc.c  */
-#line 567 "lalg.y"
+#line 554 "lalg.y"
     {
             /* Verificando se o identificador foi declarado */
             Node* ident = findSymbol( (yyvsp[(1) - (1)].name) );
@@ -2548,7 +2535,7 @@ yyreduce:
   case 133:
 
 /* Line 1455 of yacc.c  */
-#line 585 "lalg.y"
+#line 572 "lalg.y"
     {
             if((yyvsp[(1) - (1)].value).type == INTEGER) {
                 (yyval.value).type = INTEGER;
@@ -2563,7 +2550,7 @@ yyreduce:
   case 134:
 
 /* Line 1455 of yacc.c  */
-#line 594 "lalg.y"
+#line 581 "lalg.y"
     { 
             char buffer[40];
             (yyval.value) = (yyvsp[(2) - (2)].value);
@@ -2576,14 +2563,14 @@ yyreduce:
   case 135:
 
 /* Line 1455 of yacc.c  */
-#line 601 "lalg.y"
+#line 588 "lalg.y"
     { yyclearin; yyerror("sinal de relacao"); /*$$ = new ExpressionTree;*/ /*$$->type = ERROR;*/ ;}
     break;
 
   case 136:
 
 /* Line 1455 of yacc.c  */
-#line 605 "lalg.y"
+#line 592 "lalg.y"
     { 
             (yyval.value) = (yyvsp[(1) - (2)].value);
             strcat((yyval.value).c_value, " ) ");
@@ -2593,14 +2580,14 @@ yyreduce:
   case 137:
 
 /* Line 1455 of yacc.c  */
-#line 609 "lalg.y"
+#line 596 "lalg.y"
     { yyerror(")"); (yyval.value) = (yyvsp[(1) - (2)].value); ;}
     break;
 
   case 138:
 
 /* Line 1455 of yacc.c  */
-#line 613 "lalg.y"
+#line 600 "lalg.y"
     { 
         (yyval.value).type = INTEGER; (yyval.value).i_value = (yyvsp[(1) - (1)].i_number);
         sprintf((yyval.value).c_value, "%d", (yyval.value).i_value); 
@@ -2610,7 +2597,7 @@ yyreduce:
   case 139:
 
 /* Line 1455 of yacc.c  */
-#line 617 "lalg.y"
+#line 604 "lalg.y"
     { 
         (yyval.value).type = REAL; (yyval.value).f_value = (yyvsp[(1) - (1)].r_number); 
         sprintf((yyval.value).c_value, "%f", (yyval.value).f_value);
@@ -2620,7 +2607,7 @@ yyreduce:
 
 
 /* Line 1455 of yacc.c  */
-#line 2624 "lalg.tab.c"
+#line 2611 "lalg.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2832,7 +2819,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 623 "lalg.y"
+#line 610 "lalg.y"
 
 
 extern FILE *yyin;
@@ -2869,10 +2856,10 @@ int main (int argc, char *argv[])
 
     int res = yyparse();
 
-    fclose( code_file );
-
     end_codigo();
-    printCodigo();
+    printCodigo(code_file);
+
+    fclose( code_file );
 
 
     if(numerrors==0)

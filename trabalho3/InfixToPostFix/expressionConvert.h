@@ -10,7 +10,7 @@ struct stack
     char data[MAX];
     int top;
 };
-
+typedef struct stack Stack;
 
 int isempty(struct stack *s); 
 void emptystack(struct stack* s);

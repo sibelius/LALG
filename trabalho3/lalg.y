@@ -414,11 +414,10 @@ cmd : T_READ {  } T_L_PAREN variaveis T_R_PAREN
             } else {
                 $$.type = ident->value.type;
             }
-            
-            if(ident->value.type != $3.type) {
-                printf("Erro Semantico: Linha %d, Coluna %d. Atribu");
-            }
+            char posExp[100];
+            infix2postfix($3.c_value, posExp, 1);            
 
+            buildAssign($1, posExp);
 		}
     | T_ID lista_arg 
         {
@@ -459,14 +458,6 @@ condicao : expressao relacao expressao {
             strcat($$.c_value, $2.c_value);
             strcat($$.c_value, posExp2);
 
-/*            printf("postfix: %s", $$.c_value);*/
-           /* strcat($$.c_value, $2.c_value);
-            strcat($$.c_value, $3.c_value);
-*/
-            /*printf("passara para a arvore a expressao %s\n", $$.c_value);*/
-            /* criara a expressionTree */
-            /*PNode root = CreateInfixTree($$.c_value);*/
-            /*PostOrderPrintTree(root);*/
          }
     ;
 
@@ -494,13 +485,8 @@ relacao : T_EQUAL {
     
 /* Regra 23 <expressao> ::= <termo> <outros_termos> */
 expressao : termo outros_termos {
-          /*printf("dentro de expressao\n");*/
           strcpy($$.c_value, $1.c_value);
-/*          printf("o valor de $$.c_value e %s\n", $$.c_value);
-          printf("o valor de $1.c_value e %s\n", $1.c_value);
-                        */
             strcat($$.c_value, $2.c_value);
-/*           printf("o valor final de expressao e %s\n", $$.c_value);*/
           }
     ;
 
@@ -656,10 +642,10 @@ int main (int argc, char *argv[])
 
     int res = yyparse();
 
-    fclose( code_file );
-
     end_codigo();
-    printCodigo();
+    printCodigo(code_file);
+
+    fclose( code_file );
 
 
     if(numerrors==0)

@@ -34,6 +34,14 @@ void buildStartIf(Condicao cond);
 /* Preenche os valores os enderecos de desvio */
 void buildEndIf();
 
-void printCodigo();
+void buildElse();
+
+void buildStartWhile(Condicao cond);
+
+void buildEndWhile();
+
+void buildAssign(char* name ,char* exp);
+
+void printCodigo(FILE* arquivo);
 
 #endif
