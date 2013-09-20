@@ -1,6 +1,6 @@
 LALG
 ====
 
-Compilador para a linguagem LALG para a disciplina Introdução a Compiladores do ICMC - USP
+LALG Compiler developed for the course Introduction to Compilers of Institute of Mathematics and Computer Science - University of São Paulo (ICMC-USP)
 
-Não gera o código para o for
+Do not generate code for the 'for'
